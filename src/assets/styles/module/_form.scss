@@ -72,7 +72,8 @@
 .form__select,
 .form__textarea {
   width: 100%;
-  padding: rem(14) rem(16);
+  padding-block: rem(14);
+  padding-inline: rem(16);
   border: 1px solid var(--_form-color-border);
   border-radius: 8px;
   background-color: var(--_form-color-bg);
@@ -115,7 +116,8 @@
   .form__input,
   .form__select,
   .form__textarea {
-    padding: rem(16) rem(20);
+    padding-block: rem(16);
+    padding-inline: rem(20);
   }
 }
 
@@ -289,7 +291,8 @@
 }
 
 .form__success {
-  padding: rem(24);
+  padding-block: rem(24);
+  padding-inline: rem(24);
   border: 1px solid var(--_form-color-accent);
   border-radius: 8px;
   background-color: rgb(64 143 149 / 10%);

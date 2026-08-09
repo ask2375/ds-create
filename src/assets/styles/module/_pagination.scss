@@ -36,7 +36,8 @@
   align-items: center;
   height: rem(40);
   min-width: rem(40);
-  padding: 0 rem(12);
+  padding-block: 0;
+  padding-inline: rem(12);
   border: 1px solid var(--_pagination-border);
   background-color: var(--_pagination-bg);
   color: var(--_pagination-text);

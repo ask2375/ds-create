@@ -1,11 +1,12 @@
 @use "../global" as *;
 
 .footer {
-  padding: rem(40) 0;
+  padding-block: rem(40);
+  padding-inline: 0;
   background-color: $blue_234f5e;
 
   @include mq(md) {
-    padding: rem(60) 0;
+    padding-block: rem(60);
   }
 }
 

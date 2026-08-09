@@ -197,7 +197,8 @@
 
 .header__drawer-item > a {
   display: block;
-  padding: rem(20) rem(32);
+  padding-block: rem(20);
+  padding-inline: rem(32);
   font-size: rem(14);
   font-weight: $bold;
   line-height: 1;
@@ -209,7 +210,8 @@
   position: relative;
   width: 100%;
   max-width: rem(180);
-  padding: rem(15) 0;
+  padding-block: rem(15);
+  padding-inline: 0;
   background-color: $blue_234f5e;
   color: $white;
   text-align: center;

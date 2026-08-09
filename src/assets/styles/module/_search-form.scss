@@ -8,7 +8,8 @@
 
 .search-form__input {
   width: 100%;
-  padding: rem(10) rem(16);
+  padding-block: rem(10);
+  padding-inline: rem(16);
   border: 1px solid $gray_aaaaaf;
   border-radius: 4px;
   background-color: $white;
@@ -25,7 +26,8 @@
 
 .search-form__button {
   flex-shrink: 0;
-  padding: rem(10) rem(20);
+  padding-block: rem(10);
+  padding-inline: rem(20);
   border: none;
   border-radius: 4px;
   background-color: $blue_234f5e;

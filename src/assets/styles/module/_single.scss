@@ -532,6 +532,15 @@
   }
 }
 
+.single__back {
+  margin-block-start: rem(48);
+  text-align: center;
+
+  @include mq(md) {
+    margin-block-start: rem(60);
+  }
+}
+
 // 制作実績詳細ページ用スタイル
 .single--works .single__works-info {
   display: grid;
@@ -589,7 +598,8 @@
 
 .single--works .single__works-technology {
   display: inline-block;
-  padding: rem(4) rem(12);
+  padding-block: rem(4);
+  padding-inline: rem(12);
   border-radius: 4px;
   background-color: $white;
   color: $black_0d2936;

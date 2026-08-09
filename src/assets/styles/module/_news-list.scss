@@ -54,11 +54,13 @@
   display: flex;
   flex-direction: column;
   gap: rem(8);
-  padding: rem(24);
+  padding-block: rem(24);
+  padding-inline: rem(24);
 
   @include mq(md) {
     gap: rem(12);
-    padding: rem(32);
+    padding-block: rem(32);
+    padding-inline: rem(32);
   }
 }
 
@@ -141,7 +143,8 @@
 
 // 空状態
 .news-list__empty {
-  padding: rem(60);
+  padding-block: rem(60);
+  padding-inline: rem(60);
   border-radius: 10px;
   box-shadow:
     0 1px 3px oklch(from $black_000000 l c h / 10%),
