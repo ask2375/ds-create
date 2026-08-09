@@ -6,9 +6,9 @@
 get_header(); ?>
 
 <main class="l-main" id="main">
-  <section class="p-works-list">
-    <div class="p-works-list__inner l-inner">
-      <div class="p-works-list__title">
+  <section class="works-list">
+    <div class="works-list__inner inner">
+      <div class="works-list__title">
         <?php get_template_part("template-parts/section-title", null, [
           "main" => "WORKS",
           "sub" => "制作実績",

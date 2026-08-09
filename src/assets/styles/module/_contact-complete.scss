@@ -1,0 +1,32 @@
+@use "../global" as *;
+
+// 送信完了ページ用のスタイル
+.contact__complete {
+  padding-block: rem(80);
+  text-align: center;
+}
+
+.contact__complete-title {
+  font-size: rem(32);
+  font-weight: $bold;
+
+  @include mq(md) {
+    font-size: rem(40);
+  }
+}
+
+.contact__complete-text {
+  margin-block-start: rem(30);
+  color: $black_0d2936;
+  font-size: rem(16);
+  line-height: 1.8;
+
+  @include mq(md) {
+    font-size: rem(18);
+  }
+}
+
+.contact__complete-button {
+  margin-block-start: rem(50);
+  margin-inline: auto;
+}

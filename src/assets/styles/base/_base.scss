@@ -1,0 +1,154 @@
+/* リキッドレイアウト対応 */
+@use "../global" as *;
+
+// ローカルフォントのNoto Sans JPを優先して使用するためのフォントファイルを読み込む
+@font-face {
+  font-family: "Local Noto Sans JP";
+  src: local("Noto Sans JP");
+}
+
+@if $startFrom == sp {
+  // スマホファースト
+  html {
+    // 375px~767px
+    font-size: 16px;
+
+    // ~375px
+    @media (width <= 375px) {
+      font-size: vw(375, 16);
+    }
+
+    @include mq("md") {
+      font-size: vw(strip-unit($inner), 16);
+    }
+
+    // inner~max-screen
+    @media (width >= #{$inner}) {
+      font-size: 16px;
+    }
+  }
+} @else {
+  // PCファースト
+  html {
+    font-size: 16px;
+
+    @media (width <= #{$inner}) {
+      font-size: vw(strip-unit($inner), 16);
+    }
+
+    @include mq("md") {
+      font-size: 16px;
+    }
+
+    // ~375px
+    @media (width <= 375px) {
+      font-size: vw(375, 16);
+    }
+  }
+}
+
+/* フォントカラーは、使用頻度が多いものを選択する */
+body {
+  color: $black_0d2936;
+  font-family: $noto;
+  font-weight: $regular;
+  line-height: 1;
+}
+
+// PCでは電話番号のクリックを無効にする
+a[href^="tel:"] {
+  pointer-events: none;
+
+  @include mq("md") {
+    pointer-events: auto;
+  }
+}
+
+// Safari対策[iOS Safariで電話リンク（tel:）が勝手に装飾（下線など）されることがあるので対策]
+a[href^="tel"] {
+  text-decoration: none;
+}
+
+// リンクの色を親要素の文字色と同じにする
+a {
+  color: inherit;
+
+  // iOS Safariでリンクをタップしたときのハイライト（青い塗り）を消す
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+// クリックできるものはマウスを乗せたとき手の形にする
+:where(:any-link, button, [type="button"], [type="reset"], [type="submit"], label[for], select, summary, [role="tab"], [role="button"]) {
+  cursor: pointer;
+
+  /*
+		- :where() は詳細度（CSSの強さ）が 0 になるので、上書きしやすくするため指定
+		- :any-link は a と area のリンクをまとめて指せる
+		- label[for] はクリックで入力にフォーカスするので pointer は分かりやすい
+  */
+}
+
+// iosでボタンをダブルタップしてしまったときに拡大されてしまうのを防止
+:where(button, [type="button"], [type="reset"], [type="submit"]) {
+  touch-action: manipulation;
+}
+
+// フォーカスのデフォルトを無効にする
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// フォームのデフォルトのフォントサイズを16pxにする（16px未満だとiosでズームされてしまうため）
+:where(input, select, textarea) {
+  font-size: 1rem; /* = 16px */
+}
+
+// 入力量に応じてテキストエリアの高さを自動調整する
+textarea {
+  field-sizing: content;
+}
+
+/* ~~~~~ コンテンツ量が少なく短いページ（404、サンクスページなど）でもフッターを最下部に表示する ここから ~~~~~  */
+
+/* HTMLの階層構造で適宜クラス名は変更する */
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* ~~~~~ コンテンツ量が少なく短いページ（404、サンクスページなど）でもフッターを最下部に表示する ここまで ~~~~~ */
+
+// YouTubeのframeborder属性の変わり(HTML5の標準仕様で廃止されているため)
+iframe {
+  border: none;
+}
+
+// ジャギー対策
+img {
+  image-rendering: auto;
+}
+
+img,
+svg {
+  vertical-align: middle;
+}
+
+img,
+video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+/* ---------- ベースファイル | ここまで ---------- */

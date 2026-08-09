@@ -1,0 +1,47 @@
+@use "../global" as *;
+
+.button {
+  position: relative;
+  display: inline-block;
+  padding: rem(14) rem(60);
+  border: 1px solid currentcolor;
+  background-color: $white;
+  color: $black_000000;
+  font-size: rem(15);
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: rem(20);
+    width: rem(8);
+    height: rem(8);
+    border-top: 2px solid $black_000000;
+    border-right: 2px solid $black_000000;
+    translate: 0 -50%;
+    rotate: 45deg;
+    transition:
+      rotate 0.3s,
+      translate 0.3s;
+  }
+
+  @media (any-hover: hover) {
+    &:hover::before {
+      translate: 5px -50%;
+    }
+  }
+}
+
+.button[data-color="black"] {
+  border-color: $black_000000;
+  background-color: $black_000000;
+  color: $white;
+
+  &::before {
+    border-top: 2px solid currentcolor;
+    border-right: 2px solid currentcolor;
+  }
+}

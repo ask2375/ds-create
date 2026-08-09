@@ -7,8 +7,8 @@
 get_header(); ?>
 
 <main class="l-main" id="main">
-  <section class="p-archive">
-    <div class="p-archive__inner l-inner">
+  <section class="archive">
+    <div class="archive__inner inner">
       <?php get_template_part("template-parts/archive/archive-list"); ?>
     </div>
   </section>

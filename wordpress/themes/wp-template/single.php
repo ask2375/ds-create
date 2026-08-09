@@ -14,8 +14,8 @@ get_header(); ?>
     $post_type = get_post_type();
     ?>
     <main class="l-main" id="main">
-      <article class="p-single p-single--<?php echo esc_attr($post_type); ?>" itemscope itemtype="https://schema.org/Article">
-        <div class="p-single__inner l-inner">
+      <article class="single single--<?php echo esc_attr($post_type); ?>" itemscope itemtype="https://schema.org/Article">
+        <div class="single__inner inner">
           <?php get_template_part("template-parts/single/header"); ?>
           <?php get_template_part("template-parts/single/body"); ?>
           <?php get_template_part("template-parts/single/related"); ?>

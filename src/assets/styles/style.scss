@@ -1,12 +1,8 @@
-@use "foundation";
-@use "global";
+// base（reset / base）
+@use "base/**";
 
-// layoutディレクトリ内のファイルを直接インポート
-@use "layouts/**";
+// page（レイアウト・テキスト・ユーティリティ）
+@use "page/**";
 
-// components と projects
-@use "components/**";
-@use "projects/**";
-
-// utilityクラス（全てのファイル）をワイルドカードで読み込み
-@use "utilities/**";
+// module（インナー等の再利用モジュール）
+@use "module/**";

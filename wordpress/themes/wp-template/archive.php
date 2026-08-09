@@ -15,12 +15,12 @@ if (is_post_type_archive("post") || is_category() || is_tag() || is_author() || 
 get_header();
 
 $post_type = get_post_type();
-$post_type_class = $post_type === "post" ? "" : "p-archive--" . $post_type;
+$post_type_class = $post_type === "post" ? "" : "archive--" . $post_type;
 ?>
 <main class="l-main" id="main">
-  <section class="p-archive <?php echo esc_attr($post_type_class); ?>">
-    <div class="p-archive__inner l-inner">
-      <header class="p-archive__header">
+  <section class="archive <?php echo esc_attr($post_type_class); ?>">
+    <div class="archive__inner inner">
+      <header class="archive__header">
         <?php
         $title_parts = get_archive_title_parts();
         $description = "";
@@ -32,7 +32,7 @@ $post_type_class = $post_type === "post" ? "" : "p-archive--" . $post_type;
           $description = tag_description();
         }
         ?>
-        <div class="p-archive__title">
+        <div class="archive__title">
           <?php get_template_part("template-parts/section-title", null, [
             "main" => $title_parts["title_label"],
             "sub" => $title_parts["title_text"],
@@ -41,7 +41,7 @@ $post_type_class = $post_type === "post" ? "" : "p-archive--" . $post_type;
           ]); ?>
         </div>
         <?php if (!empty($description)): ?>
-          <div class="p-archive__description">
+          <div class="archive__description">
             <?php echo wp_kses_post($description); ?>
           </div>
         <?php endif; ?>

@@ -10,7 +10,7 @@ import { touchFile } from "./utils/fs-utils.js";
 
 const ROOT = projectRoot;
 const STYLE_ENTRY = paths.styleScss;
-const TARGET_DIRS = [resolve(ROOT, "src/assets/styles/projects"), resolve(ROOT, "src/assets/styles/components"), resolve(ROOT, "src/assets/styles/layouts"), resolve(ROOT, "src/assets/styles/utilities")];
+const TARGET_DIRS = [resolve(ROOT, "src/assets/styles/base"), resolve(ROOT, "src/assets/styles/page"), resolve(ROOT, "src/assets/styles/module")];
 
 async function touchStyle(reason = "") {
   try {

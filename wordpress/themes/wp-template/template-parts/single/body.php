@@ -14,7 +14,7 @@ if ($post_type === "post" && function_exists("get_field")) {
 
 // アイキャッチ画像の表示
 if (has_post_thumbnail()): ?>
-  <div class="p-single__thumbnail">
+  <div class="single__thumbnail">
     <?php
     $thumbnail_id = get_post_thumbnail_id();
     $thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");
@@ -55,7 +55,7 @@ if ($post_type === "post" && function_exists("get_field")) {
 }
 
 if ($featured_image && is_array($featured_image) && isset($featured_image["url"])): ?>
-  <div class="p-single__featured-image">
+  <div class="single__featured-image">
     <?php
     $featured_url = $featured_image["url"];
     $featured_alt = isset($featured_image["alt"]) && !empty($featured_image["alt"]) ? $featured_image["alt"] : get_the_title();
@@ -77,7 +77,7 @@ if ($featured_image && is_array($featured_image) && isset($featured_image["url"]
 <?php endif;
 ?>
 
-<div class="p-single__content" itemprop="articleBody">
+<div class="single__content" itemprop="articleBody">
   <?php the_content(); ?>
 </div>
 
@@ -94,12 +94,12 @@ if ($post_type === "post") {
   $has_tags = !empty($tags) || !empty($custom_tags);
 
   if ($has_tags): ?>
-    <div class="p-single__tags">
+    <div class="single__tags">
       <?php
       // 通常のタグ
       if (!empty($tags)):
         foreach ($tags as $tag): ?>
-          <a href="<?php echo esc_url(get_tag_link($tag->term_id)); ?>" class="p-single__tag" rel="tag">
+          <a href="<?php echo esc_url(get_tag_link($tag->term_id)); ?>" class="single__tag" rel="tag">
             <?php echo esc_html($tag->name); ?>
           </a>
         <?php endforeach;
@@ -110,7 +110,7 @@ if ($post_type === "post") {
         $custom_tags_array = array_map("trim", explode(",", $custom_tags));
         foreach ($custom_tags_array as $custom_tag):
           if (!empty($custom_tag)): ?>
-            <span class="p-single__tag p-single__tag--custom"><?php echo esc_html($custom_tag); ?></span>
+            <span class="single__tag single__tag--custom"><?php echo esc_html($custom_tag); ?></span>
           <?php endif;
         endforeach;
       endif;

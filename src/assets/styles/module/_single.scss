@@ -1,0 +1,759 @@
+@use "../global" as *;
+
+.single {
+  padding-block: rem(40);
+
+  @include mq(md) {
+    padding-block: rem(80);
+  }
+}
+
+.single__inner {
+  max-width: rem(strip-unit($inner)) + rem(strip-unit($padding-pc)) * 2;
+}
+
+.single__header {
+  margin-block-start: rem(32);
+
+  @include mq(md) {
+    margin-block-start: rem(48);
+  }
+}
+
+.single__subtitle {
+  margin-block-end: rem(8);
+  color: $black_0d2936;
+  font-size: rem(14);
+  font-weight: $medium;
+
+  @include mq(md) {
+    margin-block-end: rem(12);
+    font-size: rem(16);
+  }
+}
+
+.single__title {
+  margin-block-start: rem(16);
+  color: $black_0d2936;
+  font-size: rem(24);
+  font-weight: $bold;
+  line-height: 1.6;
+
+  @include mq(md) {
+    margin-block-start: rem(24);
+    font-size: rem(32);
+  }
+}
+
+.single__summary {
+  margin-block-start: rem(24);
+  padding-block: rem(16);
+  padding-inline: rem(16);
+  border-radius: 8px;
+  background-color: $gray_f0f0f0;
+  color: $black_0d2936;
+  font-size: rem(14);
+  line-height: 1.8;
+
+  @include mq(md) {
+    margin-block-start: rem(32);
+    padding-block: rem(20);
+    padding-inline: rem(24);
+    font-size: rem(16);
+  }
+}
+
+.single__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(16);
+  align-items: center;
+  margin-block-start: rem(16);
+  color: $gray_808080;
+  font-size: rem(14);
+
+  @include mq(md) {
+    margin-block-start: rem(24);
+  }
+}
+
+.single__author {
+  display: inline-block;
+  color: $black_0d2936;
+  font-size: rem(14);
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+}
+
+.single__date {
+  display: inline-block;
+}
+
+.single__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(8);
+}
+
+.single__category {
+  display: inline-block;
+  padding-block: rem(4);
+  padding-inline: rem(12);
+  border-radius: 4px;
+  background-color: $gray_f0f0f0;
+  color: $blue_234f5e;
+  font-size: rem(12);
+  text-decoration: none;
+  transition: opacity $duration;
+
+  @media (any-hover: hover) {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.single__thumbnail {
+  overflow: hidden;
+  margin-block-start: rem(32);
+  border-radius: 8px;
+
+  @include mq(md) {
+    margin-block-start: rem(48);
+  }
+}
+
+.single__thumbnail img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: scale 0.3s ease;
+
+  @include mq(md) {
+    border-radius: 12px;
+  }
+}
+
+.single__featured-image {
+  overflow: hidden;
+  margin-block-start: rem(32);
+  border-radius: 8px;
+
+  @include mq(md) {
+    margin-block-start: rem(48);
+  }
+}
+
+.single__featured-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+
+  @include mq(md) {
+    border-radius: 12px;
+  }
+}
+
+.single__content {
+  margin-block-start: rem(48);
+
+  @include mq(md) {
+    margin-block-start: rem(64);
+  }
+}
+
+// 本文内のHTMLタグに直接スタイルを適用（クラス名なし）
+// ヘッダー内のタイトル（.single__title）は除外
+.single__content h1,
+.single h1:not(.single__title) {
+  margin-block-start: rem(48);
+  padding-block-end: rem(16);
+  border-bottom: rem(2) solid $gray_f0f0f0;
+  color: $black_0d2936;
+  font-size: rem(28);
+  font-weight: $bold;
+  line-height: 1.6;
+
+  @include mq(md) {
+    margin-block-start: rem(64);
+    font-size: rem(36);
+  }
+}
+
+.single__content h2,
+.single h2 {
+  margin-block-start: rem(40);
+  padding-block-start: rem(16);
+  padding-inline-start: rem(16);
+  border-inline-start: rem(4) solid $green_408f95;
+  color: $black_0d2936;
+  font-size: rem(24);
+  font-weight: $bold;
+  line-height: 1.6;
+
+  @include mq(md) {
+    margin-block-start: rem(56);
+    padding-inline-start: rem(20);
+    font-size: rem(28);
+  }
+}
+
+.single__content h3,
+.single h3 {
+  margin-block-start: rem(32);
+  color: $black_0d2936;
+  font-size: rem(20);
+  font-weight: $bold;
+  line-height: 1.6;
+
+  @include mq(md) {
+    margin-block-start: rem(40);
+    font-size: rem(24);
+  }
+}
+
+.single__content h4,
+.single h4 {
+  margin-block-start: rem(24);
+  color: $black_0d2936;
+  font-size: rem(18);
+  font-weight: $bold;
+  line-height: 1.6;
+
+  @include mq(md) {
+    margin-block-start: rem(32);
+    font-size: rem(20);
+  }
+}
+
+.single__content p,
+.single p {
+  margin-block-start: rem(16);
+  color: $black_0d2936;
+  line-height: 1.8;
+
+  @include mq(md) {
+    margin-block-start: rem(20);
+  }
+}
+
+.single__content ul,
+.single__content ol,
+.single ul,
+.single ol {
+  margin-block-start: rem(16);
+  padding-inline-start: rem(24);
+  color: $black_0d2936;
+  line-height: 1.8;
+
+  @include mq(md) {
+    margin-block-start: rem(20);
+    padding-inline-start: rem(32);
+  }
+}
+
+.single__content ul,
+.single ul {
+  list-style-type: disc;
+}
+
+.single__content ol,
+.single ol {
+  list-style-type: decimal;
+}
+
+.single__content li,
+.single li {
+  margin-block-start: rem(8);
+  line-height: 1.8;
+}
+
+// 本文内のリンクのみにスタイルを適用（カテゴリ・タグ・ナビゲーションリンクは除外）
+.single__content a {
+  color: $green_408f95;
+  text-decoration: underline;
+  text-underline-offset: rem(2);
+  transition: opacity $duration;
+}
+
+.single__content a:hover {
+  opacity: 0.8;
+}
+
+// 本文内の画像のみにスタイルを適用（アイキャッチ画像は除外）
+.single__content img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  margin-block-start: rem(24);
+  border-radius: 8px;
+
+  @include mq(md) {
+    margin-block-start: rem(32);
+  }
+}
+
+.single__content blockquote,
+.single blockquote {
+  margin-block-start: rem(24);
+  padding-block: rem(16);
+  padding-inline: rem(24);
+  border-inline-start: rem(4) solid $green_408f95;
+  border-radius: 4px;
+  background-color: $gray_f0f0f0;
+  color: $black_0d2936;
+  font-style: italic;
+
+  @include mq(md) {
+    margin-block-start: rem(32);
+    padding-block: rem(20);
+    padding-inline: rem(32);
+  }
+}
+
+.single__content blockquote p,
+.single blockquote p {
+  margin-block-start: 0;
+}
+
+.single__content code,
+.single code {
+  padding-block: rem(2);
+  padding-inline: rem(6);
+  border-radius: 4px;
+  background-color: $gray_f0f0f0;
+  color: $blue_234f5e;
+  font-family: monospace;
+  font-size: rem(14);
+}
+
+.single__content pre,
+.single pre {
+  overflow-x: auto;
+  margin-block-start: rem(24);
+  padding-block: rem(16);
+  padding-inline: rem(16);
+  border-radius: 8px;
+  background-color: $gray_f0f0f0;
+  color: $black_0d2936;
+  font-family: monospace;
+  font-size: rem(14);
+  line-height: 1.6;
+
+  @include mq(md) {
+    padding-block: rem(24);
+    padding-inline: rem(24);
+  }
+}
+
+.single__content pre code,
+.single pre code {
+  padding-block: 0;
+  padding-inline: 0;
+  background-color: transparent;
+}
+
+.single__content table,
+.single table {
+  width: 100%;
+  margin-block-start: rem(24);
+  border: rem(1) solid $gray_808080;
+  border-collapse: collapse;
+
+  @include mq(md) {
+    margin-block-start: rem(32);
+  }
+}
+
+.single__content th,
+.single__content td,
+.single th,
+.single td {
+  padding-block: rem(12);
+  padding-inline: rem(16);
+  border: rem(1) solid $gray_808080;
+  line-height: 1.6;
+  text-align: start;
+
+  @include mq(md) {
+    padding-block: rem(16);
+    padding-inline: rem(20);
+  }
+}
+
+.single__content th,
+.single th {
+  background-color: $gray_f0f0f0;
+  color: $black_0d2936;
+  font-weight: $bold;
+}
+
+.single__content td,
+.single td {
+  color: $black_0d2936;
+}
+
+.single__content hr,
+.single hr {
+  margin-block-start: rem(32);
+  border: none;
+  border-top: rem(1) solid $gray_808080;
+
+  @include mq(md) {
+    margin-block-start: rem(48);
+  }
+}
+
+.single__content strong,
+.single strong {
+  color: $black_0d2936;
+  font-weight: $bold;
+}
+
+.single__content em,
+.single em {
+  font-style: italic;
+}
+
+.single__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(8);
+  margin-block-start: rem(48);
+  padding-block: rem(24);
+  border-top: rem(1) solid $gray_808080;
+
+  @include mq(md) {
+    margin-block-start: rem(64);
+    padding-block: rem(32);
+  }
+}
+
+.single__tag {
+  display: inline-block;
+  padding-block: rem(4);
+  padding-inline: rem(12);
+  border-radius: 4px;
+  background-color: $gray_f0f0f0;
+  color: $green_408f95;
+  font-size: rem(12);
+  text-decoration: none;
+  transition: opacity $duration;
+
+  @include mq(md) {
+    font-size: rem(14);
+  }
+}
+
+.single__tag:hover {
+  opacity: 0.8;
+}
+
+.single__tag--custom {
+  color: $black_0d2936;
+  cursor: default;
+}
+
+.single__navigation {
+  display: grid;
+  gap: rem(16);
+  margin-block-start: rem(48);
+  padding-block-start: rem(32);
+  border-top: rem(1) solid $gray_808080;
+
+  @include mq(md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: rem(24);
+    margin-block-start: rem(64);
+    padding-block-start: rem(48);
+  }
+}
+
+.single__nav-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.single__nav-item--prev {
+  @include mq(md) {
+    text-align: start;
+  }
+}
+
+.single__nav-item--next {
+  @include mq(md) {
+    text-align: end;
+  }
+}
+
+.single__nav-link {
+  display: block;
+  padding-block: rem(16);
+  padding-inline: rem(16);
+  border-radius: 8px;
+  background-color: $gray_f0f0f0;
+  color: $black_0d2936;
+  text-decoration: none;
+  transition: opacity $duration;
+
+  @include mq(md) {
+    padding-block: rem(20);
+    padding-inline: rem(20);
+  }
+}
+
+.single__nav-link:hover {
+  opacity: 0.8;
+}
+
+.single__nav-label {
+  display: block;
+  margin-block-start: rem(8);
+  color: $gray_808080;
+  font-size: rem(12);
+}
+
+.single__nav-title {
+  display: block;
+  color: $black_0d2936;
+  font-size: rem(14);
+  font-weight: $medium;
+  line-height: 1.6;
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+}
+
+// 制作実績詳細ページ用スタイル
+.single--works .single__works-info {
+  display: grid;
+  gap: rem(24);
+  margin-block-start: rem(32);
+  padding-block: rem(24);
+  padding-inline: rem(24);
+  border-radius: 8px;
+  background-color: $gray_f0f0f0;
+
+  @include mq(md) {
+    gap: rem(32);
+    margin-block-start: rem(48);
+    padding-block: rem(32);
+    padding-inline: rem(32);
+  }
+}
+
+.single--works .single__works-item {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8);
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.single--works .single__works-label {
+  min-width: rem(120);
+  color: $black_0d2936;
+  font-size: rem(14);
+  font-weight: $medium;
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+}
+
+.single--works .single__works-value {
+  color: $black_0d2936;
+  font-size: rem(14);
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+}
+
+.single--works .single__works-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(8);
+}
+
+.single--works .single__works-technology {
+  display: inline-block;
+  padding: rem(4) rem(12);
+  border-radius: 4px;
+  background-color: $white;
+  color: $black_0d2936;
+  font-size: rem(12);
+}
+
+.single--works .single__works-url {
+  color: $green_408f95;
+  font-size: rem(14);
+  text-decoration: underline;
+  text-underline-offset: rem(2);
+  transition: opacity $duration;
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.single--works .single__gallery {
+  margin-block-start: rem(48);
+
+  @include mq(md) {
+    margin-block-start: rem(64);
+  }
+}
+
+.single--works .single__gallery-title {
+  margin-block-end: rem(24);
+  color: $black_0d2936;
+  font-size: rem(20);
+  font-weight: $bold;
+
+  @include mq(md) {
+    margin-block-end: rem(32);
+    font-size: rem(24);
+  }
+}
+
+.single--works .single__gallery-list {
+  display: grid;
+  gap: rem(16);
+
+  @include mq(md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: rem(24);
+  }
+}
+
+.single--works .single__gallery-item {
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: $gray_f0f0f0;
+}
+
+.single--works .single__gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+// 通常投稿（post）用の追加スタイル
+.single--post .single__related {
+  margin-block-start: rem(48);
+  padding-block-start: rem(32);
+  border-top: rem(1) solid $gray_808080;
+
+  @include mq(md) {
+    margin-block-start: rem(64);
+    padding-block-start: rem(48);
+  }
+}
+
+.single--post .single__related-title {
+  margin-block-end: rem(24);
+  color: $black_0d2936;
+  font-size: rem(20);
+  font-weight: $bold;
+
+  @include mq(md) {
+    margin-block-end: rem(32);
+    font-size: rem(24);
+  }
+}
+
+.single--post .single__related-list {
+  display: grid;
+  gap: rem(16);
+
+  @include mq(sm) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: rem(24);
+  }
+
+  @include mq(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.single--post .single__related-link {
+  display: grid;
+  gap: rem(12);
+  text-decoration: none;
+  transition: opacity $duration;
+
+  @include mq(sm) {
+    grid-template-columns: rem(120) 1fr;
+    align-items: start;
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.single--post .single__related-thumbnail {
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background-color: $gray_f0f0f0;
+
+  @include mq(sm) {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.single--post .single__related-thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.single--post .single__related-content {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8);
+}
+
+.single--post .single__related-date {
+  color: $black_0d2936;
+  font-size: rem(12);
+
+  @include mq(md) {
+    font-size: rem(14);
+  }
+}
+
+.single--post .single__related-item-title {
+  margin: 0;
+  color: $black_0d2936;
+  font-size: rem(14);
+  font-weight: $medium;
+  line-height: 1.6;
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+}

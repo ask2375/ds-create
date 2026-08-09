@@ -1,0 +1,159 @@
+@use "../global" as *;
+
+.works-list {
+  padding-block: rem(48) rem(32);
+
+  @include mq(md) {
+    padding-block: rem(40) rem(60);
+  }
+}
+
+// カテゴリフィルター
+.works-list__filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(8);
+  margin-block-start: rem(32);
+
+  @include mq(md) {
+    gap: rem(12);
+  }
+}
+
+.works-list__filter-btn {
+  padding: rem(10) rem(20);
+  border: 1px solid $gray_aaaaaf;
+  border-radius: 8px;
+  background-color: transparent;
+  color: $black_0d2936;
+  font-family: inherit;
+  font-size: rem(14);
+  font-weight: $medium;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  @include mq(md) {
+    padding: rem(10) rem(24);
+    font-size: rem(15);
+  }
+
+  @media (any-hover: hover) {
+    &:hover:not(.is-active) {
+      border-color: $gray_aaaaaf;
+      background-color: $gray_f0f0f0;
+    }
+  }
+
+  // アクティブ状態
+  &.is-active {
+    border-color: $green_408f95;
+    background-color: $green_408f95;
+    color: $white;
+  }
+}
+
+// カードグリッド
+.works-list__grid {
+  --_card-widht: rem(320);
+
+  display: grid;
+  gap: rem(24);
+  margin-block-start: rem(24);
+
+  @include mq(md) {
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--_card-widht), 100%), 1fr));
+    gap: rem(32);
+    margin-block-start: rem(32);
+  }
+}
+
+// カード
+.works-list__card {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+
+  @media (any-hover: hover) {
+    &:hover .works-list__thumbnail img {
+      scale: 1.05;
+    }
+  }
+}
+
+.works-list__link {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+// サムネイル
+.works-list__thumbnail {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+
+  img {
+    transition: scale 0.4s ease;
+  }
+}
+
+// カテゴリバッジ
+.works-list__badge {
+  position: absolute;
+  top: rem(12);
+  left: rem(12);
+  padding: rem(6) rem(12);
+  border-radius: 4px;
+  background-color: $green_408f95;
+  color: $white;
+  font-size: rem(12);
+  font-weight: $medium;
+}
+
+// コンテンツ
+.works-list__content {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  gap: rem(8);
+  padding: rem(20);
+}
+
+.works-list__card-title {
+  color: $black_0d2936;
+  font-size: rem(16);
+  font-weight: $bold;
+  line-height: 1.5;
+
+  @include mq(md) {
+    font-size: rem(18);
+  }
+}
+
+.works-list__client {
+  color: oklch(from $black_0d2936 l c h / 70%);
+  font-size: rem(12);
+
+  @include mq(md) {
+    font-size: rem(13);
+  }
+}
+
+.works-list__date {
+  color: oklch(from $black_0d2936 l c h / 70%);
+  font-size: rem(12);
+}
+
+// 空メッセージ
+.works-list__empty {
+  padding-block: rem(60);
+  color: oklch(from $black_0d2936 l c h / 70%);
+  font-size: rem(16);
+  text-align: center;
+
+  @include mq(md) {
+    padding-block: rem(80);
+    font-size: rem(18);
+  }
+}

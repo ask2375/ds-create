@@ -1,0 +1,94 @@
+@use "../global" as *;
+
+.sample {
+  padding-block: rem(60);
+
+  @include mq(md) {
+    padding-block: rem(80);
+  }
+}
+
+.sample__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: rem(16);
+
+  @include mq(md) {
+    gap: rem(24);
+  }
+}
+
+.sample__title {
+  margin-block-start: rem(24);
+
+  @include mq(md) {
+    margin-block-start: rem(32);
+  }
+}
+
+.sample__button-wrap {
+  width: min(calc(240 / 16 * 1rem), 100%);
+
+  > * {
+    width: 100%;
+  }
+}
+
+.sample__divider {
+  width: 100%;
+  height: 1px;
+  max-width: rem(600);
+  margin: 0;
+  border: 0;
+  background-color: $gray_f0f0f0;
+}
+
+.sample__bg {
+  width: 100%;
+  height: rem(300);
+  max-width: rem(600);
+  border-radius: 8px;
+  background-image: url("../../images/bg_sample.webp");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  @include mq(md) {
+    height: rem(400);
+  }
+}
+
+.sample__image {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: rem(512);
+  border-radius: 8px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: rem(100);
+    background: linear-gradient(to top, $white, transparent);
+    pointer-events: none;
+  }
+}
+
+.sample__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sample p {
+  margin: 0;
+  color: $black_0d2936;
+  font-size: rem(14);
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+}

@@ -1,0 +1,64 @@
+@use "../global" as *;
+
+.section-title {
+  display: grid;
+  gap: rem(8);
+  justify-items: center;
+  width: max-content;
+  text-align: center;
+
+  @include mq(md) {
+    gap: rem(12);
+  }
+
+  &[data-align="center"] {
+    justify-items: center;
+    text-align: center;
+  }
+
+  &[data-align="left"] {
+    justify-items: start;
+    text-align: left;
+  }
+
+  &[data-align="right"] {
+    justify-items: end;
+    text-align: right;
+  }
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60%;
+  height: rem(3);
+  background-color: $orange_de8430;
+
+  @include mq(md) {
+    width: 80%;
+  }
+}
+
+.section-title__main {
+  color: $black_0d2936;
+  font-family: $lato;
+  font-size: rem(32);
+  font-weight: $bold;
+  line-height: 1;
+  text-transform: uppercase;
+
+  @include mq(md) {
+    font-size: rem(48);
+  }
+}
+
+.section-title__sub {
+  color: $black_0d2936;
+  font-size: rem(14);
+  font-weight: $regular;
+  line-height: 1.4;
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+}

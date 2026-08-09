@@ -1,0 +1,43 @@
+@use "../global" as *;
+
+.search-form {
+  display: flex;
+  gap: rem(8);
+  max-width: min(100%, rem(480));
+}
+
+.search-form__input {
+  width: 100%;
+  padding: rem(10) rem(16);
+  border: 1px solid $gray_aaaaaf;
+  border-radius: 4px;
+  background-color: $white;
+  color: $black_0d2936;
+  font-size: rem(14);
+  line-height: 1.5;
+  transition: border-color 0.2s ease;
+}
+
+.search-form__input:focus {
+  border-color: $blue_234f5e;
+  outline: none;
+}
+
+.search-form__button {
+  flex-shrink: 0;
+  padding: rem(10) rem(20);
+  border: none;
+  border-radius: 4px;
+  background-color: $blue_234f5e;
+  color: $white;
+  font-size: rem(14);
+  line-height: 1.5;
+  cursor: pointer;
+  transition: opacity $duration;
+}
+
+@media (any-hover: hover) {
+  .search-form__button:hover {
+    opacity: 0.8;
+  }
+}

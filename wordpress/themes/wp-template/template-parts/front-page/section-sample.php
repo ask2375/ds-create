@@ -3,9 +3,9 @@
  * フロントページ: サンプルセクション
  */
 ?>
-<section class="p-sample">
-  <div class="p-sample__inner l-inner">
-    <div class="p-sample__title">
+<section class="sample">
+  <div class="sample__inner inner">
+    <div class="sample__title">
       <?php get_template_part("template-parts/section-title", null, [
         "main" => "sample",
         "sub" => "サンプル",
@@ -13,26 +13,26 @@
         "tag" => "h2",
       ]); ?>
     </div>
-    <div class="p-sample__button-wrap">
-      <a class="c-button" data-color="black" href="<?php page_path("contact"); ?>">問い合わせへ</a>
+    <div class="sample__button-wrap">
+      <a class="button" data-color="black" href="<?php page_path("contact"); ?>">問い合わせへ</a>
     </div>
-    <div class="p-sample__button-wrap">
-      <a class="c-button" href="<?php page_path("news"); ?>">ニュース一覧へ</a>
-    </div>
-
-    <div class="p-sample__button-wrap">
-      <a class="c-button" href="<?php page_path("works"); ?>">制作実績一覧へ</a>
+    <div class="sample__button-wrap">
+      <a class="button" href="<?php page_path("news"); ?>">ニュース一覧へ</a>
     </div>
 
-    <hr class="p-sample__divider" />
+    <div class="sample__button-wrap">
+      <a class="button" href="<?php page_path("works"); ?>">制作実績一覧へ</a>
+    </div>
+
+    <hr class="sample__divider" />
 
     <p>背景画像の読み込み</p>
-    <div class="p-sample__bg"></div>
+    <div class="sample__bg"></div>
 
-    <hr class="p-sample__divider" />
+    <hr class="sample__divider" />
 
     <p>通常画像の読み込み(imgの下部をマスクでフェードかけてます)</p>
-    <div class="p-sample__image">
+    <div class="sample__image">
       <img src="<?php assets_path("/images/image_sample.webp"); ?>" width="512" height="512" alt="猫の画像" />
     </div>
   </div>

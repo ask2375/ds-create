@@ -1,5 +1,4 @@
-// リセット（node_modules の kiso.css）
-import "kiso.css";
+// リセットCSSは src/assets/styles/base/_reset.scss で行う
 import "./_drawer.js";
 import "./_mv-slider.js";
 import "./_viewport.js";

@@ -12,8 +12,8 @@ get_header(); ?>
     $archive_link = get_page_url("works");
     ?>
     <main class="l-main" id="main">
-      <article class="p-single p-single--works" itemscope itemtype="https://schema.org/CreativeWork">
-        <div class="p-single__inner l-inner">
+      <article class="single single--works" itemscope itemtype="https://schema.org/CreativeWork">
+        <div class="single__inner inner">
 
           <?php get_template_part("template-parts/single/works-header"); ?>
           <?php get_template_part("template-parts/single/works-thumbnail"); ?>
@@ -21,8 +21,8 @@ get_header(); ?>
           <?php get_template_part("template-parts/single/works-navigation"); ?>
 
           <?php if ($archive_link): ?>
-            <div class="p-single__back">
-              <a href="<?php echo esc_url($archive_link); ?>" class="c-button">制作実績一覧へ戻る</a>
+            <div class="single__back">
+              <a href="<?php echo esc_url($archive_link); ?>" class="button">制作実績一覧へ戻る</a>
             </div>
           <?php endif; ?>
         </div>

@@ -27,9 +27,9 @@ if (has_post_thumbnail()) {
 }
 $image_data = has_post_thumbnail() ? wp_get_attachment_image_src(get_post_thumbnail_id(), "medium") : null;
 ?>
-<article class="p-archive__item">
-  <a href="<?php echo esc_url(get_permalink()); ?>" class="p-archive__link">
-    <div class="p-archive__thumbnail">
+<article class="archive__item">
+  <a href="<?php echo esc_url(get_permalink()); ?>" class="archive__link">
+    <div class="archive__thumbnail">
       <?php if ($image_data && isset($image_data[1]) && isset($image_data[2])): ?>
         <img src="<?php echo esc_url($thumbnail_url); ?>"
           width="<?php echo esc_attr($image_data[1]); ?>"
@@ -42,22 +42,22 @@ $image_data = has_post_thumbnail() ? wp_get_attachment_image_src(get_post_thumbn
           alt="<?php echo esc_attr($thumbnail_alt); ?>">
       <?php endif; ?>
     </div>
-    <div class="p-archive__content">
-      <div class="p-archive__meta">
-        <time class="p-archive__date" datetime="<?php echo esc_attr(get_the_date("c")); ?>">
+    <div class="archive__content">
+      <div class="archive__meta">
+        <time class="archive__date" datetime="<?php echo esc_attr(get_the_date("c")); ?>">
           <?php echo esc_html(get_the_date("Y.m.d")); ?>
         </time>
         <?php if (!empty($categories)): ?>
-          <div class="p-archive__categories">
+          <div class="archive__categories">
             <?php foreach ($categories as $category): ?>
-              <span class="p-archive__category"><?php echo esc_html($category->name); ?></span>
+              <span class="archive__category"><?php echo esc_html($category->name); ?></span>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
       </div>
-      <h2 class="p-archive__item-title"><?php echo esc_html(get_the_title()); ?></h2>
+      <h2 class="archive__item-title"><?php echo esc_html(get_the_title()); ?></h2>
       <?php if ($excerpt_text): ?>
-        <div class="p-archive__excerpt">
+        <div class="archive__excerpt">
           <?php echo esc_html($excerpt_text); ?>
         </div>
       <?php endif; ?>

@@ -1,0 +1,11 @@
+@use "../global" as *;
+
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(rem(320), 1fr));
+  gap: rem(24);
+
+  @include mq(md) {
+    gap: rem(32);
+  }
+}

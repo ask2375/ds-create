@@ -3,15 +3,15 @@
  * フロントページ: MV セクション
  */
 ?>
-<section class="p-mv">
-  <div class="p-mv__inner">
-    <div class="p-mv__title-wrap">
-      <h2 class="p-mv__main-title">メインタイトル</h2>
-      <p class="p-mv__sub-title">
+<section class="mv">
+  <div class="mv__inner">
+    <div class="mv__title-wrap">
+      <h2 class="mv__main-title">メインタイトル</h2>
+      <p class="mv__sub-title">
         ここにサブタイトルが入ります。<br />ここにサブタイトルが入ります。ここにサブタイトルが入ります。<br />ここにサブタイトルが入ります。
       </p>
     </div>
-    <div class="p-mv__splide splide js-mv-splide" aria-label="main-visual">
+    <div class="mv__splide splide js-mv-splide" aria-label="main-visual">
       <div class="splide__track">
         <ul class="splide__list">
           <li class="splide__slide">
