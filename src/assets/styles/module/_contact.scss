@@ -1,0 +1,14 @@
+@use "../global" as *;
+
+.contact {
+  padding-block: rem(72);
+}
+
+.contact__form {
+  margin-block-start: rem(64);
+}
+
+.contact__title {
+  display: grid;
+  place-items: center;
+}

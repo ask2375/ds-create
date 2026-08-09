@@ -1,0 +1,40 @@
+@use "../global" as *;
+
+.triangle {
+  display: inline-block;
+  width: rem(64);
+  aspect-ratio: 1/1;
+  background-color: $black_000000;
+}
+
+.triangle[data-direction="top"] {
+  clip-path: $clip-triangle-top;
+}
+
+.triangle[data-direction="bottom"] {
+  clip-path: $clip-triangle-bottom;
+}
+
+.triangle[data-direction="left"] {
+  clip-path: $clip-triangle-left;
+}
+
+.triangle[data-direction="right"] {
+  clip-path: $clip-triangle-right;
+}
+
+.triangle[data-direction="lower-left"] {
+  clip-path: $clip-triangle-lower-left;
+}
+
+.triangle[data-direction="upper-left"] {
+  clip-path: $clip-triangle-upper-left;
+}
+
+.triangle[data-direction="lower-right"] {
+  clip-path: $clip-triangle-lower-right;
+}
+
+.triangle[data-direction="upper-right"] {
+  clip-path: $clip-triangle-upper-right;
+}

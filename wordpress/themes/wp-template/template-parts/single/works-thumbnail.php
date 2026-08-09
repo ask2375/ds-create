@@ -4,7 +4,7 @@
  * single-works.php から呼び出される
  */
 if (has_post_thumbnail()): ?>
-  <div class="p-single__thumbnail">
+  <div class="single__thumbnail">
     <?php
     $thumbnail_id = get_post_thumbnail_id();
     $thumbnail_url = wp_get_attachment_image_url($thumbnail_id, "full");

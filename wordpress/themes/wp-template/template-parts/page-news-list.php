@@ -5,9 +5,9 @@
  */
 ?>
 <main class="l-main" id="main">
-  <section class="p-news-list">
-    <div class="p-news-list__inner l-inner">
-      <div class="p-news-list__title">
+  <section class="news-list">
+    <div class="news-list__inner inner">
+      <div class="news-list__title">
         <?php get_template_part("template-parts/section-title", null, [
           "main" => "NEWS",
           "sub" => "ニュース",

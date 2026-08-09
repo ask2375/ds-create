@@ -24,21 +24,21 @@ if ($post_type === "post") {
 $prev_post = $post_type === "post" ? get_previous_post() : get_previous_post(false, "", $taxonomy);
 $next_post = $post_type === "post" ? get_next_post() : get_next_post(false, "", $taxonomy);
 ?>
-<nav class="p-single__navigation" aria-label="投稿ナビゲーション">
+<nav class="single__navigation" aria-label="投稿ナビゲーション">
   <?php if ($prev_post): ?>
-    <div class="p-single__nav-item p-single__nav-item--prev">
-      <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>" class="p-single__nav-link">
-        <span class="p-single__nav-label">前の<?php echo esc_html($post_type_label); ?></span>
-        <span class="p-single__nav-title"><?php echo esc_html(get_the_title($prev_post->ID)); ?></span>
+    <div class="single__nav-item single__nav-item--prev">
+      <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>" class="single__nav-link">
+        <span class="single__nav-label">前の<?php echo esc_html($post_type_label); ?></span>
+        <span class="single__nav-title"><?php echo esc_html(get_the_title($prev_post->ID)); ?></span>
       </a>
     </div>
   <?php endif; ?>
 
   <?php if ($next_post): ?>
-    <div class="p-single__nav-item p-single__nav-item--next">
-      <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>" class="p-single__nav-link">
-        <span class="p-single__nav-label">次の<?php echo esc_html($post_type_label); ?></span>
-        <span class="p-single__nav-title"><?php echo esc_html(get_the_title($next_post->ID)); ?></span>
+    <div class="single__nav-item single__nav-item--next">
+      <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>" class="single__nav-link">
+        <span class="single__nav-label">次の<?php echo esc_html($post_type_label); ?></span>
+        <span class="single__nav-title"><?php echo esc_html(get_the_title($next_post->ID)); ?></span>
       </a>
     </div>
   <?php endif; ?>

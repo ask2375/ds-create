@@ -6,6 +6,10 @@ if (!defined("ABSPATH")) {
 /**
  * Vite対応のスクリプトとスタイル読み込み処理
  * 環境変数（WP_DEBUG）とmanifestファイルを活用した環境判定
+ *
+ * ブラウザキャッシュ対策はファイル名ハッシュではなく ?ver=<filemtime> の付与で行う
+ * （vite.config.js の entryFileNames / assetFileNames でエントリのハッシュを外している）。
+ * manifest 経路・フォールバック経路のどちらも get_file_version() の値を $ver に渡す。
  */
 function add_vite_scripts()
 {
@@ -26,7 +30,9 @@ function add_vite_scripts()
   }
 
   // Google Fonts（開発環境以外で読み込み）
-  wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap", false);
+  // 第3引数は依存配列、第4引数は null を渡してバージョンクエリを付けない
+  // （第4引数を省略すると WordPress 本体のバージョンが &ver= として外部URLに露出する）
+  wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap", [], null);
 }
 
 /**
@@ -69,17 +75,17 @@ function enqueue_production_assets_from_manifest()
       foreach ($script_entry["css"] as $index => $css_file) {
         $handle = "theme-script-css-" . $index;
         $library_css_handles[] = $handle;
-        wp_enqueue_style($handle, $root . "/" . $css_file, [], null, false);
+        wp_enqueue_style($handle, $root . "/" . $css_file, [], get_file_version(get_template_directory() . "/" . $css_file), false);
       }
     }
     // メインJSを読み込み
-    wp_enqueue_script("theme-scripts", $root . "/" . $script_entry["file"], [], null, true);
+    wp_enqueue_script("theme-scripts", $root . "/" . $script_entry["file"], [], get_file_version(get_template_directory() . "/" . $script_entry["file"]), true);
   }
 
   // メインCSSを最後に読み込み（ライブラリCSSの後に確実に読み込まれるように依存関係を指定）
   $style_entry = $build_manifest["assets/styles/style.scss"] ?? null;
   if ($style_entry && isset($style_entry["file"])) {
-    wp_enqueue_style("theme-styles", $root . "/" . $style_entry["file"], $library_css_handles, null, false);
+    wp_enqueue_style("theme-styles", $root . "/" . $style_entry["file"], $library_css_handles, get_file_version(get_template_directory() . "/" . $style_entry["file"]), false);
   }
 }
 

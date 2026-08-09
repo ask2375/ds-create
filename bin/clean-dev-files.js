@@ -3,8 +3,12 @@
 /**
  * 本番環境用ビルド後のクリーンアップスクリプト
  * - 開発環境専用ファイル（manifest.dev.json など）を削除
- * - 過去ビルドの古いハッシュ付き JS/CSS を削除（テーマ直下が outDir のため
+ * - 現在の manifest に載っていない JS/CSS を削除（テーマ直下が outDir のため
  *   Vite の emptyOutDir が使えず、放置すると成果物が溜まり続けるため）
+ *
+ * エントリの JS/CSS はファイル名を固定しているため通常は上書きされる。
+ * 動的 import のチャンク（ハッシュ付き）やエントリ名を変えたときに不要ファイルが残るので、
+ * その掃除としてこの処理を残している。
  */
 
 import { existsSync, rmSync, unlinkSync, statSync, readdirSync, readFileSync } from "fs";

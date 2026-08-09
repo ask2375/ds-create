@@ -39,30 +39,30 @@ $display_date_formatted = $publish_date ? date_i18n("Y年m月d日", strtotime($p
 // 著者名の決定（ACFフィールドがあれば優先、なければ投稿者名）
 $display_author = $author_info ? $author_info : get_the_author();
 ?>
-<header class="p-single__header">
+<header class="single__header">
   <?php if ($subtitle): ?>
-    <p class="p-single__subtitle"><?php echo esc_html($subtitle); ?></p>
+    <p class="single__subtitle"><?php echo esc_html($subtitle); ?></p>
   <?php endif; ?>
 
-  <h1 class="p-single__title" itemprop="headline"><?php echo esc_html(get_the_title()); ?></h1>
+  <h1 class="single__title" itemprop="headline"><?php echo esc_html(get_the_title()); ?></h1>
 
-  <div class="p-single__meta">
-    <time class="p-single__date" datetime="<?php echo esc_attr($display_date); ?>" itemprop="datePublished">
+  <div class="single__meta">
+    <time class="single__date" datetime="<?php echo esc_attr($display_date); ?>" itemprop="datePublished">
       <?php echo esc_html($display_date_formatted); ?>
     </time>
 
     <?php if ($display_author): ?>
-      <span class="p-single__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+      <span class="single__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
         <span itemprop="name"><?php echo esc_html($display_author); ?></span>
       </span>
     <?php endif; ?>
 
     <?php if (!empty($categories)): ?>
-      <div class="p-single__categories">
+      <div class="single__categories">
         <?php foreach ($categories as $category):
           $category_link = $post_type === "post" ? get_category_link($category->term_id) : get_term_link($category);
           if (!is_wp_error($category_link)): ?>
-          <a href="<?php echo esc_url($category_link); ?>" class="p-single__category" itemprop="articleSection">
+          <a href="<?php echo esc_url($category_link); ?>" class="single__category" itemprop="articleSection">
             <?php echo esc_html($category->name); ?>
           </a>
         <?php endif;
@@ -72,7 +72,7 @@ $display_author = $author_info ? $author_info : get_the_author();
   </div>
 
   <?php if ($summary): ?>
-    <div class="p-single__summary">
+    <div class="single__summary">
       <?php echo esc_html($summary); ?>
     </div>
   <?php endif; ?>

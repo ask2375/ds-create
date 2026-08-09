@@ -1,0 +1,82 @@
+@use "sass:math";
+
+// ---------------------------
+// インナー幅設定
+// ---------------------------
+// コンテンツのインナー幅（最も共通の幅が多い部分）
+$inner: 1200px;
+
+// ※キャンパス幅ではなくインナーの幅を指す
+
+// 余白
+$padding-pc: 25px;
+$padding-sp: 20px;
+
+// ※PC時：デザインカンプの余白の幅ではない。PC時は通常25pxでOK。
+
+// ---------------------------
+// フォントの種類
+// ---------------------------
+// Google Fonts | Noto Sans JP（ローカルにインストール済みのフォントを優先して読み込む）
+$noto: "Local Noto Sans JP", "Noto Sans JP", "游ゴシック", yugothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", verdana, "メイリオ", meiryo, osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+
+// Google Fonts | 見出し・英字
+$lato: "Lato", sans-serif;
+
+// ---------------------------
+// 文字の太さ
+// ---------------------------
+$light: 300;
+$regular: 400;
+$medium: 500;
+$semibold: 600;
+$bold: 700;
+$extrabold: 800;
+$black: 900;
+
+// ---------------------------
+// 色（同型色が複数ある場合は『$色_#xxxxxx』のように指定）
+// ---------------------------
+$white: #fff;
+$black_000000: #000;
+$black_0d2936: #0d2936; // 基本のテキストカラー
+$gray_f0f0f0: #f0f0f0; // 背景のグレー
+$gray_aaaaaf: #aaaaaf; // ボーダーのグレー
+$gray_808080: #808080; // サブテキストのグレー
+$green_408f95: #408f95; // アクセントカラー
+$blue_234f5e: #234f5e; // メインカラー
+$blue_0000ff: #00f; // サブカラー
+$orange_de8430: #de8430;
+
+// ---------------------------
+// アニメーション
+// ---------------------------
+$duration: 0.3s;
+
+// ---------------------------
+// z-index
+// ---------------------------
+$z-index-header: 900;
+
+// ---------------------------
+// ヘッダーの高さ
+// ---------------------------
+$header-height-sp: 64px;
+$header-height-pc: 80px;
+
+// ---------------------------
+// 三角形のclip-path
+// ---------------------------
+$clip-triangle-top: polygon(50% 0, 100% 100%, 0 100%);
+$clip-triangle-bottom: polygon(0 0, 100% 0, 50% 100%);
+$clip-triangle-right: polygon(0 0, 100% 50%, 0 100%);
+$clip-triangle-left: polygon(0 50%, 100% 0, 100% 100%);
+$clip-triangle-lower-left: polygon(0 0, 100% 100%, 0 100%);
+$clip-triangle-upper-left: polygon(0 0, 100% 0, 0 100%);
+$clip-triangle-lower-right: polygon(100% 0, 100% 100%, 0 100%);
+$clip-triangle-upper-right: polygon(0 0, 100% 0, 100% 100%);
+
+// px → remへと変換し、最小値12pxを設ける
+@function maxrem($pixels) {
+  @return max(math.div($pixels, 16) * 1rem, 12px);
+}

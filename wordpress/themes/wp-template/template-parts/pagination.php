@@ -1,9 +1,9 @@
 <?php
 
 /**
- * ページネーションパーツ（c-pagination コンポーネント）
+ * ページネーションパーツ（pagination コンポーネント）
  *
- * paginate_links() の結果を c-pagination__item + data-state で出力する。
+ * paginate_links() の結果を pagination__item + data-state で出力する。
  * 状態は data-state 属性で管理し、ARIA 属性でアクセシビリティを補足する。
  *
  * 呼び出す時は親要素でwrapする。
@@ -47,14 +47,14 @@ $normalize_item = function ($html) {
     "dots" => " aria-hidden=\"true\"",
   ];
 
-  $attr = " class=\"c-pagination__item\" data-state=\"" . esc_attr($state) . "\"";
+  $attr = " class=\"pagination__item\" data-state=\"" . esc_attr($state) . "\"";
   $attr .= $aria_by_state[$state] ?? "";
 
   // 最初の class 属性を正規化した属性に置換
   return preg_replace('/\s*class=["\'][^"\']*["\']/', $attr, $html, 1);
 };
 ?>
-<nav class="c-pagination" aria-label="ページネーション">
+<nav class="pagination" aria-label="ページネーション">
   <?php foreach ($pagination as $page): ?>
     <?php echo wp_kses_post($normalize_item($page)); ?>
   <?php endforeach; ?>

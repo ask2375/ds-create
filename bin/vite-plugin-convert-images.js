@@ -193,6 +193,11 @@ export default function convertAndOptimizeImages(options = {}) {
     const convertWatcher = watch(`${toPosixPath(srcImagesDir)}/**/*.{png,jpg,jpeg}`, {
       persistent: true,
       ignoreInitial: true,
+      // 書き込み途中のファイルを掴まないよう、サイズが安定してから発火させる
+      awaitWriteFinish: {
+        stabilityThreshold: 300,
+        pollInterval: 100,
+      },
     });
 
     convertWatcher.on("add", async filePath => {

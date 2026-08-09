@@ -47,28 +47,28 @@ if (has_post_thumbnail()) {
 
 // 画像が取得できなかった場合のダミー画像
 if (empty($thumbnail_url)) {
-  $thumbnail_url = get_theme_file_uri("/assets/images/image_sample_01.webp");
+  $thumbnail_url = get_img_url("/image_sample_01.webp");
   $thumbnail_alt = "No image";
 }
 ?>
-<article class="p-works-list__card js-works-card" data-categories="<?php echo esc_attr(implode(" ", $category_slugs)); ?>">
-  <a href="<?php echo esc_url(get_permalink()); ?>" class="p-works-list__link">
-    <div class="p-works-list__thumbnail">
+<article class="works-list__card js-works-card" data-categories="<?php echo esc_attr(implode(" ", $category_slugs)); ?>">
+  <a href="<?php echo esc_url(get_permalink()); ?>" class="works-list__link">
+    <div class="works-list__thumbnail">
       <?php if ($thumbnail_url): ?>
         <img src="<?php echo esc_url($thumbnail_url); ?>"
           loading="lazy"
           alt="<?php echo esc_attr($thumbnail_alt); ?>">
       <?php endif; ?>
       <?php if ($category_name): ?>
-        <span class="p-works-list__badge"><?php echo esc_html($category_name); ?></span>
+        <span class="works-list__badge"><?php echo esc_html($category_name); ?></span>
       <?php endif; ?>
     </div>
-    <div class="p-works-list__content">
-      <h2 class="p-works-list__card-title"><?php echo esc_html(get_the_title()); ?></h2>
+    <div class="works-list__content">
+      <h2 class="works-list__card-title"><?php echo esc_html(get_the_title()); ?></h2>
       <?php if ($client): ?>
-        <p class="p-works-list__client"> <?php echo esc_html($client); ?></p>
+        <p class="works-list__client"> <?php echo esc_html($client); ?></p>
       <?php endif; ?>
-      <time class="p-works-list__date" datetime="<?php echo esc_attr(get_the_date("c")); ?>">
+      <time class="works-list__date" datetime="<?php echo esc_attr(get_the_date("c")); ?>">
         <?php echo esc_html(get_the_date("Y-m")); ?>
       </time>
     </div>

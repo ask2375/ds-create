@@ -12,9 +12,9 @@
  */
 $args = isset($args) && is_array($args) ? $args : [];
 $card_slug = $args["card_slug"] ?? "template-parts/archive/archive-card";
-$list_class = $args["list_class"] ?? "p-archive__list";
-$pagination_class = $args["pagination_class"] ?? "p-archive__pagination";
-$empty_class = $args["empty_class"] ?? "p-archive__empty";
+$list_class = $args["list_class"] ?? "archive__list";
+$pagination_class = $args["pagination_class"] ?? "archive__pagination";
+$empty_class = $args["empty_class"] ?? "archive__empty";
 $empty_message = $args["empty_message"] ?? "投稿が見つかりませんでした。";
 
 if (have_posts()): ?>

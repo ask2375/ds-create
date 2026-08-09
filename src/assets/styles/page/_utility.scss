@@ -1,0 +1,89 @@
+@use "../global" as *;
+
+/* ------------------------ */
+
+/* 改行用、SP・PC非表示用の設定 */
+
+/* ------------------------ */
+
+/* ---------- 改行 〜 more：以上、less：以下 | ここから ---------- */
+
+/* 767px以下で改行 */
+.br-767-less {
+  display: none;
+
+  @include mq(md) {
+    display: block;
+  }
+}
+
+/* 768px以上で改行 */
+.br-768-more {
+  @include mq(md) {
+    display: none;
+  }
+}
+
+/* ---------- 改行 | ここまで ---------- */
+
+/* ---------- 表示・非表示 | ここから ---------- */
+
+/* PCのとき非表示 */
+.pc-none {
+  display: none;
+
+  @include mq(md) {
+    display: block;
+  }
+}
+
+/* SPのとき非表示 */
+.sp-none {
+  @include mq(md) {
+    display: none;
+  }
+}
+
+/* ---------- 表示・非表示 | ここまで ---------- */
+
+/* ---------- margin-topの設定 | ここから ---------- */
+@for $i from 1 through 200 {
+  .mt-pc-#{$i} {
+    margin-top: rem($i);
+  }
+}
+
+@media screen and (width <= 768px) {
+  @for $i from 1 through 200 {
+    .mt-sp-#{$i} {
+      margin-top: rem($i);
+    }
+  }
+}
+
+/* PC・SP共通用 */
+@for $i from 1 through 200 {
+  .mt-#{$i} {
+    margin-top: rem($i);
+  }
+}
+
+/* ---------- margin-topの設定 | ここまで ---------- */
+
+/* ---------- スクリーンリーダー専用テキスト（視覚的に非表示） | ここから ---------- */
+
+// utility screen reader only
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
+
+/* ---------- スクリーンリーダーオンリー用の記述 | ここまで ---------- */
