@@ -51,12 +51,16 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       input: inputsForWordPress,
       output: {
-        entryFileNames: "assets/js/[name].[hash].js",
+        // エントリの JS / CSS はファイル名を固定する。キャッシュ対策は functions.php 側で
+        // filemtime を ?ver= として付与する方式に統一しているため（func-enqueue.php）。
+        entryFileNames: "assets/js/[name].js",
+        // 動的 import で生成されるチャンクは PHP を経由せず JS から直接読まれるため、
+        // ?ver= を付けられない。こちらはファイル名ハッシュでキャッシュを更新する。
         chunkFileNames: "assets/js/[name].[hash].js",
         assetFileNames: assetsInfo => {
           const isCss = assetsInfo.name.endsWith(".css");
           const isImage = /\.(png|jpe?g|gif|svg|webp|avif|ico)$/i.test(assetsInfo.name);
-          if (isCss) return "assets/styles/[name].[hash].[ext]";
+          if (isCss) return "assets/styles/[name].[ext]";
           if (isImage) return "assets/images/[name].[ext]";
           return "assets/[name].[hash].[ext]";
         },
