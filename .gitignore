@@ -21,7 +21,9 @@ dist/
 dist-ssr/
 build/
 .public-build/
+# 検証ツールの副産物（納品対象外）
 .playwright-mcp/
+.playwright-cli/
 *.local
 
 # ============================================
