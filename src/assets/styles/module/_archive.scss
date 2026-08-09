@@ -9,6 +9,7 @@
 }
 
 .archive__inner {
+  width: 100%;
   max-width: rem(strip-unit($inner)) + rem(strip-unit($padding-pc)) * 2;
 }
 

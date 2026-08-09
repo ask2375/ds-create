@@ -9,6 +9,7 @@
 }
 
 .single__inner {
+  width: 100%;
   max-width: rem(strip-unit($inner)) + rem(strip-unit($padding-pc)) * 2;
 }
 
@@ -363,7 +364,7 @@
 .single table {
   width: 100%;
   margin-block-start: rem(24);
-  border: rem(1) solid $gray_808080;
+  border: 1px solid $gray_808080;
   border-collapse: collapse;
 
   @include mq(md) {
@@ -377,7 +378,7 @@
 .single td {
   padding-block: rem(12);
   padding-inline: rem(16);
-  border: rem(1) solid $gray_808080;
+  border: 1px solid $gray_808080;
   line-height: 1.6;
   text-align: start;
 
@@ -403,7 +404,7 @@
 .single hr {
   margin-block-start: rem(32);
   border: none;
-  border-top: rem(1) solid $gray_808080;
+  border-top: 1px solid $gray_808080;
 
   @include mq(md) {
     margin-block-start: rem(48);
@@ -427,7 +428,7 @@
   gap: rem(8);
   margin-block-start: rem(48);
   padding-block: rem(24);
-  border-top: rem(1) solid $gray_808080;
+  border-top: 1px solid $gray_808080;
 
   @include mq(md) {
     margin-block-start: rem(64);
@@ -465,7 +466,7 @@
   gap: rem(16);
   margin-block-start: rem(48);
   padding-block-start: rem(32);
-  border-top: rem(1) solid $gray_808080;
+  border-top: 1px solid $gray_808080;
 
   @include mq(md) {
     grid-template-columns: repeat(2, 1fr);
@@ -660,7 +661,7 @@
 .single--post .single__related {
   margin-block-start: rem(48);
   padding-block-start: rem(32);
-  border-top: rem(1) solid $gray_808080;
+  border-top: 1px solid $gray_808080;
 
   @include mq(md) {
     margin-block-start: rem(64);
