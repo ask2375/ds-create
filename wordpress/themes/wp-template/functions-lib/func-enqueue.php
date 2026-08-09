@@ -26,7 +26,9 @@ function add_vite_scripts()
   }
 
   // Google Fonts（開発環境以外で読み込み）
-  wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap", false);
+  // 第3引数は依存配列、第4引数は null を渡してバージョンクエリを付けない
+  // （第4引数を省略すると WordPress 本体のバージョンが &ver= として外部URLに露出する）
+  wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap", [], null);
 }
 
 /**

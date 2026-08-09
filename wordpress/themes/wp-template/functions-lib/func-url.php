@@ -41,10 +41,35 @@ function assets_path($file = "")
 {
   echo esc_url(get_theme_file_uri("/assets" . $file));
 }
-/* 画像パスを返す */
+/**
+ * 画像URLを返す（return）。変数に代入するとき用
+ *
+ * ビルド時に画像だけはファイル名へハッシュを付けない設定のため（vite.config.js の assetFileNames）、
+ * 同名で差し替えるとブラウザキャッシュが残る。更新日時を ver クエリとして付与して回避する。
+ *
+ * wp_get_attachment_image_url() と同じくエスケープ前のURLを返すので、
+ * 出力時は呼び出し側で esc_url() を通すこと。
+ */
+function get_img_url($file = "")
+{
+  $relative = "/assets/images" . $file;
+  $url = get_theme_file_uri($relative);
+  $path = get_theme_file_path($relative);
+
+  if (file_exists($path)) {
+    $version = filemtime($path);
+    if ($version !== false) {
+      $url = add_query_arg("ver", $version, $url);
+    }
+  }
+
+  return $url;
+}
+
+/* 画像パスを返す（echo） */
 function img_path($file = "")
 {
-  echo esc_url(get_theme_file_uri("/assets/images" . $file));
+  echo esc_url(get_img_url($file));
 }
 /* mediaフォルダへのURL */
 function uploads_path()

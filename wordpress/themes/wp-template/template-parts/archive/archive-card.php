@@ -23,7 +23,7 @@ if (has_post_thumbnail()) {
     $thumbnail_alt = get_the_title();
   }
 } else {
-  $thumbnail_url = get_theme_file_uri("/assets/images/image_sample.webp");
+  $thumbnail_url = get_img_url("/image_sample.webp");
 }
 $image_data = has_post_thumbnail() ? wp_get_attachment_image_src(get_post_thumbnail_id(), "medium") : null;
 ?>

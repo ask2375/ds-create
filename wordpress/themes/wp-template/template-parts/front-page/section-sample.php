@@ -33,7 +33,7 @@
 
     <p>通常画像の読み込み(imgの下部をマスクでフェードかけてます)</p>
     <div class="sample__image">
-      <img src="<?php assets_path("/images/image_sample.webp"); ?>" width="512" height="512" alt="猫の画像" />
+      <img src="<?php img_path("/image_sample.webp"); ?>" width="512" height="512" alt="猫の画像" />
     </div>
   </div>
 </section>

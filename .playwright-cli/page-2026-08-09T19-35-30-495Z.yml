@@ -1,0 +1,67 @@
+- generic [active] [ref=e1]:
+  - link "本文へスキップ" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - heading [level=1] [ref=e5]:
+        - link [ref=e6] [cursor=pointer]:
+          - /url: http://localhost:8888/
+          - img "vite" [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "制作実績" [ref=e11] [cursor=pointer]:
+              - /url: http://localhost:8888/works/
+          - listitem [ref=e12]:
+            - link "ニュース" [ref=e13] [cursor=pointer]:
+              - /url: http://localhost:8888/news/
+          - listitem [ref=e14]:
+            - link "お問い合わせ" [ref=e15] [cursor=pointer]:
+              - /url: http://localhost:8888/contact/
+  - main [ref=e16]:
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - heading "メインタイトル" [level=2] [ref=e20]
+        - paragraph [ref=e21]: ここにサブタイトルが入ります。ここにサブタイトルが入ります。ここにサブタイトルが入ります。ここにサブタイトルが入ります。
+      - region "main-visual" [ref=e22]:
+        - generic [ref=e23]:
+          - group [ref=e24]
+          - group [ref=e26]
+          - group "1 of 3" [ref=e28]
+          - group [ref=e30]
+          - group [ref=e32]
+          - group [ref=e34]
+          - group [ref=e36]
+    - generic [ref=e39]:
+      - generic [ref=e41]:
+        - heading "sample" [level=2] [ref=e42]
+        - paragraph [ref=e43]: サンプル
+      - link "問い合わせへ" [ref=e45] [cursor=pointer]:
+        - /url: http://localhost:8888/contact/
+      - link "ニュース一覧へ" [ref=e47] [cursor=pointer]:
+        - /url: http://localhost:8888/news/
+      - link "制作実績一覧へ" [ref=e49] [cursor=pointer]:
+        - /url: http://localhost:8888/works/
+      - separator [ref=e50]
+      - paragraph [ref=e51]: 背景画像の読み込み
+      - separator [ref=e53]
+      - paragraph [ref=e54]: 通常画像の読み込み(imgの下部をマスクでフェードかけてます)
+      - img "猫の画像" [ref=e56]
+  - contentinfo [ref=e57]:
+    - generic [ref=e58]:
+      - generic [ref=e59]:
+        - link [ref=e61] [cursor=pointer]:
+          - /url: http://localhost:8888/
+          - img "vite" [ref=e62]
+        - navigation [ref=e63]:
+          - list [ref=e64]:
+            - listitem [ref=e65]:
+              - link "制作実績" [ref=e66] [cursor=pointer]:
+                - /url: http://localhost:8888/works/
+            - listitem [ref=e67]:
+              - link "ニュース" [ref=e68] [cursor=pointer]:
+                - /url: http://localhost:8888/news/
+            - listitem [ref=e69]:
+              - link "お問い合わせ" [ref=e70] [cursor=pointer]:
+                - /url: http://localhost:8888/contact/
+      - paragraph [ref=e72]: © 2026 wp-template_v2.0. All rights reserved.

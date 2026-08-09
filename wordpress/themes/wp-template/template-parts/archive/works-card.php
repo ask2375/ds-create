@@ -47,7 +47,7 @@ if (has_post_thumbnail()) {
 
 // 画像が取得できなかった場合のダミー画像
 if (empty($thumbnail_url)) {
-  $thumbnail_url = get_theme_file_uri("/assets/images/image_sample_01.webp");
+  $thumbnail_url = get_img_url("/image_sample_01.webp");
   $thumbnail_alt = "No image";
 }
 ?>

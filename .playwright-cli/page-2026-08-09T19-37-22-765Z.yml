@@ -1,0 +1,51 @@
+- generic [active] [ref=f3e1]:
+  - link "本文へスキップ" [ref=f3e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - heading [level=1] [ref=f3e5]:
+        - link [ref=f3e6] [cursor=pointer]:
+          - /url: http://localhost:8888/
+          - img "vite" [ref=f3e7]
+      - navigation [ref=f3e8]:
+        - list [ref=f3e9]:
+          - listitem [ref=f3e10]:
+            - link "制作実績" [ref=f3e11] [cursor=pointer]:
+              - /url: http://localhost:8888/works/
+          - listitem [ref=f3e12]:
+            - link "ニュース" [ref=f3e13] [cursor=pointer]:
+              - /url: http://localhost:8888/news/
+          - listitem [ref=f3e14]:
+            - link "お問い合わせ" [ref=f3e15] [cursor=pointer]:
+              - /url: http://localhost:8888/contact/
+  - main [ref=f3e16]:
+    - generic [ref=f3e18]:
+      - generic [ref=f3e20]:
+        - heading "NEWS" [level=1] [ref=f3e21]
+        - paragraph [ref=f3e22]: ニュース
+      - link [ref=f3e24] [cursor=pointer]:
+        - /url: http://localhost:8888/2026/08/10/hello-world/
+        - article [ref=f3e25]:
+          - generic [ref=f3e26]:
+            - time [ref=f3e27]: 2026-08-10
+            - generic [ref=f3e28]: •
+            - generic [ref=f3e29]: 未分類
+          - heading "Hello world!" [level=2] [ref=f3e32]
+  - contentinfo [ref=f3e36]:
+    - generic [ref=f3e37]:
+      - generic [ref=f3e38]:
+        - link [ref=f3e40] [cursor=pointer]:
+          - /url: http://localhost:8888/
+          - img "vite" [ref=f3e41]
+        - navigation [ref=f3e42]:
+          - list [ref=f3e43]:
+            - listitem [ref=f3e44]:
+              - link "制作実績" [ref=f3e45] [cursor=pointer]:
+                - /url: http://localhost:8888/works/
+            - listitem [ref=f3e46]:
+              - link "ニュース" [ref=f3e47] [cursor=pointer]:
+                - /url: http://localhost:8888/news/
+            - listitem [ref=f3e48]:
+              - link "お問い合わせ" [ref=f3e49] [cursor=pointer]:
+                - /url: http://localhost:8888/contact/
+      - paragraph [ref=f3e51]: © 2026 wp-template_v2.0. All rights reserved.

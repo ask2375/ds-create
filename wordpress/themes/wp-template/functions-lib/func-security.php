@@ -16,6 +16,32 @@ if (!defined("ABSPATH")) {
 remove_action("wp_head", "wp_generator");
 
 /**
+ * WordPress本体・プラグインのアセットURLからバージョンクエリを取り除く
+ *
+ * style.min.css?ver=6.9 のような記述から本体・プラグインのバージョンが判別でき、
+ * 既知の脆弱性を狙ったスキャンの手掛かりになるため除去する。
+ * テーマ自身のアセットはキャッシュバスティングとして ver を使うので対象外にする
+ * （manifest 欠損時のフォールバック経路が filemtime を ver として渡している）。
+ *
+ * @param string $src アセットのURL
+ * @return string バージョンクエリを除去したURL
+ */
+function remove_asset_version_query($src)
+{
+  if (!is_string($src) || $src === "" || strpos($src, "ver=") === false) {
+    return $src;
+  }
+
+  if (strpos($src, get_template_directory_uri()) !== false) {
+    return $src;
+  }
+
+  return remove_query_arg("ver", $src);
+}
+add_filter("style_loader_src", "remove_asset_version_query", 9999);
+add_filter("script_loader_src", "remove_asset_version_query", 9999);
+
+/**
  * 投稿者一覧ページを自動で生成されないようにする
  * WordPressの is_author() を使用してより安全に判定
  * @see　https://mucca-design.com/auther-archive-ineffective/

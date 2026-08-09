@@ -1,0 +1,50 @@
+- generic [active] [ref=f2e1]:
+  - link "本文へスキップ" [ref=f2e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f2e3]:
+    - generic [ref=f2e4]:
+      - heading [level=1] [ref=f2e5]:
+        - link [ref=f2e6] [cursor=pointer]:
+          - /url: http://localhost:8888/
+          - img "vite" [ref=f2e7]
+      - navigation [ref=f2e8]:
+        - list [ref=f2e9]:
+          - listitem [ref=f2e10]:
+            - link "制作実績" [ref=f2e11] [cursor=pointer]:
+              - /url: http://localhost:8888/works/
+          - listitem [ref=f2e12]:
+            - link "ニュース" [ref=f2e13] [cursor=pointer]:
+              - /url: http://localhost:8888/news/
+          - listitem [ref=f2e14]:
+            - link "お問い合わせ" [ref=f2e15] [cursor=pointer]:
+              - /url: http://localhost:8888/contact/
+  - main [ref=f2e16]:
+    - generic [ref=f2e18]:
+      - heading "ページが見つかりませんでした" [level=1] [ref=f2e20]
+      - generic [ref=f2e21]:
+        - paragraph [ref=f2e22]: 申し訳ございませんが、お探しのページは見つかりませんでした。URLをご確認いただくか、トップページから再度お探しください。
+        - paragraph [ref=f2e23]:
+          - link "トップページへ戻る" [ref=f2e24] [cursor=pointer]:
+            - /url: http://localhost:8888/
+      - search [ref=f2e26]:
+        - generic [ref=f2e27] [cursor=pointer]: 検索
+        - searchbox "検索" [ref=f2e28]
+        - button "検索" [ref=f2e29] [cursor=pointer]
+  - contentinfo [ref=f2e30]:
+    - generic [ref=f2e31]:
+      - generic [ref=f2e32]:
+        - link [ref=f2e34] [cursor=pointer]:
+          - /url: http://localhost:8888/
+          - img "vite" [ref=f2e35]
+        - navigation [ref=f2e36]:
+          - list [ref=f2e37]:
+            - listitem [ref=f2e38]:
+              - link "制作実績" [ref=f2e39] [cursor=pointer]:
+                - /url: http://localhost:8888/works/
+            - listitem [ref=f2e40]:
+              - link "ニュース" [ref=f2e41] [cursor=pointer]:
+                - /url: http://localhost:8888/news/
+            - listitem [ref=f2e42]:
+              - link "お問い合わせ" [ref=f2e43] [cursor=pointer]:
+                - /url: http://localhost:8888/contact/
+      - paragraph [ref=f2e45]: © 2026 wp-template_v2.0. All rights reserved.
