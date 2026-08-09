@@ -99,9 +99,20 @@ CodeUps のリキッドレイアウト仕様（375px 以下と 768〜1199px で 
 
 移植前は `border: calc(1 * var(--to-rem))` `padding: calc(14 * var(--to-rem)) calc(60 * var(--to-rem))` という表記で同じ違反が存在していた。今回の変換で表記が `rem()` に変わっただけで、違反の実体は変わっていない。
 
+### 規約照合の指摘への対応（追加実施）
+
+ユーザー判断により Critical 11 件のみ修正した（コミット e5a017a）。
+
+- `border` / `border-top` の `rem(1)` を `1px` 直書きに変更（`_single.scss` 6 箇所）。リキッドレイアウトの縮小時にサブピクセル値となり線が消えるため。
+- `max-width` を持つ要素に `width: 100%` を併記（`_archive` `_single` `_dev-notice` の `__inner`、`_form` の `.form`、`_error` の `.error__content`）。
+
+修正後に `yarn format:check` 指摘ゼロ、`yarn build:wp` 成功を確認した。出力 CSS で `border-top:1px solid #808080` 4 箇所・`border:1px solid #808080` 2 箇所・`.archive__inner{width:100%;max-width:78.125rem}` 形式の併記を実測し、`rem(1)` 由来の `.0625rem` が残っていないことも確認した。
+
+Important 27 件（`padding` ショートハンド 26 箇所、`.single__back` の配置 1 件）はユーザー判断により未修正のまま残している。
+
 ## 残タスク
 
-1. 上記の既存規約違反 38 件の修正可否をユーザーに確認する（今回の指示範囲外のため未着手）。
+1. Important 27 件（`padding` ショートハンドの `padding-block` / `padding-inline` への分解、`.single__back` の `_single.scss` への移動）。ユーザー判断で今回は見送り。
 2. `yarn install` を実行して `kiso.css` を node_modules から実際に削除する（package.json からの除去のみ実施済み）。
 3. WordPress 側（wp-env）での表示確認は未実施。静的側（Vite dev サーバー）でのみ検証した。
 4. 作業ブランチ `feat/codeups-scss-migration` の main へのマージは未実施。ユーザー承認待ち。
