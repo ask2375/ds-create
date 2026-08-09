@@ -1,0 +1,7 @@
+node_modules
+dist
+.idea
+.public-build
+wordpress/plugins/*
+wordpress/themes/*/assets/
+wordpress/uploads
