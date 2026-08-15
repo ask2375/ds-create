@@ -1,12 +1,6 @@
 /* リキッドレイアウト対応 */
 @use "../global" as *;
 
-// ローカルフォントのNoto Sans JPを優先して使用するためのフォントファイルを読み込む
-@font-face {
-  font-family: "Local Noto Sans JP";
-  src: local("Noto Sans JP");
-}
-
 @if $startFrom == sp {
   // スマホファースト
   html {
@@ -115,10 +109,10 @@ textarea {
 /* ~~~~~ コンテンツ量が少なく短いページ（404、サンクスページなど）でもフッターを最下部に表示する ここから ~~~~~  */
 
 /* HTMLの階層構造で適宜クラス名は変更する */
-.content-wrap {
+.content-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100svh;
 }
 
 main {

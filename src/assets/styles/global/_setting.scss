@@ -17,11 +17,8 @@ $padding-sp: 20px;
 // ---------------------------
 // フォントの種類
 // ---------------------------
-// Google Fonts | Noto Sans JP（ローカルにインストール済みのフォントを優先して読み込む）
-$noto: "Local Noto Sans JP", "Noto Sans JP", "游ゴシック", yugothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", verdana, "メイリオ", meiryo, osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-
-// Google Fonts | 見出し・英字
-$lato: "Lato", sans-serif;
+// Google Fonts | Noto Sans JP
+$noto: "Noto Sans JP", "游ゴシック", yugothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", verdana, "メイリオ", meiryo, osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 
 // ---------------------------
 // 文字の太さ
@@ -47,34 +44,6 @@ $green_408f95: #408f95; // アクセントカラー
 $blue_234f5e: #234f5e; // メインカラー
 $blue_0000ff: #00f; // サブカラー
 $orange_de8430: #de8430;
-
-// ---------------------------
-// アニメーション
-// ---------------------------
-$duration: 0.3s;
-
-// ---------------------------
-// z-index
-// ---------------------------
-$z-index-header: 900;
-
-// ---------------------------
-// ヘッダーの高さ
-// ---------------------------
-$header-height-sp: 64px;
-$header-height-pc: 80px;
-
-// ---------------------------
-// 三角形のclip-path
-// ---------------------------
-$clip-triangle-top: polygon(50% 0, 100% 100%, 0 100%);
-$clip-triangle-bottom: polygon(0 0, 100% 0, 50% 100%);
-$clip-triangle-right: polygon(0 0, 100% 50%, 0 100%);
-$clip-triangle-left: polygon(0 50%, 100% 0, 100% 100%);
-$clip-triangle-lower-left: polygon(0 0, 100% 100%, 0 100%);
-$clip-triangle-upper-left: polygon(0 0, 100% 0, 0 100%);
-$clip-triangle-lower-right: polygon(100% 0, 100% 100%, 0 100%);
-$clip-triangle-upper-right: polygon(0 0, 100% 0, 100% 100%);
 
 // px → remへと変換し、最小値12pxを設ける
 @function maxrem($pixels) {

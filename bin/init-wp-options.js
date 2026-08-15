@@ -18,6 +18,10 @@ const DEFAULT_CONFIG = {
     date_format: "Y-m-d",
     time_format: "H:i",
     start_of_week: 1,
+    // 検索エンジンがサイトをインデックスしないようにする（制作中の開発環境用。公開時に 1 へ戻す）
+    blog_public: 0,
+    // 1ページに表示する最大投稿数
+    posts_per_page: 1,
   },
   front_page: {
     slug: "top",

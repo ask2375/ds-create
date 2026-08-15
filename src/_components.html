@@ -8,236 +8,238 @@
   </head>
 
   <body>
-    <header class="header l-header">
-      <div class="header__inner">
-        <h1 class="header__logo">
-          <a href="/">
-            <img src="/assets/images/logo_vite.svg" alt="vite" width="410" height="404" />
-          </a>
-        </h1>
-        <nav class="header__nav">
-          <ul class="header__nav-list">
-            <li class="header__nav-item">
-              <a href="#works">制作実績</a>
-            </li>
-            <li class="header__nav-item">
-              <a href="#news">ニュース</a>
-            </li>
-            <li class="header__nav-item" data-variant="contact">
-              <a href="#contact">お問い合わせ</a>
-            </li>
-          </ul>
-        </nav>
-        <button class="header__hamburger js-hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer-menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <div id="drawer-menu" class="header__drawer js-drawer" aria-hidden="true">
-          <nav class="header__drawer-nav">
-            <ul class="header__drawer-list">
-              <li class="header__drawer-item">
+    <div class="content-wrapper">
+      <header class="header l-header">
+        <div class="header__inner">
+          <h1 class="header__logo">
+            <a href="/">
+              <img src="/assets/images/logo_vite.svg" alt="vite" width="410" height="404" />
+            </a>
+          </h1>
+          <nav class="header__nav">
+            <ul class="header__nav-list">
+              <li class="header__nav-item">
                 <a href="#works">制作実績</a>
               </li>
-              <li class="header__drawer-item">
+              <li class="header__nav-item">
                 <a href="#news">ニュース</a>
               </li>
-              <li class="header__drawer-item" data-variant="contact">
+              <li class="header__nav-item" data-variant="contact">
                 <a href="#contact">お問い合わせ</a>
               </li>
             </ul>
           </nav>
-        </div>
-      </div>
-    </header>
-
-    <main class="l-main" id="main">
-      <section>
-        <div class="inner">
-          <h2>コンポーネント一覧</h2>
-          <p>
-            本ページは静的開発用のコンポーネントカタログです。<code>src/assets/styles/components/</code>配下の各SCSSファイルに対応するHTML例と、<code>data-</code>属性によるバリエーションを掲載しています。新しいコンポーネントを追加した際は、このページにも実例を追記してください。
-          </p>
-        </div>
-      </section>
-
-      <hr />
-
-      <section>
-        <div class="inner">
-          <h3>button（_c-button.scss）</h3>
-          <p>矢印付きの汎用ボタン／リンクコンポーネント。<code>data-color="black"</code>を付与すると背景色が反転したダークカラーのバリエーションになる。</p>
-          <dl>
-            <dt>デフォルト（属性なし）</dt>
-            <dd><a class="button" href="#">送信する</a></dd>
-
-            <dt>data-color="black"</dt>
-            <dd><a class="button" data-color="black" href="#">送信する</a></dd>
-          </dl>
-        </div>
-      </section>
-
-      <hr />
-
-      <section>
-        <div class="inner">
-          <h3>pagination（_c-pagination.scss）</h3>
-          <p>一覧ページ等で使用するページネーション。各項目は<code>pagination__item</code>に<code>data-state</code>属性（current / dots / prev / next / disabled）を付与して状態を表現する。リンク先はダミー（<code>href="#"</code>）。</p>
-          <dl>
-            <dt>使用例（中間ページ）</dt>
-            <dd>
-              <nav class="pagination" aria-label="ページネーション">
-                <a class="pagination__item" href="#" data-state="prev">前へ</a>
-                <a class="pagination__item" href="#">1</a>
-                <span class="pagination__item" data-state="dots" aria-hidden="true">…</span>
-                <a class="pagination__item" href="#">4</a>
-                <a class="pagination__item" href="#" data-state="current" aria-current="page">5</a>
-                <a class="pagination__item" href="#">6</a>
-                <span class="pagination__item" data-state="dots" aria-hidden="true">…</span>
-                <a class="pagination__item" href="#">10</a>
-                <a class="pagination__item" href="#" data-state="next">次へ</a>
-              </nav>
-            </dd>
-
-            <dt>使用例（先頭ページ・前へが data-state="disabled"）</dt>
-            <dd>
-              <nav class="pagination" aria-label="ページネーション（先頭ページ）">
-                <span class="pagination__item" data-state="disabled" aria-disabled="true">前へ</span>
-                <a class="pagination__item" href="#" data-state="current" aria-current="page">1</a>
-                <a class="pagination__item" href="#">2</a>
-                <a class="pagination__item" href="#">3</a>
-                <a class="pagination__item" href="#" data-state="next">次へ</a>
-              </nav>
-            </dd>
-          </dl>
-        </div>
-      </section>
-
-      <hr />
-
-      <section>
-        <div class="inner">
-          <h3>search-form（_c-search-form.scss）</h3>
-          <p>検索フォームコンポーネント。入力欄には視覚的に隠したラベルを<code>sr-only</code>で付与すること。バリエーション（<code>data-</code>属性）はなし。フォームの送信先はダミー（<code>action="#"</code>）。</p>
-          <dl>
-            <dt>使用例</dt>
-            <dd>
-              <form role="search" method="get" class="search-form" action="#">
-                <label for="component-catalog-search" class="sr-only">検索</label>
-                <input type="search" id="component-catalog-search" class="search-form__input" name="s" placeholder="キーワードで検索" />
-                <button type="submit" class="search-form__button">検索</button>
-              </form>
-            </dd>
-          </dl>
-        </div>
-      </section>
-
-      <hr />
-
-      <section>
-        <div class="inner">
-          <h3>section-title（_c-section-title.scss）</h3>
-          <p>英字メインタイトル＋日本語サブタイトルのセクション見出し。<code>data-align</code>属性でテキスト配置（center / left / right）を切り替える。</p>
-          <dl>
-            <dt>data-align="center"</dt>
-            <dd>
-              <hgroup class="section-title" data-align="center">
-                <h4 class="section-title__main">Sample Title</h4>
-                <p class="section-title__sub">サンプルの補足テキストが入ります</p>
-              </hgroup>
-            </dd>
-
-            <dt>data-align="left"</dt>
-            <dd>
-              <hgroup class="section-title" data-align="left">
-                <h4 class="section-title__main">Sample Title</h4>
-                <p class="section-title__sub">サンプルの補足テキストが入ります</p>
-              </hgroup>
-            </dd>
-
-            <dt>data-align="right"</dt>
-            <dd>
-              <hgroup class="section-title" data-align="right">
-                <h4 class="section-title__main">Sample Title</h4>
-                <p class="section-title__sub">サンプルの補足テキストが入ります</p>
-              </hgroup>
-            </dd>
-          </dl>
-        </div>
-      </section>
-
-      <hr />
-
-      <section>
-        <div class="inner">
-          <h3>skip-link（_c-skip-link.scss）</h3>
-          <p>
-            キーボード操作時に本文へ直接移動するためのスキップリンク。通常は<code>position: fixed</code
-            >で画面外に隠れており、<code>:focus-visible</code>時のみ表示される。バリエーション（<code>data-</code>属性）はなし。実際にこのページの本文（<code>#main</code>）へ移動するため、下の要素を <code>Tab</code>キーでフォーカスして確認できる。
-          </p>
-          <dl>
-            <dt>使用例（フォーカスすると画面左上に表示される）</dt>
-            <dd><a class="skip-link" href="#main">本文へスキップ</a></dd>
-          </dl>
-        </div>
-      </section>
-
-      <hr />
-
-      <section>
-        <div class="inner">
-          <h3>triangle（_c-triangle.scss）</h3>
-          <p>装飾用の三角形コンポーネント。<code>data-direction</code>属性で向き（top / bottom / left / right / lower-left / upper-left / lower-right / upper-right）を指定する。装飾目的のため<code>aria-hidden="true"</code>を必ず付与すること。</p>
-          <dl>
-            <dt>data-direction="top"</dt>
-            <dd><span class="triangle" data-direction="top" aria-hidden="true"></span></dd>
-
-            <dt>data-direction="bottom"</dt>
-            <dd><span class="triangle" data-direction="bottom" aria-hidden="true"></span></dd>
-
-            <dt>data-direction="left"</dt>
-            <dd><span class="triangle" data-direction="left" aria-hidden="true"></span></dd>
-
-            <dt>data-direction="right"</dt>
-            <dd><span class="triangle" data-direction="right" aria-hidden="true"></span></dd>
-
-            <dt>data-direction="lower-left"</dt>
-            <dd><span class="triangle" data-direction="lower-left" aria-hidden="true"></span></dd>
-
-            <dt>data-direction="upper-left"</dt>
-            <dd><span class="triangle" data-direction="upper-left" aria-hidden="true"></span></dd>
-
-            <dt>data-direction="lower-right"</dt>
-            <dd><span class="triangle" data-direction="lower-right" aria-hidden="true"></span></dd>
-
-            <dt>data-direction="upper-right"</dt>
-            <dd><span class="triangle" data-direction="upper-right" aria-hidden="true"></span></dd>
-          </dl>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="footer__inner inner">
-        <div class="footer__content">
-          <div class="footer__logo">
-            <a href="/">
-              <img src="/assets/images/logo_vite.svg" alt="vite" width="410" height="404" loading="lazy" />
-            </a>
+          <button class="header__hamburger js-hamburger" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div id="drawer-menu" class="header__drawer js-drawer" aria-hidden="true">
+            <nav class="header__drawer-nav">
+              <ul class="header__drawer-list">
+                <li class="header__drawer-item">
+                  <a href="#works">制作実績</a>
+                </li>
+                <li class="header__drawer-item">
+                  <a href="#news">ニュース</a>
+                </li>
+                <li class="header__drawer-item" data-variant="contact">
+                  <a href="#contact">お問い合わせ</a>
+                </li>
+              </ul>
+            </nav>
           </div>
-          <nav class="footer__nav">
-            <ul class="footer__nav-list">
-              <li class="footer__nav-item"><a href="#works">制作実績</a></li>
-              <li class="footer__nav-item"><a href="#news">ニュース</a></li>
-              <li class="footer__nav-item"><a href="#contact">お問い合わせ</a></li>
-            </ul>
-          </nav>
         </div>
-        <div class="footer__bottom">
-          <p class="footer__copyright">&copy; 2026 WordPress開発環境テンプレート. All rights reserved.</p>
+      </header>
+
+      <main class="l-main" id="main">
+        <section>
+          <div class="inner">
+            <h2>コンポーネント一覧</h2>
+            <p>
+              本ページは静的開発用のコンポーネントカタログです。<code>src/assets/styles/components/</code>配下の各SCSSファイルに対応するHTML例と、<code>data-</code>属性によるバリエーションを掲載しています。新しいコンポーネントを追加した際は、このページにも実例を追記してください。
+            </p>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <div class="inner">
+            <h3>button（_c-button.scss）</h3>
+            <p>矢印付きの汎用ボタン／リンクコンポーネント。<code>data-color="black"</code>を付与すると背景色が反転したダークカラーのバリエーションになる。</p>
+            <dl>
+              <dt>デフォルト（属性なし）</dt>
+              <dd><a class="button" href="#">送信する</a></dd>
+
+              <dt>data-color="black"</dt>
+              <dd><a class="button" data-color="black" href="#">送信する</a></dd>
+            </dl>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <div class="inner">
+            <h3>pagination（_c-pagination.scss）</h3>
+            <p>一覧ページ等で使用するページネーション。各項目は<code>pagination__item</code>に<code>data-state</code>属性（current / dots / prev / next / disabled）を付与して状態を表現する。リンク先はダミー（<code>href="#"</code>）。</p>
+            <dl>
+              <dt>使用例（中間ページ）</dt>
+              <dd>
+                <nav class="pagination" aria-label="ページネーション">
+                  <a class="pagination__item" href="#" data-state="prev">前へ</a>
+                  <a class="pagination__item" href="#">1</a>
+                  <span class="pagination__item" data-state="dots" aria-hidden="true">…</span>
+                  <a class="pagination__item" href="#">4</a>
+                  <a class="pagination__item" href="#" data-state="current" aria-current="page">5</a>
+                  <a class="pagination__item" href="#">6</a>
+                  <span class="pagination__item" data-state="dots" aria-hidden="true">…</span>
+                  <a class="pagination__item" href="#">10</a>
+                  <a class="pagination__item" href="#" data-state="next">次へ</a>
+                </nav>
+              </dd>
+
+              <dt>使用例（先頭ページ・前へが data-state="disabled"）</dt>
+              <dd>
+                <nav class="pagination" aria-label="ページネーション（先頭ページ）">
+                  <span class="pagination__item" data-state="disabled" aria-disabled="true">前へ</span>
+                  <a class="pagination__item" href="#" data-state="current" aria-current="page">1</a>
+                  <a class="pagination__item" href="#">2</a>
+                  <a class="pagination__item" href="#">3</a>
+                  <a class="pagination__item" href="#" data-state="next">次へ</a>
+                </nav>
+              </dd>
+            </dl>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <div class="inner">
+            <h3>search-form（_c-search-form.scss）</h3>
+            <p>検索フォームコンポーネント。入力欄には視覚的に隠したラベルを<code>sr-only</code>で付与すること。バリエーション（<code>data-</code>属性）はなし。フォームの送信先はダミー（<code>action="#"</code>）。</p>
+            <dl>
+              <dt>使用例</dt>
+              <dd>
+                <form role="search" method="get" class="search-form" action="#">
+                  <label for="component-catalog-search" class="sr-only">検索</label>
+                  <input type="search" id="component-catalog-search" class="search-form__input" name="s" placeholder="キーワードで検索" />
+                  <button type="submit" class="search-form__button">検索</button>
+                </form>
+              </dd>
+            </dl>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <div class="inner">
+            <h3>section-title（_c-section-title.scss）</h3>
+            <p>英字メインタイトル＋日本語サブタイトルのセクション見出し。<code>data-align</code>属性でテキスト配置（center / left / right）を切り替える。</p>
+            <dl>
+              <dt>data-align="center"</dt>
+              <dd>
+                <hgroup class="section-title" data-align="center">
+                  <h4 class="section-title__main">Sample Title</h4>
+                  <p class="section-title__sub">サンプルの補足テキストが入ります</p>
+                </hgroup>
+              </dd>
+
+              <dt>data-align="left"</dt>
+              <dd>
+                <hgroup class="section-title" data-align="left">
+                  <h4 class="section-title__main">Sample Title</h4>
+                  <p class="section-title__sub">サンプルの補足テキストが入ります</p>
+                </hgroup>
+              </dd>
+
+              <dt>data-align="right"</dt>
+              <dd>
+                <hgroup class="section-title" data-align="right">
+                  <h4 class="section-title__main">Sample Title</h4>
+                  <p class="section-title__sub">サンプルの補足テキストが入ります</p>
+                </hgroup>
+              </dd>
+            </dl>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <div class="inner">
+            <h3>skip-link（_c-skip-link.scss）</h3>
+            <p>
+              キーボード操作時に本文へ直接移動するためのスキップリンク。通常は<code>position: fixed</code
+              >で画面外に隠れており、<code>:focus-visible</code>時のみ表示される。バリエーション（<code>data-</code>属性）はなし。実際にこのページの本文（<code>#main</code>）へ移動するため、下の要素を <code>Tab</code>キーでフォーカスして確認できる。
+            </p>
+            <dl>
+              <dt>使用例（フォーカスすると画面左上に表示される）</dt>
+              <dd><a class="skip-link" href="#main">本文へスキップ</a></dd>
+            </dl>
+          </div>
+        </section>
+
+        <hr />
+
+        <section>
+          <div class="inner">
+            <h3>triangle（_c-triangle.scss）</h3>
+            <p>装飾用の三角形コンポーネント。<code>data-direction</code>属性で向き（top / bottom / left / right / lower-left / upper-left / lower-right / upper-right）を指定する。装飾目的のため<code>aria-hidden="true"</code>を必ず付与すること。</p>
+            <dl>
+              <dt>data-direction="top"</dt>
+              <dd><span class="triangle" data-direction="top" aria-hidden="true"></span></dd>
+
+              <dt>data-direction="bottom"</dt>
+              <dd><span class="triangle" data-direction="bottom" aria-hidden="true"></span></dd>
+
+              <dt>data-direction="left"</dt>
+              <dd><span class="triangle" data-direction="left" aria-hidden="true"></span></dd>
+
+              <dt>data-direction="right"</dt>
+              <dd><span class="triangle" data-direction="right" aria-hidden="true"></span></dd>
+
+              <dt>data-direction="lower-left"</dt>
+              <dd><span class="triangle" data-direction="lower-left" aria-hidden="true"></span></dd>
+
+              <dt>data-direction="upper-left"</dt>
+              <dd><span class="triangle" data-direction="upper-left" aria-hidden="true"></span></dd>
+
+              <dt>data-direction="lower-right"</dt>
+              <dd><span class="triangle" data-direction="lower-right" aria-hidden="true"></span></dd>
+
+              <dt>data-direction="upper-right"</dt>
+              <dd><span class="triangle" data-direction="upper-right" aria-hidden="true"></span></dd>
+            </dl>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer__inner inner">
+          <div class="footer__content">
+            <div class="footer__logo">
+              <a href="/">
+                <img src="/assets/images/logo_vite.svg" alt="vite" width="410" height="404" loading="lazy" />
+              </a>
+            </div>
+            <nav class="footer__nav">
+              <ul class="footer__nav-list">
+                <li class="footer__nav-item"><a href="#works">制作実績</a></li>
+                <li class="footer__nav-item"><a href="#news">ニュース</a></li>
+                <li class="footer__nav-item"><a href="#contact">お問い合わせ</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="footer__bottom">
+            <p class="footer__copyright">&copy; 2026 WordPress開発環境テンプレート. All rights reserved.</p>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
     <script type="module" src="/assets/js/script.js"></script>
   </body>

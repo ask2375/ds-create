@@ -1,35 +1,27 @@
 # ============================================
 # Dependencies
 # ============================================
-node_modules/
-.pnp
-.pnp.js
+node_modules
+
+# .yarn関連は残すが、yarn.lockはコミットする
 .yarn/*
-!.yarn/patches
 !.yarn/releases
 !.yarn/plugins
-
-# Lock files (yarn.lockは管理対象、npm/pnpmのlockファイルは無視)
-# yarn.lock は Git で管理します（yarnプロジェクトでは必須）
-package-lock.json
-pnpm-lock.yaml
+.yarnrc.yml
+.pnp.cjs
+.pnp.loader.mjs
 
 # ============================================
 # Build outputs
 # ============================================
-dist/
-dist-ssr/
-build/
-.public-build/
-# 検証ツールの副産物（納品対象外）
-.playwright-mcp/
-.playwright-cli/
+dist
+dist-ssr
 *.local
 
 # ============================================
 # Logs
 # ============================================
-logs/
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -42,155 +34,48 @@ lerna-debug.log*
 # ============================================
 # macOS
 .DS_Store
-.AppleDouble
-.LSOverride
-._*
-
-# Windows
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-desktop.ini
-*.stackdump
-[Dd]esktop.ini
-$RECYCLE.BIN/
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-*.lnk
-
-# Linux
-.directory
-.Trash-*
-.nfs*
 
 # ============================================
 # Editor / IDE
 # ============================================
 # VSCode
-.vscode/*
-!.vscode/extensions.json
+.vscode
 !.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+!.vscode/extensions.json
 
-# IntelliJ IDEA / PhpStorm / WebStorm
-.idea/
-*.iml
-*.iws
-*.ipr
-out/
+# IntelliJ IDEA
+.idea
 
-# Sublime Text
-*.sublime-project
-*.sublime-workspace
-
-# Vim
-*.swp
-*.swo
-*~
-[._]*.s[a-v][a-z]
-[._]*.sw[a-p]
-[._]s[a-rt-v][a-z]
-[._]ss[a-gi-z]
-[._]sw[a-p]
-
-# Emacs
-*~
-\#*\#
-/.emacs.desktop
-/.emacs.desktop.lock
-*.elc
-auto-save-list
-tramp
-.\#*
-
-# ============================================
-# Environment variables
-# ============================================
-.env
-.env.local
-.env.*.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# ============================================
-# Testing / Coverage
-# ============================================
-coverage/
-*.lcov
-.nyc_output/
-*.test.js.snap
-
-# ============================================
-# Temporary files
-# ============================================
-*.tmp
-*.temp
-*.bak
-*.swp
-*.cache
-.cache/
-.temp/
-tmp/
-
-# ============================================
-# WordPress
-# ============================================
-# Plugins (managed by wp-env)
-wordpress/plugins/*
-
-# Uploads
-# メディア本体（画像など）はコンテンツ同期のために追跡する
-# 重い元データはここで除外（必要に応じて追加してください）
-wordpress/uploads/**/*.psd
-wordpress/uploads/**/*.ai
-wordpress/uploads/**/*.zip
-wordpress/uploads/**/*.pdf
-# 一時ファイル
-wordpress/uploads/tmp-create-post.*
-wordpress/uploads/tmp-init-options.*
-wordpress/uploads/tmp-import-backup.sql
-wordpress/uploads/tmp-pre-import-*.sql
-
-# WordPress debug log
-debug.log
-
-# ============================================
-# Vite / Build tools
-# ============================================
-# Vite開発マニフェスト（自動生成されるため）
-wordpress/themes/*/manifest.dev.json
-wordpress/themes/*/.vite/
-# ビルド成果物（yarn build:wp で自動生成されるため。assets/images はデモ画像を追跡）
-wordpress/themes/*/assets/js/
-wordpress/themes/*/assets/styles/
-
-# ============================================
-# Husky
-# ============================================
-.husky/_
-
-# ============================================
-# AI / Development tools
-# ============================================
-.cursor/
-.serena/
-.claude/settings.local.json
-.claude/settings.json
-
-# ============================================
-# Misc
-# ============================================
+# Misc editor files
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# 仕様書（ローカル専用）
-spec/
+# ============================================
+# Environment variables
+# ============================================
+.env
+
+# ============================================
+# Husky
+# ============================================
+.husky/.gitignore
+
+# ============================================
+# AI / Development tools
+# ============================================
+.cursor/
+.serena/
+_
+.claude
+CLAUDE.md
+
+# ============================================
+# 検証データ
+# ============================================
+pixelmatch
+.playwright-cli
+.playwright-mcp
+指示書・仕様書
