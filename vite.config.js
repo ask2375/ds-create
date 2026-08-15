@@ -46,7 +46,9 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     manifest: true,
-    minify: "esbuild",
+    // minify すると esbuild が疑似要素 ::after を CSS2 旧記法 :after へ潰すため無効化する。
+    // 納品 CSS / JS は可読なまま出す運用（alias-carnival と同方針）。
+    minify: false,
     outDir: mode === "wp" || isDev ? themeDir : resolve(__dirname, "dist"),
     rollupOptions: {
       input: inputsForWordPress,
