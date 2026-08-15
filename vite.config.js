@@ -49,6 +49,10 @@ export default defineConfig(({ mode }) => ({
     // minify すると esbuild が疑似要素 ::after を CSS2 旧記法 :after へ潰すため無効化する。
     // 納品 CSS / JS は可読なまま出す運用（alias-carnival と同方針）。
     minify: false,
+    // 画像を base64 インライン化しない（src のディレクトリ構成をテーマ側でも維持するため）。
+    // 既定の 4096 バイト未満だと SVG が data URI 化され、CSS が肥大して画像単体のキャッシュも効かない。
+    // 注意: コールバック形式で数値を返すと truthy = インライン化と解釈されるため、数値を直接書く。
+    assetsInlineLimit: 0,
     outDir: mode === "wp" || isDev ? themeDir : resolve(__dirname, "dist"),
     rollupOptions: {
       input: inputsForWordPress,
@@ -60,8 +64,16 @@ export default defineConfig(({ mode }) => ({
         // ?ver= を付けられない。こちらはファイル名ハッシュでキャッシュを更新する。
         chunkFileNames: "assets/js/[name].[hash].js",
         assetFileNames: assetsInfo => {
-          const isCss = assetsInfo.name.endsWith(".css");
-          const isImage = /\.(png|jpe?g|gif|svg|webp|avif|ico)$/i.test(assetsInfo.name);
+          // Vite 5.2+ は emit 時に元パス（root=src 相対）を渡すため、src/assets/images の
+          // ディレクトリ構成（common/top 等）をそのままテーマ側に維持する。
+          // フラット化すると同名別フォルダの画像が衝突し、convert-images プラグインの
+          // 構造保持コピーとも二重出力になる。
+          const original = assetsInfo.originalFileNames?.[0] ?? assetsInfo.originalFileName;
+          if (original && original.startsWith("assets/images/")) return original;
+
+          const name = assetsInfo.names?.[0] ?? assetsInfo.name;
+          const isCss = name.endsWith(".css");
+          const isImage = /\.(png|jpe?g|gif|svg|webp|avif|ico)$/i.test(name);
           if (isCss) return "assets/styles/[name].[ext]";
           if (isImage) return "assets/images/[name].[ext]";
           return "assets/[name].[hash].[ext]";
