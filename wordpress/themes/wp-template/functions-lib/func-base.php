@@ -19,11 +19,23 @@ function my_setup()
   add_theme_support("title-tag"); /* タイトルタグ自動生成 */
   add_theme_support("html5", [/* HTML5のタグで出力 */ "comment-form", "comment-list", "gallery", "caption"]);
 
-  // ブロックエディタのスタイルサポート
-  add_theme_support("editor-styles");
-
-  // 環境変数（WP_DEBUG）とmanifestファイルを活用したエディタスタイル読み込み
-  enqueue_editor_styles();
+  // ブロックエディタのスタイルサポートは既定で無効にする。
+  //
+  // 有効にすると enqueue_editor_styles() がサイト全体の style.css をエディタ内へ流し込む。
+  // 本テンプレートの style.css には base/_reset.scss（`* { margin: 0; padding: 0 }` /
+  // `ul, ol { list-style: none }`）と base/_base.scss（`body { line-height: 1 }`）が含まれ、
+  // これらが WordPress 標準の block-library CSS より後に読み込まれて、ブロック既定の
+  // 余白・行間・リストマーカーをすべて打ち消す。
+  // 一方で本文装飾を BEM のページ側ラッパー限定（例: `.single-news__body h2`）で書くと、
+  // ラッパーが存在しないエディタ（.editor-styles-wrapper）には 1 つも効かない。
+  // 結果として「リセットだけが効いて装飾はゼロ」の詰まった編集画面になる。
+  //
+  // エディタは WordPress 標準の見た目で運用する。フロントと同じ見た目で編集させたい場合は、
+  // サイト全体の style.css を流用せず、リセットを含まないエディタ専用スタイルを別途用意して
+  // `.editor-styles-wrapper` 配下へマップすること。
+  //
+  // add_theme_support("editor-styles");
+  // enqueue_editor_styles();
 }
 add_action("after_setup_theme", "my_setup");
 
