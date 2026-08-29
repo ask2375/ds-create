@@ -2,13 +2,20 @@
 
 /**
  * 本番環境用ビルド後のクリーンアップスクリプト
- * - 開発環境専用ファイル（manifest.dev.json など）を削除
  * - 現在の manifest に載っていない JS/CSS を削除（テーマ直下が outDir のため
  *   Vite の emptyOutDir が使えず、放置すると成果物が溜まり続けるため）
  *
  * エントリの JS/CSS はファイル名を固定しているため通常は上書きされる。
  * 動的 import のチャンク（ハッシュ付き）やエントリ名を変えたときに不要ファイルが残るので、
  * その掃除としてこの処理を残している。
+ *
+ * manifest.dev.json はここでは削除しない（2026-08-21 変更・k-s-enterprise 案件の実害から）。
+ * 削除すると、yarn dev の稼働中に build:wp を実行した時点で WordPress の環境判定
+ * （func-helpers.php の is_vite_dev_mode）が dev → 本番アセット配信に落ち、
+ * 以降 yarn dev を再起動するまで SCSS / JS の保存が localhost:8888 に反映されなくなるため。
+ * 本番サーバーへ誤って残っても、dev 判定は WP_DEBUG=true かつ localhost も必要なため誤発火しない。
+ * FTP デプロイスクリプトを導入する案件では、manifest.dev.json をアップロード除外リストに
+ * 加えること（例: k-s-enterprise の bin/deploy.mjs は LOCAL_EXCLUDE で除外している）。
  */
 
 import { existsSync, rmSync, unlinkSync, statSync, readdirSync, readFileSync } from "fs";
@@ -18,8 +25,8 @@ import { log, success, error } from "./utils/logger.js";
 
 const themeDir = paths.themeDir;
 
-// 削除対象のファイル（manifest.dev.jsonのみ）
-const filesToRemove = [join(themeDir, "manifest.dev.json")];
+// 削除対象のファイル（現在は無し。manifest.dev.json を消さない理由はファイル冒頭コメント参照）
+const filesToRemove = [];
 
 log("clean-dev-files", `クリーンアップを開始: ${themeDir}`);
 
