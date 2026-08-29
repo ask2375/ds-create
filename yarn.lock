@@ -4449,13 +4449,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kiso.css@npm:^1.1.4":
-  version: 1.2.4
-  resolution: "kiso.css@npm:1.2.4"
-  checksum: 10c0/efcd8744f41e3c39e784401c84b8adfeb2dce16016fc7ae05f958e1fe0c1a1736146c0f7eb53b036e96aa2f4f9eb3de375a11cce0806c870754acab586da755e
-  languageName: node
-  linkType: hard
-
 "known-css-properties@npm:^0.37.0":
   version: 0.37.0
   resolution: "known-css-properties@npm:0.37.0"
@@ -6795,7 +6788,6 @@ __metadata:
     eslint: "npm:8.56.0"
     eslint-config-prettier: "npm:9.1.0"
     glob: "npm:10.5.0"
-    kiso.css: "npm:^1.1.4"
     postcss: "npm:^8.5.13"
     prettier: "npm:^3.8.3"
     sass: "npm:^1.99.0"
