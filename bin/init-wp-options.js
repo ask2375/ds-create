@@ -1,11 +1,15 @@
 import fs from "fs";
-import { resolve } from "path";
+import { delimiter, resolve } from "path";
 import { exists, readJson, ensureDir, writeFile } from "./utils/fs-utils.js";
 import { log, success, error } from "./utils/logger.js";
 import { projectRoot, THEME_NAME } from "./utils/paths.js";
 import { isWordPressEnvRunning, ensureCliContainerRunning, runWpCli } from "./utils/wp-env.js";
 
 const MODULE_NAME = "init-wp-options";
+
+process.env.PATH = `${resolve(projectRoot, "node_modules/.bin")}${delimiter}${process.env.PATH}`;
+
+const SETTINGS_ONLY = process.argv.slice(2).includes("--settings-only");
 const UPLOADS_DIR = resolve(projectRoot, "wordpress/uploads");
 const DATA_JSON_PATH = resolve(UPLOADS_DIR, "tmp-init-options.json");
 const EVAL_PHP_PATH = resolve(UPLOADS_DIR, "tmp-init-options.php");
@@ -165,6 +169,11 @@ if (!empty($data['options']) && is_array($data['options'])) {
     update_option($key, $value);
     WP_CLI::log("Option update: {$key}");
   }
+}
+
+if (!empty($data['settings_only'])) {
+  WP_CLI::success('WordPress settings applied (theme + options only).');
+  return;
 }
 
 // 3. パーマリンク設定
@@ -362,6 +371,14 @@ function loadSeedPosts(config) {
  * @returns {Object} PHPへ渡すペイロード
  */
 function buildPayload(config) {
+  if (SETTINGS_ONLY) {
+    return {
+      options: config.options || {},
+      theme_slug: THEME_NAME,
+      settings_only: true,
+    };
+  }
+
   return {
     options: config.options || {},
     permalink_structure: config.permalink_structure || "",
@@ -409,30 +426,32 @@ function printPhpOutput(output) {
 async function main() {
   log(MODULE_NAME, "WordPress 初期設定を適用します...");
 
-  if (!isWordPressEnvRunning()) {
-    error(MODULE_NAME, "WordPress環境が起動していません。先に yarn wp-start を実行してください。");
-    process.exit(1);
-  }
-
-  // CLIコンテナを確実に起動する（wp-env 10では、wp-env startだけではCLIコンテナが起動しない場合がある）
-  log(MODULE_NAME, "CLIコンテナの起動を確認中...");
-  let cliStarted = false;
-  for (let i = 0; i < 5; i++) {
-    cliStarted = ensureCliContainerRunning();
-    if (cliStarted) {
-      log(MODULE_NAME, "CLIコンテナが起動しました。");
-      break;
+  if (!SETTINGS_ONLY) {
+    if (!isWordPressEnvRunning()) {
+      error(MODULE_NAME, "WordPress環境が起動していません。先に yarn wp-start を実行してください。");
+      process.exit(1);
     }
-    if (i < 4) {
-      log(MODULE_NAME, `CLIコンテナの起動を試行中... (${i + 1}/5)`);
-      await new Promise(resolve => setTimeout(resolve, 3000));
-    }
-  }
 
-  if (!cliStarted) {
-    error(MODULE_NAME, "CLIコンテナの起動に失敗しました。");
-    error(MODULE_NAME, "手動で以下のコマンドを実行してください: yarn wp-start");
-    process.exit(1);
+    // CLIコンテナを確実に起動する（wp-env 10では、wp-env startだけではCLIコンテナが起動しない場合がある）
+    log(MODULE_NAME, "CLIコンテナの起動を確認中...");
+    let cliStarted = false;
+    for (let i = 0; i < 5; i++) {
+      cliStarted = ensureCliContainerRunning();
+      if (cliStarted) {
+        log(MODULE_NAME, "CLIコンテナが起動しました。");
+        break;
+      }
+      if (i < 4) {
+        log(MODULE_NAME, `CLIコンテナの起動を試行中... (${i + 1}/5)`);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+    }
+
+    if (!cliStarted) {
+      error(MODULE_NAME, "CLIコンテナの起動に失敗しました。");
+      error(MODULE_NAME, "手動で以下のコマンドを実行してください: yarn wp-start");
+      process.exit(1);
+    }
   }
 
   const ready = await waitForWpReady();

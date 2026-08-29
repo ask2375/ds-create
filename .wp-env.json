@@ -26,6 +26,6 @@
     "wp-content/plugins": "./wordpress/plugins"
   },
   "lifecycleScripts": {
-    "afterStart": "node bin/ensure-dev-plugin-state.js && node bin/ensure-admin-user.js && node bin/ensure-plugin-languages.js"
+    "afterStart": "node bin/init-wp-options.js --settings-only && node bin/ensure-dev-plugin-state.js && node bin/ensure-admin-user.js && node bin/ensure-plugin-languages.js"
   }
 }

@@ -27,6 +27,7 @@
     "wp-start": "node bin/update-wp-config.js --wp-env && wp-env start",
     "wp-stop": "wp-env stop",
     "wp-init": "node bin/init-wp-options.js",
+    "wp-settings:fix": "node bin/init-wp-options.js --settings-only",
     "wp-user:fix": "node bin/ensure-admin-user.js",
     "wp-lang:fix": "node bin/ensure-plugin-languages.js",
     "wp-plugins:dev-state": "node bin/ensure-dev-plugin-state.js",

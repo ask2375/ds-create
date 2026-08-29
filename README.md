@@ -182,6 +182,7 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
 | WP環境 | `yarn wp-init`                    | WordPress初期設定（タイムゾーン・パーマリンク・フロントページ・シード投稿・**テーマ有効化**）。起動後に実行 |
 | WP環境 | `yarn wp-contents:export` / `import` | コンテンツのエクスポート・インポート（import は確認プロンプトあり、`--yes` でスキップ可） |
 | WP環境 | `yarn wp-contents:export:sanitized` | 配布用に無害化してエクスポート（ユーザー情報を user-0401/user-0401 に正規化・コメント/セッション/キャッシュ/シークレット除去） |
+| WP環境 | `yarn wp-settings:fix`            | 有効テーマを `config/project.json` の `themeSlug` に、管理画面の初期値を `config/wp-options.json` の `options` に揃える（`yarn wp-start` 時に自動実行されるため通常は不要） |
 | WP環境 | `yarn wp-user:fix`                | 管理ユーザーを `user-0401` / `user-0401` に統一（`yarn wp-start` 時に自動実行されるため通常は不要） |
 | WP環境 | `yarn wp-lang:fix`                | 有効化中プラグインの日本語翻訳を導入（`yarn wp-start` 時に自動実行されるため通常は不要） |
 | WP環境 | `yarn wp-plugins:dev-state`       | 開発中に有効化してはいけないプラグイン（SiteGuard）を無効化（`yarn wp-start` 時に自動実行されるため通常は不要） |

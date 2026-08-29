@@ -18,7 +18,7 @@ WordPress 開発環境のビルドと運用を支援するスクリプト・プ�
 | `import-contents.js` | CLI | `wordpress/uploads/backup.sql` から DB を退避後にリセット・インポート（`yarn wp-contents:import`、確認プロンプトあり） |
 | `check-env.js` | CLI | Node.js / Yarn の実行環境チェック |
 | `init-project.js` | CLI | `config/project.json` を対話作成し、テーマスラッグ・表示名・テキストドメインを設定（`yarn init:project`） |
-| `init-wp-options.js` | CLI | **WordPress の中身**の初期設定（オプション・固定ページ・シード投稿） |
+| `init-wp-options.js` | CLI | **WordPress の中身**の初期設定（オプション・固定ページ・シード投稿）。`--settings-only`（`yarn wp-settings:fix`）ではテーマ有効化とオプション適用だけを行い、`lifecycleScripts.afterStart` から `wp-env start` のたびに自動実行される。冪等 |
 | `sync-wp-plugins.js` | CLI | 管理画面で追加したプラグインを `.wp-env.json` に同期（`yarn wp-plugins:sync`） |
 | `update-wp-config.js` | CLI / Vite Plugin | **テーマまわり・設定ファイル**の同期（.wp-env、style.css、DB のテーマ名） |
 | `validate-acf-json.js` | CLI | ACF フィールドグループ JSON の検証（`yarn validate:acf`） |
@@ -73,9 +73,10 @@ WordPress 開発環境のビルドと運用を支援するスクリプト・プ�
 
 ### init-wp-options.js
 
-- **実行**: `yarn wp-init`
+- **実行**: `yarn wp-init`（フル） / `yarn wp-settings:fix`（`--settings-only`）
 - **設定**: `config/wp-options.json`（未指定時はスクリプト内のデフォルト）
 - タイムゾーン・日付形式・パーマリンク・フロント/投稿ページ・追加固定ページ・シード投稿を作成。
+- **`--settings-only`（テーマ有効化 + オプション適用のみ）**: `.wp-env.json` の `lifecycleScripts.afterStart` の先頭から `wp-env start` のたびに自動実行される。目的は、外観＞テーマの有効テーマを `config/project.json` の `themeSlug` に、管理画面の各種初期値を `config/wp-options.json` の `options` に、毎起動で必ず揃えること。コンテナや DB が作り直されて WordPress 標準テーマ・標準オプションへ戻っても、次の起動で案件の設定に復帰する。パーマリンク・フロントページ・追加固定ページ・シード投稿はこのモードでは実行しない。起動のたびに走るため、利用者が管理画面で削除した固定ページや投稿が復活したり、フロントページ設定が上書きされたりする副作用を避ける必要があるため。フル実行が必要なときだけ `yarn wp-init` を使う。
 - **検索エンジンのインデックス（`blog_public`）**: デフォルトは `0`（管理画面「表示設定」の「検索エンジンがサイトをインデックスしないようにする」にチェックが入った状態）。制作中の開発環境を想定した初期値のため、本番公開時は `1` に戻すこと。
 - **1ページに表示する最大投稿数（`posts_per_page`）**: デフォルトは `1`。少ない投稿数でページネーションの動作を確認できるようにするための初期値で、案件に合わせて `config/wp-options.json` で変更する。
 - **追加固定ページ（`pages`）**: `config/wp-options.json` の `pages` 配列に指定した固定ページを「無ければ作成」する（デフォルト: お問い合わせページ `contact`）。テンプレートは `page-{slug}.php` がスラッグ一致で自動適用される
