@@ -18,7 +18,7 @@ function add_vite_scripts()
   switch ($environment) {
     case "dev":
       enqueue_dev_assets();
-      return;
+      break;
 
     case "manifest":
       enqueue_production_assets_from_manifest();
@@ -29,7 +29,10 @@ function add_vite_scripts()
       break;
   }
 
-  // Google Fonts（開発環境以外で読み込み）
+  // Google Fonts（開発環境を含む全環境で読み込み）
+  // 開発環境を除外していると、ローカル確認時だけ Web フォントが OS 標準フォントへフォールバックし、
+  // 文字幅・行高がカンプおよび本番と食い違う。カンプ一致率の検証をローカルで行う運用のため、
+  // 開発環境でも本番と同じフォントを読み込む。
   // 第3引数は依存配列、第4引数は null を渡してバージョンクエリを付けない
   // （第4引数を省略すると WordPress 本体のバージョンが &ver= として外部URLに露出する）
   wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap", [], null);
@@ -46,6 +49,18 @@ function enqueue_dev_assets()
   }
 
   $baseUrl = $dev_manifest["url"];
+
+  // 開発環境では CSS が script.js 内の動的 import（import.meta.env.DEV 分岐）でのみ注入される。
+  // その script.js は footer + type="module"（defer 相当）で読み込まれるため、
+  // モジュール実行 → SCSS の追加リクエスト → dart-sass のオンデマンドコンパイルが終わるまで、
+  // ブラウザは無スタイルの生 HTML を描画してしまう（リロード時に白背景 + 素の <ul> / <a> が見える FOUC）。
+  // Vite 開発サーバーは CSS 系ファイルに ?direct を付けたリクエストへ変換後の生 CSS を text/css で返すので、
+  // これを head の <link rel="stylesheet"> として出し、レンダーブロッキングさせてチラつきを止める。
+  // HMR は従来どおり JS 側の import が担当する（同一 CSS が二重に適用されるが内容が同じため無害・開発環境限定）。
+  if (isset($dev_manifest["inputs"]["style"])) {
+    wp_enqueue_style("theme-styles-dev", $baseUrl . $dev_manifest["inputs"]["style"] . "?direct", [], null);
+  }
+
   wp_enqueue_script("vite-client", $baseUrl . "@vite/client", [], null, true);
 
   if (isset($dev_manifest["inputs"]["script"])) {
