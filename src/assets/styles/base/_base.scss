@@ -43,9 +43,9 @@
 
 /* フォントカラーは、使用頻度が多いものを選択する */
 body {
-  color: $black_0d2936;
-  font-family: $noto;
+  font-family: $zen;
   font-weight: $regular;
+  color: $navy_22304a;
   line-height: 1;
 }
 
@@ -129,6 +129,10 @@ iframe {
 // ジャギー対策
 img {
   image-rendering: auto;
+}
+
+picture {
+  display: contents;
 }
 
 img,

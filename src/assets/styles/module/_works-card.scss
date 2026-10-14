@@ -1,0 +1,90 @@
+@use "../global" as *;
+
+.works-card__btn {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  width: 100%;
+  height: 100%;
+  background-color: $white;
+  border: rem(2) solid $skyblue_d5eefb;
+  border-radius: rem(28);
+  box-shadow: 0 rem(8) rem(24) rgba($skyblue_5ec8f5, 0.1);
+  transition: opacity 0.3s;
+  overflow: hidden;
+}
+
+@media (any-hover: hover) {
+  .works-card__btn:hover {
+    opacity: 0.6;
+  }
+}
+
+.works-card__img-wrapper {
+  position: relative;
+  display: block;
+  aspect-ratio: 384 / 240;
+  border-bottom: rem(2) solid $skyblue_d5eefb;
+}
+
+.works-card__img {
+  aspect-ratio: 384 / 240;
+}
+
+.works-card__badge {
+  position: absolute;
+  top: rem(14);
+  left: rem(14);
+  font-size: maxrem(12);
+  font-family: $zen;
+  font-weight: $bold;
+  color: $white;
+  line-height: 1.8;
+  letter-spacing: 0.1em;
+  padding-block: rem(4);
+  padding-inline: rem(12);
+  background-color: $pink_ff7fb8;
+  border-radius: 100vmax;
+}
+
+.works-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: rem(8);
+  padding-block: rem(24) rem(26);
+  padding-inline: rem(26);
+}
+
+.works-card__title {
+  display: block;
+  display: -webkit-box;
+  font-size: maxrem(20);
+  font-family: $mplus;
+  font-weight: $bold;
+  color: $navy_22304a;
+  line-height: calc(36 / 20);
+  white-space: normal; /* 文字を折り返す */
+  -webkit-line-clamp: 3; /* 表示する行数 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.works-card__list-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(6);
+  margin-top: auto;
+}
+
+.works-card__list-item {
+  font-size: maxrem(12);
+  font-family: $zen;
+  font-weight: $bold;
+  color: $white;
+  line-height: 1.8;
+  padding-block: rem(2);
+  padding-inline: rem(12);
+  background-color: $blue_1b7fbd;
+  border-radius: 100vmax;
+}

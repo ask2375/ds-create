@@ -2288,6 +2288,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"basic-ftp@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "basic-ftp@npm:6.2.1"
+  checksum: 10c0/7b6d8cdf8e9a7ba71697d55554e56a82c2329ffbdc5a8da8143d840105d7b48bc169c1b5d2f1cc340e453ba362b1c151eece811d6fe478f847ebfe57ffc677b2
+  languageName: node
+  linkType: hard
+
 "before-after-hook@npm:^2.2.0":
   version: 2.2.3
   resolution: "before-after-hook@npm:2.2.3"
@@ -2978,6 +2985,13 @@ __metadata:
   dependencies:
     esutils: "npm:^2.0.2"
   checksum: 10c0/c96bdccabe9d62ab6fea9399fdff04a66e6563c1d6fb3a3a063e8d53c3bb136ba63e84250bbf63d00086a769ad53aef92d2bd483f03f837fc97b71cbee6b2520
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^17.4.2":
+  version: 17.4.2
+  resolution: "dotenv@npm:17.4.2"
+  checksum: 10c0/164f8e77a646c8446867d5b588d26ea6005c8ea7c5eb41cf926f6113d23f2191355f6e0cfd95ea9bab98394a5b0a3f1e51a8399711b666fe55cc7b0bd745f942
   languageName: node
   linkType: hard
 
@@ -6783,8 +6797,10 @@ __metadata:
     "@splidejs/splide": "npm:^4.1.4"
     "@wordpress/env": "npm:^11.5.0"
     autoprefixer: "npm:^10.5.0"
+    basic-ftp: "npm:^6.2.1"
     chokidar: "npm:^3.6.0"
     concurrently: "npm:^9.1.2"
+    dotenv: "npm:^17.4.2"
     eslint: "npm:8.56.0"
     eslint-config-prettier: "npm:9.1.0"
     glob: "npm:10.5.0"

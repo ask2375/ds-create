@@ -35,7 +35,22 @@ function add_vite_scripts()
   // 開発環境でも本番と同じフォントを読み込む。
   // 第3引数は依存配列、第4引数は null を渡してバージョンクエリを付けない
   // （第4引数を省略すると WordPress 本体のバージョンが &ver= として外部URLに露出する）
-  wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap", [], null);
+  wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap", [], null);
+
+  enqueue_adobe_fonts();
+}
+
+/**
+ * Adobe Fonts の読み込み（kit ID は functions.php の ADOBE_FONTS_KIT_ID。空なら出力なし）
+ */
+function enqueue_adobe_fonts()
+{
+  if (!defined("ADOBE_FONTS_KIT_ID") || !preg_match("/^[a-z0-9]+$/", ADOBE_FONTS_KIT_ID)) {
+    return;
+  }
+
+  wp_enqueue_script("adobe-fonts", "https://use.typekit.net/" . ADOBE_FONTS_KIT_ID . ".js", [], null, false);
+  wp_add_inline_script("adobe-fonts", "try{Typekit.load({async:true});}catch(e){}");
 }
 
 /**
@@ -50,13 +65,6 @@ function enqueue_dev_assets()
 
   $baseUrl = $dev_manifest["url"];
 
-  // 開発環境では CSS が script.js 内の動的 import（import.meta.env.DEV 分岐）でのみ注入される。
-  // その script.js は footer + type="module"（defer 相当）で読み込まれるため、
-  // モジュール実行 → SCSS の追加リクエスト → dart-sass のオンデマンドコンパイルが終わるまで、
-  // ブラウザは無スタイルの生 HTML を描画してしまう（リロード時に白背景 + 素の <ul> / <a> が見える FOUC）。
-  // Vite 開発サーバーは CSS 系ファイルに ?direct を付けたリクエストへ変換後の生 CSS を text/css で返すので、
-  // これを head の <link rel="stylesheet"> として出し、レンダーブロッキングさせてチラつきを止める。
-  // HMR は従来どおり JS 側の import が担当する（同一 CSS が二重に適用されるが内容が同じため無害・開発環境限定）。
   if (isset($dev_manifest["inputs"]["style"])) {
     wp_enqueue_style("theme-styles-dev", $baseUrl . $dev_manifest["inputs"]["style"] . "?direct", [], null);
   }
@@ -203,3 +211,15 @@ function add_font_preconnect($html, $handle)
   return $html;
 }
 add_filter("style_loader_tag", "add_font_preconnect", 10, 2);
+
+/**
+ * Adobe Fonts最適化（プリコネクト）
+ */
+function add_adobe_fonts_preconnect($tag, $handle)
+{
+  if ("adobe-fonts" === $handle) {
+    $tag = "<link rel='preconnect' href='https://use.typekit.net' crossorigin>\n" . $tag;
+  }
+  return $tag;
+}
+add_filter("script_loader_tag", "add_adobe_fonts_preconnect", 10, 2);

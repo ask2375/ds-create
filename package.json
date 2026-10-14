@@ -6,7 +6,8 @@
   "license": "SEE LICENSE IN LICENSE",
   "packageManager": "yarn@4.12.0",
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=20.19.0",
+    "npm": "please-use-yarn"
   },
   "dependencies": {
     "@splidejs/splide": "^4.1.4",
@@ -24,6 +25,9 @@
     "dev": "concurrently \"yarn watch:scss\" \"vite\"",
     "watch:scss": "node bin/watch-scss-globs.js",
     "build:wp": "vite build --mode wp && node bin/clean-dev-files.js",
+    "images:rebuild": "node bin/rebuild-images.js",
+    "deploy": "yarn build:wp && node bin/deploy.mjs",
+    "deploy:dry": "node bin/deploy.mjs --dry-run",
     "wp-start": "node bin/update-wp-config.js --wp-env && wp-env start",
     "wp-stop": "wp-env stop",
     "wp-init": "node bin/init-wp-options.js",
@@ -50,8 +54,10 @@
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.25.0",
+    "basic-ftp": "^6.2.1",
     "chokidar": "^3.6.0",
     "concurrently": "^9.1.2",
+    "dotenv": "^17.4.2",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
     "glob": "10.5.0",

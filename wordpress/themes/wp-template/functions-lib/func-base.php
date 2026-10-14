@@ -172,3 +172,49 @@ function wpcf7_autop_return_false()
 {
   return false;
 }
+
+/*
+ * 管理画面の固定ページ一覧にスラッグ列を追加
+ * タイトル列の直後に挿入する
+ */
+function add_page_slug_column($columns)
+{
+  $new_columns = [];
+  foreach ($columns as $key => $label) {
+    $new_columns[$key] = $label;
+    if ($key === "title") {
+      $new_columns["page_slug"] = "スラッグ";
+    }
+  }
+  return $new_columns;
+}
+add_filter("manage_pages_columns", "add_page_slug_column");
+
+function render_page_slug_column($column_name, $post_id)
+{
+  if ($column_name === "page_slug") {
+    echo esc_html(urldecode(get_post_field("post_name", $post_id)));
+  }
+}
+add_action("manage_pages_custom_column", "render_page_slug_column", 10, 2);
+
+function add_noindex_robots($robots)
+{
+  $robots["noindex"] = true;
+  $robots["nofollow"] = true;
+  $robots["noarchive"] = true;
+  return $robots;
+}
+add_filter("wp_robots", "add_noindex_robots");
+
+function send_noindex_header()
+{
+  header("X-Robots-Tag: noindex, nofollow, noarchive", true);
+}
+add_action("send_headers", "send_noindex_header");
+
+function allow_crawl_robots_txt($output)
+{
+  return "User-agent: *\nDisallow:\n";
+}
+add_filter("robots_txt", "allow_crawl_robots_txt");

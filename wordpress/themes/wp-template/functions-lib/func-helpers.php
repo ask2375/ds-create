@@ -45,6 +45,20 @@ function get_vite_manifest()
 }
 
 /**
+ * manifest.dev.json の mtime から Vite dev サーバーの稼働を判定
+ * dev サーバー稼働中は bin/vite-plugin-clean-dev-manifest.js が mtime を 5 秒ごとに更新する。
+ *
+ * @param string $manifest_path manifest.dev.json のパス
+ * @return bool mtime が 20 秒以内なら true
+ */
+function is_vite_dev_server_alive($manifest_path)
+{
+  clearstatcache(true, $manifest_path);
+  $mtime = @filemtime($manifest_path);
+  return $mtime !== false && time() - $mtime <= 20;
+}
+
+/**
  * ビルド済みmanifest.jsonを読み込む（本番環境用）
  *
  * @return array|false manifest配列（本番環境のみ）、失敗時はfalse
@@ -87,7 +101,12 @@ function is_vite_dev_mode()
 
   // manifest.dev.jsonが存在し、かつlocalhostであることを確認
   $dev_manifest = get_vite_manifest();
-  return $dev_manifest !== false && isset($dev_manifest["url"]);
+  if ($dev_manifest === false || !isset($dev_manifest["url"])) {
+    return false;
+  }
+
+  // dev サーバーが停止していればビルド済み資産へ
+  return is_vite_dev_server_alive(get_template_directory() . "/manifest.dev.json");
 }
 
 /**

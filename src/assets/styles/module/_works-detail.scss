@@ -1,0 +1,122 @@
+@use "../global" as *;
+
+.works-card__modal {
+  block-size: fit-content;
+  max-block-size: calc(100svb - var(--modal-gutter-block) * 2);
+  contain: none;
+}
+
+.works-card__modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.works-card__modal-container {
+  flex: 1;
+  block-size: auto;
+  min-block-size: 0;
+}
+
+.works-detail {
+  display: grid;
+  gap: rem(16);
+  margin-top: rem(20); // 60 - 40
+
+  @include mq("md") {
+    gap: rem(20);
+    margin-top: rem(40); // 60 - 20
+  }
+}
+
+.works-detail__img-wrapper {
+  aspect-ratio: 760 / 475;
+  border: rem(2) solid $skyblue_d5eefb;
+}
+
+.works-detail__img {
+  aspect-ratio: 760 / 475;
+}
+
+.works-detail__title {
+  font-size: maxrem(24);
+  font-family: $mplus;
+  font-weight: $bold;
+  color: $navy_22304a;
+  line-height: calc(36 / 24);
+
+  @include mq("md") {
+    font-size: maxrem(20);
+  }
+}
+
+.works-detail__meta {
+  margin-top: rem(16);
+}
+
+.works-detail__meta-row {
+  display: grid;
+  grid-template-columns: rem(130) 1fr;
+  gap: rem(14);
+
+  @include mq("md") {
+    grid-template-columns: rem(115) 1fr;
+  }
+}
+
+.works-detail__meta-row:nth-child(n + 2) {
+  margin-top: rem(4);
+}
+
+.works-detail__meta-term {
+  font-size: maxrem(18);
+  font-family: $zen;
+  font-weight: $regular;
+  color: $gray_8494ad;
+  line-height: 1.8;
+
+  @include mq("md") {
+    font-size: maxrem(16);
+  }
+}
+
+.works-detail__meta-desc {
+  font-size: maxrem(18);
+  font-family: $zen;
+  font-weight: $regular;
+  color: $navy_22304a;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+
+  @include mq("md") {
+    font-size: maxrem(16);
+  }
+}
+
+.works-detail__list-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.works-detail__list-item:not(:last-child)::after {
+  content: "";
+  rotate: 20deg;
+  display: inline-block;
+  vertical-align: middle;
+  width: 1px;
+  height: 0.9em;
+  margin-inline: rem(6);
+  background-color: $gray_8494ad;
+}
+
+.works-detail__link {
+  color: $blue_1b7fbd;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+@media (any-hover: hover) {
+  .works-detail__link:hover {
+    color: $pink_d43f86;
+    text-decoration: underline;
+  }
+}

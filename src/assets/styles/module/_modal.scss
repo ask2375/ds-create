@@ -1,0 +1,109 @@
+@use "../global" as *;
+
+:where(dialog) {
+  color: unset;
+  margin: unset;
+  padding-block: unset;
+  padding-inline: unset;
+  background-color: unset;
+  border: unset;
+  inline-size: unset;
+  max-inline-size: unset;
+  block-size: unset;
+  max-block-size: unset;
+  overflow: unset;
+}
+
+:where(:root[data-mousedown] dialog *) {
+  outline: none;
+}
+
+[data-modal-open]:where(:root[data-mousedown] *) {
+  outline: none;
+}
+
+.modal {
+  --modal-gutter-inline: max(5vi, #{rem(20)});
+  --modal-gutter-block: #{rem(20)};
+  --modal-padding: #{rem(40)};
+
+  color: $navy_22304a;
+  margin: auto;
+  background-color: $white;
+  border-radius: rem(28);
+  box-shadow: 0 0 0 100vmax color-mix(in srgb, $navy_22304a, transparent 20%);
+  transition:
+    opacity 0.5s,
+    scale 0.5s;
+  inline-size: min(calc(100% - var(--modal-gutter-inline) * 2), rem(840));
+  block-size: min(calc(100svb - var(--modal-gutter-block) * 2), rem(475));
+  contain: strict;
+
+  @include mq("md") {
+    --modal-padding: #{rem(20)};
+  }
+}
+
+.modal:not([data-active="true"]) {
+  opacity: 0;
+  scale: 0.95;
+}
+
+.modal::backdrop {
+  backdrop-filter: blur(4px);
+  transition: opacity 0.5s;
+}
+
+.modal:not([data-active="true"])::backdrop {
+  opacity: 0;
+}
+
+.modal__container {
+  block-size: 100%;
+  padding-block: var(--modal-padding);
+  padding-inline: var(--modal-padding);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.modal__close {
+  position: absolute;
+  inset-block-start: rem(4);
+  inset-inline-end: rem(4);
+  aspect-ratio: 1;
+  background-color: $blue_1b7fbd;
+  border: 0;
+  border-radius: 100vmax;
+  box-shadow: 0 0 12px 0 rgb(0 0 0 / 20%);
+  z-index: 1;
+  transition: background-color 0.3s;
+  inline-size: 3em;
+  appearance: none;
+  cursor: pointer;
+}
+
+.modal__close::before,
+.modal__close::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: inline-block;
+  width: 45%;
+  height: 2px;
+  margin: auto;
+  background-color: $white;
+}
+
+.modal__close::before {
+  rotate: 45deg;
+}
+
+.modal__close::after {
+  rotate: 135deg;
+}
+
+@media (any-hover: hover) {
+  .modal__close:hover {
+    background-color: color-mix(in srgb, $blue_1b7fbd 80%, white);
+  }
+}

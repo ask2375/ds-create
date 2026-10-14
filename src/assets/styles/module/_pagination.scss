@@ -1,0 +1,117 @@
+@use "../global" as *;
+
+.pagination,
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: rem(10);
+
+  @include mq("md") {
+    justify-content: center;
+  }
+}
+
+.page-numbers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: maxrem(15);
+  font-family: $mplus;
+  font-weight: $medium;
+  color: $white;
+  min-width: rem(33);
+  aspect-ratio: 1 / 1;
+  transition:
+    color 0.3s,
+    background-color 0.3s,
+    border-color 0.3s;
+}
+
+.page-numbers:not(.dots, .current, .prev, .next) {
+  background-color: transparent;
+  border: 1px solid $white;
+}
+
+.page-numbers.current {
+  color: $black_000000;
+  background-color: $white;
+  border: 1px solid $white;
+}
+
+.page-numbers.dots {
+  min-width: 0;
+  padding: 0;
+  border: none;
+}
+
+.next.page-numbers,
+.prev.page-numbers {
+  position: relative;
+  min-width: rem(33);
+  aspect-ratio: 1 / 1;
+  background-color: $white;
+  border: 1px solid $white;
+}
+
+.next.page-numbers::after,
+.prev.page-numbers::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: rem(8);
+  height: rem(8);
+  border-top: 1px solid $black_000000;
+  border-right: 1px solid $black_000000;
+  transition: border-color 0.3s;
+}
+
+.next.page-numbers::after {
+  transform: translate(-65%, -50%) rotate(45deg);
+}
+
+.prev.page-numbers::after {
+  transform: translate(-35%, -50%) rotate(-135deg);
+}
+
+.pagination[data-theme="works"] .page-numbers {
+  color: $blue_1b7fbd;
+}
+
+.pagination[data-theme="works"] .page-numbers:not(.dots, .current) {
+  border: 1px solid $blue_1b7fbd;
+}
+
+.pagination[data-theme="works"] .page-numbers.current {
+  color: $white;
+  background-color: $blue_1b7fbd;
+  border: 1px solid $blue_1b7fbd;
+}
+
+.pagination[data-theme="works"] .next.page-numbers,
+.pagination[data-theme="works"] .prev.page-numbers {
+  background-color: $white;
+  border: 1px solid $blue_1b7fbd;
+}
+
+.pagination[data-theme="works"] .next.page-numbers::after,
+.pagination[data-theme="works"] .prev.page-numbers::after {
+  border-color: $blue_1b7fbd;
+}
+
+@media (any-hover: hover) {
+  .pagination[data-theme="works"] .page-numbers:not(.dots, .current, .prev, .next):hover,
+  .pagination[data-theme="works"] .next.page-numbers:hover,
+  .pagination[data-theme="works"] .prev.page-numbers:hover {
+    color: $white;
+    background-color: $blue_1b7fbd;
+    border: 1px solid $blue_1b7fbd;
+  }
+}
+
+@media (any-hover: hover) {
+  .pagination[data-theme="works"] .next.page-numbers:hover::after,
+  .pagination[data-theme="works"] .prev.page-numbers:hover::after {
+    border-color: $white;
+  }
+}

@@ -4,9 +4,9 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { getNodeStatus, getYarnStatus } from "./utils/check-env.js";
 import { log } from "./utils/logger.js";
-import { projectRoot, THEME_NAME, validateThemeSlug } from "./utils/paths.js";
+import { projectRoot, THEME_NAME, validateThemeSlug, VITE_PORT } from "./utils/paths.js";
 import { resolveThemeConfig } from "./utils/project-config.js";
-import { isWordPressEnvRunning } from "./utils/wp-env.js";
+import { getWpEnvPort, isWordPressEnvRunning } from "./utils/wp-env.js";
 import { getPluginSyncDiff } from "./sync-wp-plugins.js";
 
 const MODULE = "doctor";
@@ -168,7 +168,7 @@ async function check_plugin_sync() {
 }
 
 async function collect_results() {
-  return [check_theme_slug(), check_node(), check_yarn(), check_docker(), check_docker_compose(), check_port("8888"), check_port("5173"), check_theme_dir_match(), await check_plugin_sync()];
+  return [check_theme_slug(), check_node(), check_yarn(), check_docker(), check_docker_compose(), check_port(String(getWpEnvPort())), check_port(String(VITE_PORT)), check_theme_dir_match(), await check_plugin_sync()];
 }
 
 function summarize(results) {

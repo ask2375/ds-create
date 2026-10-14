@@ -20,6 +20,12 @@ $padding-sp: 20px;
 // Google Fonts | Noto Sans JP
 $noto: "Noto Sans JP", "游ゴシック", yugothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", verdana, "メイリオ", meiryo, osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 
+// Google Fonts | Zen Kaku Gothic New（本文）
+$zen: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
+
+// Google Fonts | M PLUS Rounded 1c（見出し・ロゴ）
+$mplus: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif;
+
 // ---------------------------
 // 文字の太さ
 // ---------------------------
@@ -34,16 +40,22 @@ $black: 900;
 // ---------------------------
 // 色（同型色が複数ある場合は『$色_#xxxxxx』のように指定）
 // ---------------------------
-$white: #fff;
-$black_000000: #000;
-$black_0d2936: #0d2936; // 基本のテキストカラー
-$gray_f0f0f0: #f0f0f0; // 背景のグレー
-$gray_aaaaaf: #aaaaaf; // ボーダーのグレー
-$gray_808080: #808080; // サブテキストのグレー
-$green_408f95: #408f95; // アクセントカラー
-$blue_234f5e: #234f5e; // メインカラー
-$blue_0000ff: #00f; // サブカラー
-$orange_de8430: #de8430;
+$white: #ffffff;
+$black_000000: #000000;
+$black_0d2936: #0d2936;
+$navy_22304a: #22304a;
+$navy_3a4a68: #3a4a68;
+$gray_5b6b86: #5b6b86;
+$gray_8494ad: #8494ad;
+$skyblue_5ec8f5: #5ec8f5;
+$skyblue_9dd9f7: #9dd9f7;
+$skyblue_d5eefb: #d5eefb;
+$skyblue_eaf6fd: #eaf6fd;
+$skyblue_f3faff: #f3faff;
+$blue_1f9ad8: #1f9ad8;
+$blue_1b7fbd: #1b7fbd;
+$pink_ff7fb8: #ff7fb8;
+$pink_d43f86: #d43f86;
 
 // px → remへと変換し、最小値12pxを設ける
 @function maxrem($pixels) {

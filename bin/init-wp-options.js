@@ -171,28 +171,25 @@ if (!empty($data['options']) && is_array($data['options'])) {
   }
 }
 
-if (!empty($data['settings_only'])) {
-  WP_CLI::success('WordPress settings applied (theme + options only).');
-  return;
-}
-
 // 3. パーマリンク設定
 global $wp_rewrite;
 $should_flush = false;
+$permalink_flag = 'wp_template_permalink_initialized';
+$apply_permalink = empty($data['settings_only']) || !get_option($permalink_flag);
 
-if (isset($data['permalink_structure']) && trim((string) $data['permalink_structure']) !== '') {
+if ($apply_permalink && isset($data['permalink_structure']) && trim((string) $data['permalink_structure']) !== '') {
   $wp_rewrite->set_permalink_structure($data['permalink_structure']);
   WP_CLI::log("Permalink structure updated: {$data['permalink_structure']}");
   $should_flush = true;
 }
 
-if (isset($data['category_base']) && trim((string) $data['category_base']) !== '') {
+if ($apply_permalink && isset($data['category_base']) && trim((string) $data['category_base']) !== '') {
   $wp_rewrite->set_category_base(trim($data['category_base']));
   WP_CLI::log('Category base updated: ' . trim($data['category_base']));
   $should_flush = true;
 }
 
-if (isset($data['tag_base']) && trim((string) $data['tag_base']) !== '') {
+if ($apply_permalink && isset($data['tag_base']) && trim((string) $data['tag_base']) !== '') {
   $wp_rewrite->set_tag_base(trim($data['tag_base']));
   WP_CLI::log('Tag base updated: ' . trim($data['tag_base']));
   $should_flush = true;
@@ -203,6 +200,15 @@ if ($should_flush) {
   // .htaccess を書き込むと RewriteBase が壊れる。ソフトフラッシュでルールを再生成させる
   flush_rewrite_rules(false);
   WP_CLI::log('Rewrite rules flushed.');
+}
+
+if ($apply_permalink) {
+  update_option($permalink_flag, 1);
+}
+
+if (!empty($data['settings_only'])) {
+  WP_CLI::success('WordPress settings applied (theme + options + initial permalink).');
+  return;
 }
 
 // 4. フロントページ設定
@@ -374,6 +380,9 @@ function buildPayload(config) {
   if (SETTINGS_ONLY) {
     return {
       options: config.options || {},
+      permalink_structure: config.permalink_structure || "",
+      category_base: config.category_base || "",
+      tag_base: config.tag_base || "",
       theme_slug: THEME_NAME,
       settings_only: true,
     };

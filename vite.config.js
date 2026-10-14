@@ -4,19 +4,21 @@ import { defineConfig } from "vite";
 import { globSync } from "glob";
 import autoprefixer from "autoprefixer";
 import updateStyleCss from "./bin/update-wp-config.js";
-import { THEME_NAME } from "./bin/utils/paths.js";
+import { THEME_NAME, VITE_PORT, WP_ENV_PORT } from "./bin/utils/paths.js";
 import sassGlobImports from "vite-plugin-sass-glob-import";
 import liveReload from "vite-plugin-live-reload";
 import devManifest from "vite-plugin-dev-manifest";
 import convertAndOptimizeImages from "./bin/vite-plugin-convert-images.js";
+import cleanDevManifest from "./bin/vite-plugin-clean-dev-manifest.js";
+import printWpUrl from "./bin/vite-plugin-print-wp-url.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "src");
 const themeDir = resolve(__dirname, `wordpress/themes/${THEME_NAME}`);
 const isDev = process.env.NODE_ENV === "development";
 
-const imageConfig = {
-  format: "webp",
+export const imageConfig = {
+  format: "both",
   copyOriginal: false,
   optimize: { png: 80, jpeg: 80, jpg: 80, webp: 80, avif: 80 },
 };
@@ -34,15 +36,17 @@ export default defineConfig(({ mode }) => ({
   root,
   base: mode === "wp" ? "./" : "/",
   server: {
-    port: 5173,
+    // 案件別ポート（.wp-env.json の port - 3000）。strictPort で使用中なら別ポートへずれずエラーにする
+    port: VITE_PORT,
+    open: `http://localhost:${WP_ENV_PORT}/`,
     host: "localhost",
     cors: true,
-    strictPort: false,
+    strictPort: true,
     hmr: {
       protocol: "ws",
       host: "localhost",
     },
-    origin: mode == "wp" ? undefined : "http://localhost:5173",
+    origin: mode == "wp" ? undefined : `http://localhost:${VITE_PORT}`,
   },
   build: {
     manifest: true,
@@ -92,6 +96,8 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     devManifest(),
+    printWpUrl({ wpPort: WP_ENV_PORT }),
+    cleanDevManifest({ themeDir }),
     updateStyleCss(),
     sassGlobImports(),
     convertAndOptimizeImages({

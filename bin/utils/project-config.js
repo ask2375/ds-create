@@ -75,11 +75,19 @@ export function resolveThemeConfig() {
     };
   }
 
-  const theme_slug = validateThemeSlug(basename(project_root));
+  // config/project.json 未作成時はプロジェクトフォルダ名をテーマスラッグとして採用する
+  // （テンプレート複製直後の初回 `yarn wp-start` で update-wp-config.js がこの値から project.json を生成する）
+  const folder_name = basename(project_root);
+  let theme_slug;
+  try {
+    theme_slug = validateThemeSlug(folder_name);
+  } catch {
+    throw new Error(`プロジェクトフォルダ名「${folder_name}」はテーマスラッグに使用できません（半角英数・ハイフン・アンダースコア・ドットのみ、先頭は英数字）。フォルダ名を変更するか、\`yarn init:project\` で config/project.json を作成してください。`);
+  }
 
   return {
     themeSlug: theme_slug,
-    themeName: theme_slug,
+    themeName: createThemeName(theme_slug),
     textDomain: theme_slug,
     source: "basename",
   };

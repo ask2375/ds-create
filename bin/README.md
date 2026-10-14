@@ -1,7 +1,7 @@
 # bin/ ディレクトリ
 
 WordPress 開発環境のビルドと運用を支援するスクリプト・プラグインを格納しています。  
-テーマ名（`{THEME_NAME}`）は `config/project.json` の `themeSlug` が正本です。未作成時のみプロジェクトフォルダ名へフォールバックします。
+テーマ名（`{THEME_NAME}`）は `config/project.json` の `themeSlug` が正本です。未作成時のみプロジェクトフォルダ名へフォールバックします。テンプレートは `config/project.json` を同梱しないため、複製先での初回 `yarn wp-start`（`update-wp-config.js`）がフォルダ名から `config/project.json` を生成し、テーマディレクトリ・style.css・テーマ PHP 内の text domain をそのスラッグへ揃えます。
 
 ---
 
@@ -18,11 +18,13 @@ WordPress 開発環境のビルドと運用を支援するスクリプト・プ�
 | `import-contents.js` | CLI | `wordpress/uploads/backup.sql` から DB を退避後にリセット・インポート（`yarn wp-contents:import`、確認プロンプトあり） |
 | `check-env.js` | CLI | Node.js / Yarn の実行環境チェック |
 | `init-project.js` | CLI | `config/project.json` を対話作成し、テーマスラッグ・表示名・テキストドメインを設定（`yarn init:project`） |
-| `init-wp-options.js` | CLI | **WordPress の中身**の初期設定（オプション・固定ページ・シード投稿）。`--settings-only`（`yarn wp-settings:fix`）ではテーマ有効化とオプション適用だけを行い、`lifecycleScripts.afterStart` から `wp-env start` のたびに自動実行される。冪等 |
+| `init-wp-options.js` | CLI | **WordPress の中身**の初期設定（オプション・固定ページ・シード投稿）。`--settings-only`（`yarn wp-settings:fix`）ではテーマ有効化とオプション適用（パーマリンクは初回のみ）だけを行い、`lifecycleScripts.afterStart` から `wp-env start` のたびに自動実行される。冪等 |
 | `sync-wp-plugins.js` | CLI | 管理画面で追加したプラグインを `.wp-env.json` に同期（`yarn wp-plugins:sync`） |
 | `update-wp-config.js` | CLI / Vite Plugin | **テーマまわり・設定ファイル**の同期（.wp-env、style.css、DB のテーマ名） |
 | `validate-acf-json.js` | CLI | ACF フィールドグループ JSON の検証（`yarn validate:acf`） |
+| `vite-plugin-clean-dev-manifest.js` | Plugin | `manifest.dev.json` の mtime を 5 秒ごとに更新し、dev サーバー終了時に削除する。PHP 側の dev アセット配信の判定材料になる |
 | `vite-plugin-convert-images.js` | Plugin | 画像を WebP/AVIF に変換（開発時・ビルド時の両方。src と WordPress 双方へ出力） |
+| `vite-plugin-print-wp-url.js` | Plugin | `yarn dev` の起動バナーを WordPress（wp-env）の URL に差し替える。Vite 標準の Local 行（Vite dev サーバー自身のポート）は出力しない |
 | `watch-scss-globs.js` | CLI | SCSS の追加・削除を監視し、Vite の glob 展開を促す |
 
 ### utils/
@@ -76,7 +78,7 @@ WordPress 開発環境のビルドと運用を支援するスクリプト・プ�
 - **実行**: `yarn wp-init`（フル） / `yarn wp-settings:fix`（`--settings-only`）
 - **設定**: `config/wp-options.json`（未指定時はスクリプト内のデフォルト）
 - タイムゾーン・日付形式・パーマリンク・フロント/投稿ページ・追加固定ページ・シード投稿を作成。
-- **`--settings-only`（テーマ有効化 + オプション適用のみ）**: `.wp-env.json` の `lifecycleScripts.afterStart` の先頭から `wp-env start` のたびに自動実行される。目的は、外観＞テーマの有効テーマを `config/project.json` の `themeSlug` に、管理画面の各種初期値を `config/wp-options.json` の `options` に、毎起動で必ず揃えること。コンテナや DB が作り直されて WordPress 標準テーマ・標準オプションへ戻っても、次の起動で案件の設定に復帰する。パーマリンク・フロントページ・追加固定ページ・シード投稿はこのモードでは実行しない。起動のたびに走るため、利用者が管理画面で削除した固定ページや投稿が復活したり、フロントページ設定が上書きされたりする副作用を避ける必要があるため。フル実行が必要なときだけ `yarn wp-init` を使う。
+- **`--settings-only`（テーマ有効化 + オプション適用のみ）**: `.wp-env.json` の `lifecycleScripts.afterStart` の先頭から `wp-env start` のたびに自動実行される。目的は、外観＞テーマの有効テーマを `config/project.json` の `themeSlug` に、管理画面の各種初期値を `config/wp-options.json` の `options` に、毎起動で必ず揃えること。コンテナや DB が作り直されて WordPress 標準テーマ・標準オプションへ戻っても、次の起動で案件の設定に復帰する。パーマリンクは初回の 1 回だけ `config/wp-options.json` の `permalink_structure` / `category_base` / `tag_base` を適用し、オプション `wp_template_permalink_initialized` に適用済みの印を残す。以後の起動では印があるため適用せず、管理画面で変更したパーマリンクを上書きしない（フル実行の `yarn wp-init` は毎回適用する）。新規インストール時の WordPress 既定値「日付と投稿名」が残り続けるのを防ぐため。フロントページ・追加固定ページ・シード投稿はこのモードでは実行しない。起動のたびに走るため、利用者が管理画面で削除した固定ページや投稿が復活したり、フロントページ設定が上書きされたりする副作用を避ける必要があるため。フル実行が必要なときだけ `yarn wp-init` を使う。
 - **検索エンジンのインデックス（`blog_public`）**: デフォルトは `0`（管理画面「表示設定」の「検索エンジンがサイトをインデックスしないようにする」にチェックが入った状態）。制作中の開発環境を想定した初期値のため、本番公開時は `1` に戻すこと。
 - **1ページに表示する最大投稿数（`posts_per_page`）**: デフォルトは `1`。少ない投稿数でページネーションの動作を確認できるようにするための初期値で、案件に合わせて `config/wp-options.json` で変更する。
 - **追加固定ページ（`pages`）**: `config/wp-options.json` の `pages` 配列に指定した固定ページを「無ければ作成」する（デフォルト: お問い合わせページ `contact`）。テンプレートは `page-{slug}.php` がスラッグ一致で自動適用される
@@ -130,6 +132,16 @@ WordPress 開発環境のビルドと運用を支援するスクリプト・プ�
 - **実行**: `yarn validate:acf`
 - `wordpress/themes/{THEME_NAME}/acf-json/` 内の JSON を構文・必須キー・キー形式で検証。
 
+### vite-plugin-clean-dev-manifest.js
+
+- **使用**: `vite.config.js` からインポート（`apply: "serve"` のため開発サーバー起動時のみ有効）
+- **機能**:
+  - dev サーバー稼働中は `wordpress/themes/{THEME_NAME}/manifest.dev.json` の mtime を 5 秒ごとに更新する（heartbeat）
+  - dev サーバー終了時に `manifest.dev.json` を削除する。Vite が自前で処理しない SIGINT は当プラグインで受け、削除後に exit 130 で終了する
+- **PHP 側との関係**: `functions-lib/func-helpers.php` の `is_vite_dev_server_alive()` が `manifest.dev.json` の mtime を見て、20 秒以内なら dev サーバー稼働中と判定する。稼働中は Vite dev サーバーからアセットを配信し、それ以外はテーマ内のビルド済みアセットを配信する。
+- **注意**: 稼働判定に `httpServer` の close イベントは使わない。設定ファイル変更による dev サーバーの再起動でも発火し、稼働中に `manifest.dev.json` が削除されてしまうため。
+- **関連**: `bin/clean-dev-files.js` は `yarn build:wp` の後処理として、`manifest.dev.json` の `url` からポートを読み、dev サーバーが停止している場合に同ファイルを削除する。
+
 ### vite-plugin-convert-images.js
 
 - **使用**: `vite.config.js` からインポート（開発時・ビルド時の両方で有効）
@@ -141,6 +153,15 @@ WordPress 開発環境のビルドと運用を支援するスクリプト・プ�
 - **設定**:
   - `vite.config.js` の `convertImages({ format: "webp", copyOriginal: false, optimize: {...} })` で形式・元画像コピー有無・品質を指定
 - **使用ライブラリ**: Sharp ベースの独自実装（`vite-plugin-image-optimizer` は不使用）
+
+### vite-plugin-print-wp-url.js
+
+- **使用**: `vite.config.js` からインポート（`apply: "serve"` のため開発サーバー起動時のみ有効）
+- **機能**:
+  - `configureServer` で `server.printUrls` を差し替え、起動バナーに `➜ WordPress: http://localhost:{.wp-env.json の port}/` の 1 行だけを出力する
+  - Vite 標準の `Local` / `Network` 行は出力しない
+- **背景**: Vite dev サーバーが listen するポートは `.wp-env.json` の `port` から 3000 を引いた値（`bin/utils/paths.js` の `VITE_PORT`）である。このテンプレートは `.wp-env.json` に `port` を持たないため `WP_ENV_PORT` は 8888 にフォールバックし、Vite 側は 5888 になる。複製先で `.wp-env.json` に案件別の `port` を設定すれば、バナーと `server.open` の URL も自動的にその値へ追従する。Vite 側のポートは HMR とアセット配信（`vite.config.js` の `server.origin` と `manifest.dev.json`）のためだけに使うもので、PHP を処理しないためブラウザで開いても WordPress は表示されない。
+- **関連設定**: `vite.config.js` の `server.open` にも wp-env の URL（絶対 URL）を指定しており、`yarn dev` で自動的に開かれるのは wp-env 側になる。Vite は `server.open` が絶対 URL の場合、dev サーバーの URL を base とした解決を行っても絶対 URL 側が優先される。
 
 ### watch-scss-globs.js
 

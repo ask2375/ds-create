@@ -3,29 +3,25 @@
 @if $startFrom == sp {
   .inner {
     width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: rem(strip-unit($padding-sp));
-    padding-left: rem(strip-unit($padding-sp));
+    max-width: rem(540);
+    margin-inline: auto;
+    padding-inline: rem(strip-unit($padding-sp));
 
     @include mq("md") {
       max-width: rem(strip-unit($inner)) + rem(strip-unit($padding-pc)) * 2;
-      padding-right: rem(strip-unit($padding-pc));
-      padding-left: rem(strip-unit($padding-pc));
+      padding-inline: rem(strip-unit($padding-pc));
     }
   }
 } @else {
   .inner {
     width: 100%;
     max-width: rem(strip-unit($inner)) + rem(strip-unit($padding-pc)) * 2;
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: rem(strip-unit($padding-pc));
-    padding-left: rem(strip-unit($padding-pc));
+    margin-inline: auto;
+    padding-inline: rem(strip-unit($padding-pc));
 
     @include mq("md") {
-      padding-right: rem(strip-unit($padding-sp));
-      padding-left: rem(strip-unit($padding-sp));
+      max-width: rem(540);
+      padding-inline: rem(strip-unit($padding-sp));
     }
   }
 }

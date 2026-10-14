@@ -3,7 +3,7 @@ import { resolve } from "path";
 import { readJson, exists, writeFile, ensureDir } from "./utils/fs-utils.js";
 import { log, success, error } from "./utils/logger.js";
 import { projectRoot } from "./utils/paths.js";
-import { isWordPressEnvRunning, runWpCli } from "./utils/wp-env.js";
+import { getWpEnvSiteUrl, isWordPressEnvRunning, runWpCli } from "./utils/wp-env.js";
 
 const MODULE_NAME = "create-post";
 const UPLOADS_DIR = resolve(projectRoot, "wordpress/uploads");
@@ -213,7 +213,7 @@ async function main() {
 
     if (postId) {
       success(MODULE_NAME, `投稿を作成しました！投稿ID: ${postId}`);
-      log(MODULE_NAME, `投稿URL: http://localhost:8888/?p=${postId}`);
+      log(MODULE_NAME, `投稿URL: ${getWpEnvSiteUrl()}/?p=${postId}`);
     } else {
       error(MODULE_NAME, "投稿の作成に失敗しました");
     }
@@ -279,7 +279,7 @@ function createPostsFromJson(jsonPath) {
             index: postNumber,
             title: post.title,
             postId,
-            url: `http://localhost:8888/?p=${postId}`,
+            url: `${getWpEnvSiteUrl()}/?p=${postId}`,
           });
           success(MODULE_NAME, `  ✓ 作成成功 (ID: ${postId})`);
         } else {
@@ -353,7 +353,7 @@ if (args.length === 0) {
     });
     if (postId) {
       success(MODULE_NAME, `投稿を作成しました！投稿ID: ${postId}`);
-      log(MODULE_NAME, `投稿URL: http://localhost:8888/?p=${postId}`);
+      log(MODULE_NAME, `投稿URL: ${getWpEnvSiteUrl()}/?p=${postId}`);
     } else {
       error(MODULE_NAME, "投稿の作成に失敗しました");
     }

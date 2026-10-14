@@ -1,19 +1,5 @@
 @use "../global" as *;
 
-.l-header {
-  position: fixed;
-  inset: 0;
-  z-index: $z-index-header;
-}
-
-.l-main {
-  margin-block-start: rem(strip-unit($header-height-sp));
-
-  @include mq("md") {
-    margin-block-start: rem(strip-unit($header-height-pc));
-  }
-}
-
 .l-lower {
   margin-top: rem(150);
 

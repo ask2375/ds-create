@@ -39,6 +39,7 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
    yarn wp-start
    ```
 
+   - 初回実行時に `config/project.json` がプロジェクトフォルダ名（例: `omae-kensetsu`）から自動作成され、テーマディレクトリ `wordpress/themes/wp-template` のリネーム・`style.css` の Theme Name / Text Domain・テーマ PHP 内の text domain がまとめて書き換わります（変更予定を表示して `y/N` を確認します）。フォルダ名以外のスラッグにしたい場合は、先に `yarn init:project` を実行してください
    - 初回はWordPressコアとプラグインのダウンロードに時間がかかります（5-10分程度）
    - 完了すると `http://localhost:8888` でWordPressにアクセスできます
    - **言語設定は自動的に日本語になります**（`.wp-env.json` の `WPLANG: "ja"` 設定により）
@@ -59,7 +60,7 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
    yarn dev
    ```
 
-   - `http://localhost:5173` でVite開発サーバーが起動します
+   - Vite開発サーバーが起動します（ポートは `.wp-env.json` の `port` − 3000 で案件ごとに固定。本案件は `http://localhost:5892`）
    - このサーバーは起動したままでOKです
 
 6. **WordPress管理画面にログイン**（初回のみ）
@@ -79,6 +80,7 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
 
 - **Node.js**: v20.19.0以上（推奨: v22.12.0以上）
 - **パッケージマネージャー**: Yarn（npmは使用禁止）
+  - `.npmrc` の `engine-strict=true` と `package.json` の `engines.npm: "please-use-yarn"` により、`npm install` / `npm i <pkg>` は `EBADENGINE` で即エラーになる（サブフォルダからの実行も同様）。yarn 案件で npm が走ると `package-lock.json` が生成され `yarn.lock` と不整合になり、`yarn deploy` 等が「This package doesn't seem to be present in your lockfile」で止まるための予防措置
 
 ### WordPress開発の場合のみ
 
@@ -168,6 +170,7 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
 - **ファイル編集**: `src/` フォルダ内のファイルを編集すると、自動的にWordPressテーマに反映されます
 - **ビルド**: 本番環境用のビルドは `yarn build:wp` で実行します
 - **言語設定**: `.wp-env.json` の `WPLANG: "ja"` 設定により、`yarn wp-start` 時に自動的に日本語版WordPressがインストールされ、言語設定も日本語になります
+- **Adobe Fonts**: `wordpress/themes/{THEME_NAME}/functions.php` の `ADOBE_FONTS_KIT_ID` に Web プロジェクト ID（例: `ifh1pjk`）を入れると、`<head>` に JS 埋め込み（`use.typekit.net/<kit>.js` + `Typekit.load`）とプリコネクトが出力されます。空文字のままなら何も出力しません。日本語フォントの kit は CSS 埋め込み（`<kit>.css`）が 412 で拒否されるため、JS 埋め込み固定です
 
 ---
 
@@ -176,7 +179,7 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
 | 種別   | コマンド                          | 説明 |
 |--------|-----------------------------------|------|
 | 診断   | `yarn doctor`                     | Node / Yarn / Docker / ポート / テーマ設定を診断（困ったらまず実行） |
-| 開発   | `yarn dev`                        | 開発サーバー起動（Vite + SCSS監視）→ `localhost:5173` |
+| 開発   | `yarn dev`                        | 開発サーバー起動（Vite + SCSS監視）→ `localhost:<wp-env port − 3000>`（本案件 5892） |
 | ビルド | `yarn build:wp`                   | WordPress用ビルド → `wordpress/themes/{THEME_NAME}/` |
 | WP環境 | `yarn wp-start` / `yarn wp-stop`  | WordPress起動・停止 → `localhost:8888` |
 | WP環境 | `yarn wp-init`                    | WordPress初期設定（タイムゾーン・パーマリンク・フロントページ・シード投稿・**テーマ有効化**）。起動後に実行 |
@@ -187,9 +190,9 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
 | WP環境 | `yarn wp-lang:fix`                | 有効化中プラグインの日本語翻訳を導入（`yarn wp-start` 時に自動実行されるため通常は不要） |
 | WP環境 | `yarn wp-plugins:dev-state`       | 開発中に有効化してはいけないプラグイン（SiteGuard）を無効化（`yarn wp-start` 時に自動実行されるため通常は不要） |
 | WP環境 | `yarn wp-plugins:sync`            | 管理画面で追加したプラグインを `.wp-env.json` に同期 |
-| WP環境 | `yarn update:wp-config`           | テーマ名・ディレクトリをプロジェクト名に合わせて更新 |
+| WP環境 | `yarn update:wp-config`           | テーマ名・ディレクトリ・style.css・テーマ PHP の text domain を `config/project.json` の `themeSlug` に合わせて更新（`yarn wp-start` 時に自動実行。`config/project.json` 未作成時はフォルダ名から自動作成） |
 | WP環境 | `yarn wp-post:create`              | 投稿の一括作成（`post-data/` のJSONファイルを使用） |
-| 設定   | `yarn init:project`               | `config/project.json` を対話作成し、テーマスラッグ・表示名・テキストドメインを設定 |
+| 設定   | `yarn init:project`               | `config/project.json` を対話作成し、テーマスラッグ・表示名・テキストドメインを設定（フォルダ名と異なるスラッグにしたい場合のみ。初回 `yarn wp-start` の前に実行） |
 | 品質   | `yarn format`                     | リント・フォーマット一括（自動修正） |
 | 品質   | `yarn format:check`               | チェックのみ |
 | 品質   | `yarn validate:acf`               | ACF-JSON のバリデーション |
@@ -246,6 +249,22 @@ Vite + FLOCSS + WordPress を使用したモダンなWordPressテーマ開発環
   - `src/assets/styles/components/_c-xxx.scss` → `url("../../images/画像ファイル名.webp")`
   - PNG/JPG を指定した場合もビルド時に WebP に変換され、`wordpress/themes/{THEME_NAME}/assets/images/` に出力される（ハッシュなし）。ビルド後の CSS では Vite が出力先に合わせて自動で `url("../images/...")` に書き換える。パスが解決できないと `... didn't resolve at build time` 警告が出て画像が出力されないため、ビルドログで警告が無いことを確認すること
 
+### 写真の読み込みは `<picture>` で AVIF / WebP を出し分ける
+
+`vite.config.js` の `imageConfig.format` が `"both"` のため、PNG/JPG から WebP と AVIF の両方が生成される。写真（コンテンツ画像）は `<picture>` で出し分け、`<img>` には WebP を指定してフォールバックにする。SVG・アイコンは変換対象外なので `<img>` 単体でよい。
+
+```php
+<picture>
+  <source type="image/avif" srcset="<?php img_path("/top/mv-img.avif"); ?>" />
+  <img class="mv__bg-img" src="<?php img_path("/top/mv-img.webp"); ?>" width="1966" height="1310" alt="" />
+</picture>
+```
+
+- `<source>` は上から順に評価され、対応できる最初の 1 件が採用される。AVIF を先に書く
+- `class` / `width` / `height` / `alt` / `loading` / `fetchpriority` はすべて `<img>` 側に書く（`<source>` には書かない）
+- `_base.scss` に `picture { display: contents; }` を定義済み。`<picture>` は既定 `display: inline` でボックスを生成し、`img { width: 100%; height: 100% }` の解決基準を変えてレイアウトを崩すため、ボックスを消して `<img>` を親の直接の子として扱わせている。この宣言を消さないこと
+- 既存の `<img>` を後から `<picture>` で包む場合も、上記により矩形は変わらない
+
 OGP・favicon は管理画面（外観→カスタマイズ / SEO Simple Pack）で設定。
 
 ---
@@ -253,7 +272,7 @@ OGP・favicon は管理画面（外観→カスタマイズ / SEO Simple Pack）
 ## ビルドとWordPress
 
 - **WordPress用ビルド**: `yarn build:wp` → `wordpress/themes/{THEME_NAME}/assets/` に出力（`{THEME_NAME}` はプロジェクトルート名）
-- **開発時**: Vite（`localhost:5173`）から資産を読み込み（HMR対応）
+- **開発時**: Vite（`localhost:<wp-env port − 3000>`、本案件 5892）から資産を読み込み（HMR対応）。dev サーバーが停止していれば（manifest.dev.json の mtime が 20 秒以上前）ビルド済み資産へ自動フォールバック
 - **本番時**: ビルド済み資産を読み込み（ハッシュ付きファイル名でキャッシュバスティング）
 
 **管理画面**: `http://localhost:8888/wp-admin/`（ID: `user-0401` / パス: `user-0401`）
@@ -308,7 +327,46 @@ ls wordpress/themes/{THEME_NAME}/manifest.dev.json
 
 ### デプロイ方法
 
-#### 1. WPvividでのアップロード
+#### 1. `yarn deploy`（推奨）
+
+`bin/deploy.mjs` によるFTP差分デプロイ。ビルドから転送までを一括で行う。
+
+**推奨する理由**: 開発専用ファイル（`manifest.dev.json` / `.vite/`）を自動で除外するため、本番環境への混入が構造的に起きない。手動アップロードではこの除外を毎回人間が判断することになり、混入が起きる。
+
+**初回のみ**: `.env` を用意する（`指示書・仕様書/.env` またはプロジェクトルート直下。どちらも `.gitignore` 済み）。
+
+```bash
+FTP_HOST=ftp.example.com
+FTP_USER=username
+FTP_PASSWORD=password
+FTP_REMOTE_DIR=/public_html/wp-content/themes/{THEME_NAME}
+FTP_SECURE=false            # FTPS なら true（省略時 false）
+```
+
+```bash
+# 1. 転送・削除の予定を確認（接続はするが何も変更しない）
+yarn deploy:dry
+
+# 2. 問題なければ実行（yarn build:wp → 差分アップロード）
+yarn deploy
+```
+
+転送対象は `wordpress/themes/{THEME_NAME}/` の中身。アップロード後、ローカルに存在しないリモートファイルは削除される（`.htaccess` / `robots.txt` / `sitemap.xml` / `favicon.ico` / `.well-known` 等は保護リストで削除対象外）。
+
+差分判定は「リモートとのサイズ比較」に加えて「前回転送時の内容ハッシュ台帳（`.deploy-state.json`）との照合」で行う。サイズが偶然一致する書き換え（`#fff` → `#eee`、`20px` → `24px` 等）を取りこぼさないため。
+
+**転送されないファイル**（`bin/deploy.mjs` の `LOCAL_EXCLUDE`）:
+
+| 対象 | 除外する理由 |
+| --- | --- |
+| `manifest.dev.json` | `yarn dev` の稼働マーカー。開発環境判定に使う |
+| `.vite/` | ビルド成果物のmanifest。送らない場合は `enqueue_production_assets_fallback()` が同じアセットを読むため本番の表示は変わらない |
+| `WordPress関連ファイル/` | AI作業ファイル・DBバックアップ置き場（納品対象外） |
+| `.DS_Store` / `node_modules` / `.git` / `.playwright-cli` | 開発環境の生成物 |
+
+`.vite/` を除外できる前提は「`src/assets/js/` の `_` 始まり以外のエントリが `script.js` のみ」であること。エントリを増やした場合はフォールバック経路が `script.js` しか読まないため、`LOCAL_EXCLUDE` から `.vite` を外すこと（詳細は `bin/deploy.mjs` の該当コメント）。
+
+#### 2. WPvividでのアップロード
 
 ```bash
 # 1. ビルド実行
@@ -317,7 +375,9 @@ yarn build:wp
 # 2. WPvividでテーマをアップロード
 ```
 
-#### 2. FTPでの直接アップロード
+#### 3. FTPでの直接アップロード
+
+FTPクライアントで手作業アップロードする場合。`yarn deploy` が使えない環境向けの代替手段。
 
 ```bash
 # 1. ビルド実行
@@ -326,6 +386,13 @@ yarn build:wp
 # 2. FTPでテーマディレクトリをアップロード
 # wordpress/themes/{THEME_NAME}/ をアップロード
 ```
+
+**この方法を使う場合、次のファイル・フォルダを手動で除外すること**（`yarn deploy` なら自動で除外される）:
+
+- `manifest.dev.json`
+- `.vite/`
+- `WordPress関連ファイル/`
+- `.DS_Store`
 
 ※DBは別途アップロードが必要です
 
@@ -550,7 +617,7 @@ unable to get image 'mariadb:lts': Cannot connect to the Docker daemon at unix:/
    yarn dev
    ```
 
-3. **ブラウザで確認**: `http://localhost:5173` にアクセス
+3. **ブラウザで確認**: `http://localhost:5892`（`.wp-env.json` の port − 3000）にアクセス
 
 詳細は各ドキュメントを参照してください。
 

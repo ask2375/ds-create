@@ -1,0 +1,78 @@
+{
+    "key": "group_6b2f0c8e4d7a1",
+    "title": "制作実績カテゴリー設定",
+    "fields": [
+        {
+            "key": "field_6b2f0c8e4d7a2",
+            "label": "グループ",
+            "name": "works_filter_group",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "制作実績一覧の絞り込みでどのグループに表示するかを選びます。「制作方法」は絞り込みに出さず、詳細モーダルの「制作方法」欄に表示します。「なし」は絞り込みに出さず、詳細モーダルのカテゴリー欄にだけ表示します。",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "recommended": "イチオシ（単独表示）",
+                "site": "ジャンルで選ぶ",
+                "animation": "アニメーションで選ぶ",
+                "build": "制作方法",
+                "": "なし"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6b2f0c8e4d7a3",
+            "label": "並び順",
+            "name": "display_order",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "同じグループ内での表示順です。小さい数字ほど上に表示します。",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "works_category"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "制作実績のカテゴリーごとの絞り込みグループと表示順",
+    "show_in_rest": 0,
+    "modified": 1791572398
+}

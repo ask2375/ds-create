@@ -132,6 +132,72 @@ function parseStyleCssHeader(content) {
 }
 
 /**
+ * テーマディレクトリ配下の PHP ファイルを再帰的に列挙する
+ * @param {string} dir
+ * @returns {string[]}
+ */
+function listPhpFiles(dir) {
+  const results = [];
+  for (const entry of readdirSync(dir)) {
+    if (entry === "node_modules" || entry === "vendor") continue;
+    const entryPath = resolve(dir, entry);
+    const stats = statSync(entryPath);
+    if (stats.isDirectory()) {
+      results.push(...listPhpFiles(entryPath));
+    } else if (entry.endsWith(".php")) {
+      results.push(entryPath);
+    }
+  }
+  return results;
+}
+
+/**
+ * gettext 系関数の text domain 引数を置換する正規表現を生成する
+ * 対象: `__("...", "old")` / `esc_html_e("...", "old")` 等の末尾引数、`load_theme_textdomain("old", ...)` の先頭引数
+ * クラス名や URL など、引数位置以外に現れる同名文字列は置換しない
+ * @param {string} textDomain
+ * @returns {{ trailingArg: RegExp, loadThemeTextdomain: RegExp }}
+ */
+function createTextDomainPatterns(textDomain) {
+  const escaped = textDomain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return {
+    trailingArg: new RegExp(`,(\\s*)(['"])${escaped}\\2(\\s*)\\)`, "g"),
+    loadThemeTextdomain: new RegExp(`(load_theme_textdomain\\(\\s*)(['"])${escaped}\\2`, "g"),
+  };
+}
+
+/**
+ * テーマ PHP 内の text domain を置換する
+ * @param {string} themeDir
+ * @param {string} oldTextDomain
+ * @param {string} newTextDomain
+ * @param {{ dryRun?: boolean }} [options]
+ * @returns {number} 置換対象（または置換済み）ファイル数
+ */
+function replacePhpTextDomain(themeDir, oldTextDomain, newTextDomain, { dryRun = false } = {}) {
+  if (!oldTextDomain || oldTextDomain === newTextDomain || !exists(themeDir)) {
+    return 0;
+  }
+
+  const patterns = createTextDomainPatterns(oldTextDomain);
+  let changedFiles = 0;
+
+  for (const phpPath of listPhpFiles(themeDir)) {
+    const content = readFile(phpPath);
+    const replaced = content.replace(patterns.trailingArg, `,$1$2${newTextDomain}$2$3)`).replace(patterns.loadThemeTextdomain, `$1$2${newTextDomain}$2`);
+
+    if (replaced !== content) {
+      changedFiles++;
+      if (!dryRun) {
+        writeFile(phpPath, replaced);
+      }
+    }
+  }
+
+  return changedFiles;
+}
+
+/**
  * style.css の変更プレビューを取得する
  * @returns {string|null}
  */
@@ -155,6 +221,29 @@ function getStyleCssChangePreview() {
   }
 
   return null;
+}
+
+/**
+ * テーマ PHP 内 text domain の変更プレビューを取得する
+ * @returns {string|null}
+ */
+function getPhpTextDomainChangePreview() {
+  const themeConfig = resolveThemeConfig();
+  const styleCssPath = getCurrentStyleCssPath();
+
+  if (!exists(styleCssPath)) {
+    return null;
+  }
+
+  const header = parseStyleCssHeader(readFile(styleCssPath));
+  const themeDir = resolve(styleCssPath, "..");
+  const fileCount = replacePhpTextDomain(themeDir, header.textDomain, themeConfig.textDomain, { dryRun: true });
+
+  if (fileCount === 0) {
+    return null;
+  }
+
+  return `テーマ PHP の text domain: \`${header.textDomain}\`→\`${themeConfig.textDomain}\`（${fileCount} ファイル）`;
 }
 
 /**
@@ -254,6 +343,11 @@ function getChangePreviewItems() {
     const styleCssChange = getStyleCssChangePreview();
     if (styleCssChange) {
       items.push(styleCssChange);
+    }
+
+    const phpTextDomainChange = getPhpTextDomainChangePreview();
+    if (phpTextDomainChange) {
+      items.push(phpTextDomainChange);
     }
   }
 
@@ -452,6 +546,7 @@ export function updateStyleCssFile() {
 
     // 既存の style.css を読み込み
     let content = readFile(styleCssPath);
+    const previousTextDomain = parseStyleCssHeader(content).textDomain;
 
     // コメントブロックが /*! で始まっているか確認
     if (!content.trim().startsWith("/*!")) {
@@ -489,6 +584,12 @@ export function updateStyleCssFile() {
     if (content !== currentContent) {
       writeFile(styleCssPath, content);
       success("update-wp-config", `style.css を更新しました: Theme Name=${themeConfig.themeName}, Text Domain=${themeConfig.textDomain}`);
+    }
+
+    // style.css の Text Domain が変わった場合は、テーマ PHP 内の gettext 引数も追従させる
+    const phpFileCount = replacePhpTextDomain(resolve(styleCssPath, ".."), previousTextDomain, themeConfig.textDomain);
+    if (phpFileCount > 0) {
+      success("update-wp-config", `テーマ PHP の text domain を更新しました: ${previousTextDomain} → ${themeConfig.textDomain}（${phpFileCount} ファイル）`);
     }
 
     return true;

@@ -2,6 +2,7 @@
  * 共通のパス解決ユーティリティ
  */
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
 import { resolve, dirname, sep } from "path";
 import { resolveThemeConfig, validateThemeSlug } from "./project-config.js";
 
@@ -19,6 +20,7 @@ export { validateThemeSlug };
 // よく使うパス
 export const paths = {
   wpEnvConfig: resolve(projectRoot, ".wp-env.json"),
+  wpEnvOverrideConfig: resolve(projectRoot, ".wp-env.override.json"),
   styleCss: resolve(projectRoot, `wordpress/themes/${THEME_NAME}/style.css`),
   wpThemesDir: resolve(projectRoot, `wordpress/themes/${THEME_NAME}`),
   themeDir: resolve(projectRoot, `wordpress/themes/${THEME_NAME}`), // wpThemesDirのエイリアス
@@ -26,6 +28,22 @@ export const paths = {
   srcImagesDir: resolve(projectRoot, "src/assets/images"),
   styleScss: resolve(projectRoot, "src/assets/styles/style.scss"),
 };
+
+// wp-env のポート（.wp-env.json の port。未設定時は 8888）
+export const WP_ENV_PORT = readWpEnvPort();
+
+// Vite dev サーバーのポート（wp-env ポート - 3000。案件ごとに固定）
+export const VITE_PORT = WP_ENV_PORT - 3000;
+
+function readWpEnvPort() {
+  try {
+    const port = Number(JSON.parse(readFileSync(paths.wpEnvConfig, "utf8")).port);
+    if (Number.isInteger(port) && port > 0) return port;
+  } catch {
+    /* noop */
+  }
+  return 8888;
+}
 
 /**
  * OS依存のパス区切り文字（Windowsの `\`）を POSIX 形式の `/` に変換する

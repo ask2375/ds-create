@@ -2,7 +2,43 @@
  * WordPress @wordpress/env 関連の共通ユーティリティ
  */
 import { spawnSync } from "child_process";
-import { projectRoot } from "./paths.js";
+import { exists, readJson } from "./fs-utils.js";
+import { projectRoot, paths } from "./paths.js";
+
+// wp-env がポート未指定時に使う既定ポート
+const WP_ENV_DEFAULT_PORT = 8888;
+
+/**
+ * wp-env が公開しているポート番号を返す
+ * .wp-env.override.json の port を優先し、無ければ .wp-env.json、どちらにも無ければ既定の 8888 を返す
+ * @returns {number}
+ */
+export function getWpEnvPort() {
+  for (const configPath of [paths.wpEnvOverrideConfig, paths.wpEnvConfig]) {
+    if (!exists(configPath)) {
+      continue;
+    }
+
+    try {
+      const config = readJson(configPath);
+      if (Number.isInteger(config.port)) {
+        return config.port;
+      }
+    } catch {
+      // JSON が壊れている場合は次の候補にフォールバックする
+    }
+  }
+
+  return WP_ENV_DEFAULT_PORT;
+}
+
+/**
+ * wp-env のサイト URL を返す（末尾スラッシュなし）
+ * @returns {string}
+ */
+export function getWpEnvSiteUrl() {
+  return `http://localhost:${getWpEnvPort()}`;
+}
 
 /**
  * WordPress 環境（wp-env）が起動しているかどうかを判定する
