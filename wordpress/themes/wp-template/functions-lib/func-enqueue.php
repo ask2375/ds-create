@@ -37,6 +37,10 @@ function add_vite_scripts()
   // （第4引数を省略すると WordPress 本体のバージョンが &ver= として外部URLに露出する）
   wp_enqueue_style("google-fonts", "https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap", [], null);
 
+  if (is_front_page()) {
+    wp_enqueue_style("google-fonts-top", "https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap", ["google-fonts"], null);
+  }
+
   enqueue_adobe_fonts();
 }
 

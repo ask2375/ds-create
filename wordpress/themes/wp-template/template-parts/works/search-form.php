@@ -2,10 +2,10 @@
 $search_args = works_search_args();
 $filters = works_search_filters();
 $recommended = works_search_recommended();
-$archive_url = get_post_type_archive_link("works");
+$search_url = $args["action"] ?? get_post_type_archive_link("works") . "#works-search";
 ?>
 
-<form class="works__search" id="works-search" action="<?php echo esc_url($archive_url . "#works-search"); ?>" method="get" role="search" aria-label="制作実績検索">
+<form class="works__search js-works-ajax-form" id="works-search" action="<?php echo esc_url($search_url); ?>" method="get" role="search" aria-label="制作実績検索">
   <div class="works__search-keyword">
     <div class="works__search-keyword-field">
       <input type="search" id="works-keyword" name="keyword" class="works__search-keyword-input" placeholder="キーワードで検索" aria-label="キーワードで検索" value="<?php echo esc_attr($search_args["keyword"]); ?>" />
@@ -63,7 +63,7 @@ $archive_url = get_post_type_archive_link("works");
 
   <?php if (works_search_active_args()): ?>
     <div class="works__search-reset-wrapper">
-      <a href="<?php echo esc_url($archive_url . "#works-search"); ?>" class="works__search-reset">
+      <a href="<?php echo esc_url($search_url); ?>" class="works__search-reset js-works-ajax-link">
         <span class="works__search-reset-icon" aria-hidden="true"></span>
         <span class="works__search-reset-text">条件をリセット</span>
       </a>

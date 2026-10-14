@@ -47,6 +47,10 @@ body {
   font-weight: $regular;
   color: $navy_22304a;
   line-height: 1;
+  background-color: $blue_5194f1;
+  background-image: linear-gradient(rgba($white, 0.188) 1px, transparent 1px), linear-gradient(90deg, rgba($white, 0.188) 1px, transparent 1px), radial-gradient(ellipse at 42% 40%, $blue_77b5ff 0, $blue_65a7fa 42%, $blue_5194f1 100%);
+  background-size: rem(28) rem(28), rem(28) rem(28), 100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
 }
 
 // PCでは電話番号のクリックを無効にする

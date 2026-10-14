@@ -1,0 +1,110 @@
+@use "../global" as *;
+
+.top-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: rem(16);
+  padding-inline: rem(24);
+  background-color: $white;
+  border-bottom: 1px solid $blue_b9cdec;
+
+  @include mq("md") {
+    padding-block: rem(12);
+    padding-inline: rem(16);
+  }
+}
+
+[data-panel="mv"] .top-header {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.top-header__logo {
+  font-size: maxrem(20);
+  font-family: $noto;
+  font-weight: $bold;
+  color: $blue_2e518c;
+
+  @media (width >= 769px) and (width <= 1100px) {
+    font-size: maxrem(18);
+  }
+
+  @include mq("md") {
+    font-size: maxrem(16);
+  }
+}
+
+.top-header__logo-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.top-header__nav-items {
+  display: flex;
+  align-items: center;
+  gap: rem(20);
+
+  @media (width >= 769px) and (width <= 1100px) {
+    gap: rem(13);
+  }
+}
+
+.top-header__nav-item {
+  @include mq("md") {
+    display: none;
+  }
+}
+
+.top-header__nav-item--contact {
+  @include mq("md") {
+    display: block;
+  }
+}
+
+.top-header__nav-link {
+  font-size: maxrem(14);
+  font-family: $noto;
+  font-weight: $regular;
+  color: $blue_2e518c;
+  text-decoration: none;
+
+  @media (width >= 769px) and (width <= 1100px) {
+    font-size: maxrem(12);
+  }
+}
+
+.top-header__nav-link[aria-current="true"] {
+  font-weight: $bold;
+  text-decoration: underline;
+  text-decoration-color: $pink_e878b9;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.top-header__nav-btn {
+  display: inline-block;
+  font-size: maxrem(14);
+  font-family: $noto;
+  font-weight: $regular;
+  color: $white;
+  text-decoration: none;
+  padding-block: rem(8);
+  padding-inline: rem(16);
+  background-color: $pink_e878b9;
+  border: 1px solid $pink_c85c9e;
+  border-radius: rem(5);
+}
+
+.top-header__nav-btn[aria-current="true"] {
+  font-weight: $bold;
+  text-decoration: underline;
+  text-decoration-color: $pink_e878b9;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}

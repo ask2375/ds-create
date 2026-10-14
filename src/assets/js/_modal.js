@@ -284,6 +284,10 @@ const initializeModal = modal => {
 };
 
 // === 初期化処理 ===
-document.querySelectorAll(".modal").forEach(modal => {
-  initializeModal(modal);
-});
+export const initModals = (root = document) => {
+  root.querySelectorAll(".modal").forEach(modal => {
+    initializeModal(modal);
+  });
+};
+
+initModals();

@@ -1,0 +1,124 @@
+@use "../global" as *;
+
+.loop-img {
+  overflow: hidden;
+}
+
+.loop-img__wrapper {
+  display: flex;
+  align-items: center;
+  gap: rem(30);
+
+  @media screen and (max-width: 1921px) {
+    gap: rem(20);
+  }
+}
+
+.loop-img__wrapper--vertical {
+  flex-direction: column;
+  height: 100%;
+}
+
+.loop-img__items {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: rem(30);
+
+  @media screen and (max-width: 1921px) {
+    gap: rem(20);
+  }
+}
+
+// ── 左方向（右→左）──
+.loop-img__items--left {
+  animation: loop-scroll-left 300s infinite linear both;
+}
+
+// ── 左方向 高速（strengths等）──
+.loop-img__items--left-fast {
+  animation: loop-scroll-left 100s infinite linear both;
+}
+
+@keyframes loop-scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+// ── 右方向（左→右）──
+.loop-img__items--right {
+  animation: loop-scroll-right 100s infinite linear both;
+}
+
+@keyframes loop-scroll-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+// ── 上方向（下→上）──
+.loop-img__items--up {
+  flex-direction: column;
+  width: 100%;
+  animation: loop-scroll-up 400s infinite linear both;
+}
+
+@keyframes loop-scroll-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+
+// ── 下方向（上→下）──
+.loop-img__items--down {
+  flex-direction: column;
+  width: 100%;
+  animation: loop-scroll-down 400s infinite linear both;
+}
+
+@keyframes loop-scroll-down {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+.loop-img__item {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.loop-img__item img {
+  width: 100%;
+  display: block;
+}
+
+// ── テキストループ variant ──
+.loop-img__item--text {
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.loop-img__item--text img {
+  width: auto;
+  max-width: none;
+  height: 100%;
+  object-fit: contain;
+}
+
+.loop-img--sticky {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100lvh;
+}
+
+.loop-img--sp-hidden {
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.loop-img--sp-small {
+  @media screen and (max-width: 768px) {
+    .loop-img__item {
+      width: 70%;
+    }
+  }
+}
