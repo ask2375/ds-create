@@ -634,3 +634,4 @@ unable to get image 'mariadb:lts': Cannot connect to the Docker daemon at unix:/
 - テンプレート自体の再配布・再販売は禁止
 
 詳細は [LICENSE](./LICENSE) ファイルをご確認ください。
+# ds-create
