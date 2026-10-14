@@ -1,0 +1,82 @@
+@use "../global" as *;
+
+.top-contact__box {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  max-width: rem(860);
+  margin-block: rem(16) rem(15);
+  padding-block: rem(44) rem(46);
+  padding-inline: rem(28);
+  color: $blue_234781;
+  text-align: center;
+  background-color: $white;
+  border: 2px solid $blue_7594c7;
+  border-radius: rem(14) rem(28) rem(14) rem(28);
+  box-shadow:
+    rem(5) rem(6) 0 $pink_f1a9d3,
+    rem(9) rem(11) 0 $blue_6d98dd;
+  isolation: isolate;
+
+  @include mq("md") {
+    margin-top: rem(8);
+    padding-block: rem(32) rem(37);
+    padding-inline: rem(20);
+  }
+}
+
+.top-contact__mark {
+  display: grid;
+  place-items: center;
+  transform: rotate(-5deg);
+  color: $pink_d77bb3;
+  width: rem(72);
+  height: rem(61);
+  margin-inline: auto;
+  margin-bottom: rem(23);
+  background-color: $white_fff0f8;
+  border: 2px solid $pink_efadd4;
+  border-radius: rem(15);
+}
+
+.top-contact__mark::before {
+  content: "";
+  width: rem(38);
+  height: rem(38);
+  background-color: currentcolor;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.top-contact__invitation {
+  font-size: maxrem(24);
+  font-family: $mplus;
+  font-weight: $extrabold;
+  color: $blue_234781;
+  line-height: 1.85;
+  margin-bottom: rem(17);
+
+  @include mq("md") {
+    font-size: maxrem(19);
+  }
+}
+
+.top-contact__invitation-strong {
+  font-size: maxrem(29);
+  font-weight: $black;
+
+  @include mq("md") {
+    font-size: maxrem(21);
+  }
+}
+
+.top-contact__text {
+  font-size: maxrem(13);
+  font-family: $noto;
+  font-weight: $regular;
+  color: $blue_7284a1;
+  margin-bottom: rem(30);
+
+  @include mq("md") {
+    font-size: maxrem(12);
+  }
+}

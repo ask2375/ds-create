@@ -1,0 +1,116 @@
+@use "../global" as *;
+
+.home {
+  font-size: maxrem(16);
+  font-family: $noto;
+  color: $gray_333333;
+  line-height: 1.8;
+  overflow: hidden;
+
+  @include mq("md") {
+    font-size: maxrem(15);
+    line-height: 1.7;
+  }
+}
+
+.top-world {
+  position: fixed;
+  inset: 0;
+  overflow: clip;
+}
+
+.top-world__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-100vw, -100svh);
+  display: grid;
+  grid-template-columns: repeat(3, 100vw);
+  grid-template-rows: repeat(4, 100svh);
+  width: 300vw;
+  height: 400svh;
+}
+
+.top-world__inner.is-ready {
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.top-world__panel {
+  --section-accent: #{$mint_78cdbd};
+  --section-tint: #{$green_e9f8f3};
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: $blue_234781;
+  background-color: $blue_5194f1;
+  background-image: linear-gradient(rgba($white, 0.188) 1px, transparent 1px), linear-gradient(90deg, rgba($white, 0.188) 1px, transparent 1px), radial-gradient(ellipse at 42% 40%, $blue_77b5ff 0, $blue_65a7fa 42%, $blue_5194f1 100%);
+  background-size: rem(28) rem(28), rem(28) rem(28), 100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.top-world__panel--features {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.top-world__panel--service {
+  --section-accent: #{$blue_88b9f4};
+  --section-tint: #{$blue_eaf3ff};
+
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.top-world__panel--contact {
+  --section-accent: #{$pink_ef8dc8};
+  --section-tint: #{$white_fff0f8};
+
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.top-world__panel--mv {
+  display: block;
+  grid-column: 2;
+  grid-row: 2;
+  color: inherit;
+  background-color: $blue_60a1f7;
+  background-image: none;
+  overflow: hidden;
+
+  @include mq("md") {
+    overflow-y: auto;
+  }
+}
+
+.top-world__panel--about {
+  --section-accent: #{$purple_b0a0e5};
+  --section-tint: #{$purple_f2edff};
+
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.top-world__panel--works {
+  --section-accent: #{$pink_ef9bd1};
+  --section-tint: #{$white_fff0f9};
+
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.home :is(a, button):focus-visible {
+  outline: 3px solid $pink_ec599f;
+  outline-offset: 5px;
+}
+
+.home [tabindex="-1"]:focus {
+  outline: none;
+}

@@ -1,0 +1,37 @@
+@use "../global" as *;
+
+[data-icon="star"] {
+  --icon: url("../../images/common/icon-star.svg");
+}
+
+[data-icon="bolt"] {
+  --icon: url("../../images/common/icon-bolt.svg");
+}
+
+[data-icon="code"] {
+  --icon: url("../../images/common/icon-code.svg");
+}
+
+[data-icon="grid"] {
+  --icon: url("../../images/common/icon-grid.svg");
+}
+
+[data-icon="user"] {
+  --icon: url("../../images/common/icon-user.svg");
+}
+
+[data-icon="mail"] {
+  --icon: url("../../images/common/icon-mail.svg");
+}
+
+[data-icon="arrow"] {
+  --icon: url("../../images/common/icon-arrow.svg");
+}
+
+[data-icon="spark"] {
+  --icon: url("../../images/common/icon-spark.svg");
+}
+
+[data-icon="play"] {
+  --icon: url("../../images/common/icon-play.svg");
+}

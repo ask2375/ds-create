@@ -163,6 +163,20 @@ function works_search_archive_query($query)
 
   $args = works_search_args();
 
+  $tax_query = works_search_tax_query($args);
+  if ($tax_query) {
+    $query->set("tax_query", $tax_query);
+  }
+
+  if ($args["keyword"] !== "") {
+    $query->set("works_search_keyword", $args["keyword"]);
+  }
+}
+add_action("pre_get_posts", "works_search_archive_query");
+
+// 検索条件から tax_query を組み立てる（一覧のメインクエリとトップの制作実績で共用）
+function works_search_tax_query($args)
+{
   $tax_query = [];
   foreach (works_search_filters() as $param => $conf) {
     if ($args[$param] === "") {
@@ -185,20 +199,13 @@ function works_search_archive_query($query)
   if (count($tax_query) > 1) {
     $tax_query["relation"] = "AND";
   }
-  if ($tax_query) {
-    $query->set("tax_query", $tax_query);
-  }
-
-  if ($args["keyword"] !== "") {
-    $query->set("works_search_keyword", $args["keyword"]);
-  }
+  return $tax_query;
 }
-add_action("pre_get_posts", "works_search_archive_query");
 
-// キーワード検索のフィルタは works 一覧のキーワード検索時のみ発動する
+// キーワード検索のフィルタは works 一覧のメインクエリと、works_search_custom を付けたクエリ（トップの制作実績）のキーワード検索時のみ発動する
 function works_search_is_keyword_query($query)
 {
-  if (is_admin() || !$query->is_main_query()) {
+  if (is_admin() || (!$query->is_main_query() && !$query->get("works_search_custom"))) {
     return false;
   }
   if ($query->get("post_type") !== "works") {
