@@ -42,7 +42,7 @@
 			</div>
 
 			<div class="works__note-wrapper">
-				<p class="works__note-text">※掲載している実績はすべて、<wbr>Web制作会社さまからご依頼いただき、<wbr>制作を担当したものです。</p>
+				<p class="works__note-text">※掲載している制作実績は、<wbr>すべてWeb制作会社さまからご依頼いただき、<wbr>制作を担当したものです。</p>
 			</div>
 		</div>
 	</section>

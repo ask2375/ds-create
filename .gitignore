@@ -210,3 +210,8 @@ pixelmatch
 
 # anime-create スキルの案件ローカル設定（環境固有のため管理外）
 anime.config.local.md
+
+# ============================================
+# Live2D Cubism Core（Live2D 専有ライセンス。公開リポジトリへコミットしない）
+# ============================================
+wordpress/themes/*/assets/live2d-character/vendor/live2dcubismcore.min.js

@@ -7,7 +7,6 @@ $services = [
 ?>
 <section class="top-world__panel top-world__panel--service js-world-panel" id="service" aria-labelledby="service-title" data-col="1" data-row="2">
   <div class="top-panel__inner top-service">
-    <p class="top-panel__kicker"><span class="top-panel__kicker-label" data-icon="code">service</span><span class="top-panel__kicker-number">02</span></p>
     <h2 class="top-panel__title js-world-title" id="service-title" tabindex="-1">お役に立てること</h2>
     <p class="top-panel__lead">企画からリリースまで、Webサイト制作に必要な3つの領域をカバーします。</p>
     <ul class="top-service__cards">

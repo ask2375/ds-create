@@ -98,7 +98,8 @@ function works_search_register_taxonomies()
 add_action("init", "works_search_register_taxonomies", 0);
 
 // 現在の検索条件をサニタイズして返す
-function works_search_args()
+// $recommended_default が true のとき（トップの制作実績）は、イチオシ未指定をオンとして扱い、"0" でオフにする
+function works_search_args($recommended_default = false)
 {
   $args = [
     "keyword" => isset($_GET["keyword"]) ? sanitize_text_field(wp_unslash($_GET["keyword"])) : "",
@@ -109,14 +110,15 @@ function works_search_args()
     $args[$param] = $term && works_search_term_group($term) === $conf["group"] ? $slug : "";
   }
   $recommended = works_search_recommended();
-  $args[$recommended["param"]] = isset($_GET[$recommended["param"]]) && "1" === (string) $_GET[$recommended["param"]] ? "1" : "";
+  $recommended_value = isset($_GET[$recommended["param"]]) ? (string) $_GET[$recommended["param"]] : ($recommended_default ? "1" : "");
+  $args[$recommended["param"]] = "1" === $recommended_value ? "1" : "";
   return $args;
 }
 
 // 空でない検索条件だけを返す
-function works_search_active_args()
+function works_search_active_args($recommended_default = false)
 {
-  return array_filter(works_search_args(), function ($value) {
+  return array_filter(works_search_args($recommended_default), function ($value) {
     return $value !== "";
   });
 }

@@ -19,7 +19,7 @@
     0 rem(24) rem(70) rgba($blue_153e79, 0.22);
   overflow: hidden;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     width: calc(100% - #{rem(24)});
     max-height: 90svh;
     border-radius: rem(17);
@@ -40,16 +40,16 @@
 
 .top-dialog__header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
   gap: rem(20);
   padding-block: rem(23) rem(20);
   padding-inline: rem(28);
   background-color: $white_f6faff;
   border-bottom: 1px solid $blue_d5e1f6;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     gap: rem(12);
     padding-block: rem(17) rem(15);
     padding-inline: rem(17);
@@ -65,7 +65,6 @@
   line-height: 1.5;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: rem(4);
 }
 
 .top-dialog__title {
@@ -74,14 +73,15 @@
   font-weight: $black;
   color: $blue_234781;
   line-height: 1.55;
+  margin-top: rem(4);
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     font-size: maxrem(17);
   }
 }
 
 .top-dialog__close-form {
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     flex-shrink: 0;
   }
 }
@@ -99,7 +99,7 @@
   border-radius: 100vmax;
   transition: opacity 0.3s;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     width: rem(34);
     height: rem(34);
   }
@@ -115,7 +115,7 @@
   margin: auto;
   background-color: currentcolor;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     width: rem(13);
   }
 }
@@ -136,7 +136,7 @@
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     font-size: maxrem(13);
     padding-block: rem(20) rem(24);
     padding-inline: rem(18);
@@ -148,18 +148,17 @@
   font-family: $noto;
   font-weight: $medium;
   color: $blue_4b648d;
-  margin-bottom: rem(24);
 }
 
 .top-dialog__footer {
   flex-shrink: 0;
+  text-align: center;
   padding-block: rem(15) rem(19);
   padding-inline: rem(28);
-  text-align: center;
   background-color: $white_f9fbff;
   border-top: 1px solid $blue_d5e1f6;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     padding-block: rem(13) rem(16);
     padding-inline: rem(18);
   }
@@ -200,8 +199,9 @@
 
 .top-dialog__cards {
   display: grid;
-  list-style: none;
   gap: rem(17);
+  list-style: none;
+  margin-top: rem(24);
 }
 
 .top-dialog__card {
@@ -214,7 +214,7 @@
   border: 1px solid $blue_cbdcf3;
   border-radius: rem(16);
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     grid-template-columns: rem(37) minmax(0, 1fr);
     gap: rem(12);
     padding-block: rem(17);
@@ -237,7 +237,7 @@
   border-radius: rem(13);
   box-shadow: 0 2px 0 $blue_bdd4ee;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     font-size: maxrem(15);
     width: rem(36);
     height: rem(36);
@@ -261,18 +261,22 @@
   font-weight: $black;
   color: $blue_234781;
   line-height: 1.5;
-  margin-bottom: rem(9);
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     font-size: maxrem(16);
   }
 }
 
-.top-dialog__service-items {
-  padding-inline-start: 1.3em;
-  list-style: disc;
+.top-dialog__service-text {
+  margin-top: rem(9);
+}
 
-  @media (width <= 600px) {
+.top-dialog__service-items {
+  list-style: disc;
+  margin-top: rem(9);
+  padding-inline-start: 1.3em;
+
+  @media screen and (max-width: 600px) {
     font-size: maxrem(12);
   }
 }
@@ -283,6 +287,7 @@
 
 .top-dialog__profile {
   display: grid;
+  margin-top: rem(24);
   border-top: 1px solid $blue_dbe5f5;
 }
 
@@ -294,7 +299,7 @@
   padding-inline: rem(4);
   border-bottom: 1px solid $blue_dbe5f5;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     grid-template-columns: rem(74) minmax(0, 1fr);
     gap: rem(12);
   }
@@ -306,7 +311,7 @@
   font-weight: $medium;
   color: $blue_6a80a4;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     font-size: 11px;
   }
 }
@@ -329,14 +334,14 @@
   color: $blue_234781;
   line-height: 1.5;
   margin-top: rem(28);
-  margin-bottom: rem(18);
 }
 
 .top-dialog__list-items {
-  padding-inline-start: rem(19);
   list-style: none;
+  margin-top: rem(18);
+  padding-inline-start: rem(19);
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     padding-inline-start: rem(9);
   }
 }
@@ -347,7 +352,7 @@
   padding-inline-start: rem(25);
   border-left: 2px solid $blue_c7d8f4;
 
-  @media (width <= 600px) {
+  @media screen and (max-width: 600px) {
     padding-inline-start: rem(18);
   }
 }
@@ -384,7 +389,7 @@
   font-weight: $extrabold;
   color: $blue_234781;
   line-height: 1.7;
-  margin-block: rem(5);
+  margin-top: rem(5);
 }
 
 .top-dialog__history-text {
@@ -392,6 +397,7 @@
   font-family: $noto;
   font-weight: $medium;
   color: $blue_566f96;
+  margin-top: rem(5);
 }
 
 .top-dialog__note {

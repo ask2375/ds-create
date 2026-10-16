@@ -45,12 +45,8 @@
 body {
   font-family: $zen;
   font-weight: $regular;
-  color: $navy_22304a;
+  color: $gray_494b4f;
   line-height: 1;
-  background-color: $blue_5194f1;
-  background-image: linear-gradient(rgba($white, 0.188) 1px, transparent 1px), linear-gradient(90deg, rgba($white, 0.188) 1px, transparent 1px), radial-gradient(ellipse at 42% 40%, $blue_77b5ff 0, $blue_65a7fa 42%, $blue_5194f1 100%);
-  background-size: rem(28) rem(28), rem(28) rem(28), 100% 100%;
-  background-repeat: repeat, repeat, no-repeat;
 }
 
 // PCでは電話番号のクリックを無効にする
@@ -100,6 +96,11 @@ a:hover {
   outline: none;
 }
 
+.home :is(a, button):focus-visible {
+  outline: 3px solid $pink_ec599f;
+  outline-offset: 5px;
+}
+
 // フォームのデフォルトのフォントサイズを16pxにする（16px未満だとiosでズームされてしまうため）
 :where(input, select, textarea) {
   font-size: 1rem; /* = 16px */
@@ -113,10 +114,36 @@ textarea {
 /* ~~~~~ コンテンツ量が少なく短いページ（404、サンクスページなど）でもフッターを最下部に表示する ここから ~~~~~  */
 
 /* HTMLの階層構造で適宜クラス名は変更する */
-.content-wrapper {
+.body-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100svh;
+  background-color: $blue_5194f1;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.body-container::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(ellipse at 54% 38%, $blue_77b5ff 0, $blue_65a7fa 42%, $blue_5194f1 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.body-container::after {
+  @include perspective-grid;
+
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  z-index: -1;
+  pointer-events: none;
 }
 
 main {

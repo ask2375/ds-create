@@ -39,6 +39,12 @@ function add_vite_scripts()
 
   if (is_front_page()) {
     wp_enqueue_style("google-fonts-top", "https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap", ["google-fonts"], null);
+
+    $live2d_dir = get_theme_file_uri("assets/live2d-character");
+    wp_enqueue_script("live2d-core", "$live2d_dir/vendor/live2dcubismcore.min.js", [], null, true);
+    wp_enqueue_script("pixi", "$live2d_dir/vendor/pixi.min.js", [], null, true);
+    wp_enqueue_script("pixi-live2d", "$live2d_dir/vendor/pixi-live2d-display.cubism4.min.js", ["pixi", "live2d-core"], null, true);
+    wp_enqueue_script("live2d-character", "$live2d_dir/live2d-character.js", ["pixi-live2d"], get_file_version(get_theme_file_path("assets/live2d-character/live2d-character.js")), true);
   }
 
   enqueue_adobe_fonts();
