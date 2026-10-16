@@ -11,7 +11,7 @@ $mv_holo_verticals = [
   ["modifier" => "left", "x" => "53", "size" => 25, "text" => "想いをカタチに。　 くりえいてぃぶな　 ", "speed" => "-13", "phase" => ".6"],
 ];
 ?>
-<section class="top-world__panel top-world__panel--mv top-mv js-world-panel" id="mv" data-col="1" data-row="1" aria-labelledby="hero-title">
+<section class="top-world__panel top-world__panel--mv top-mv js-world-panel" id="mv" aria-labelledby="hero-title">
   <div class="top-mv__layout">
     <svg class="top-mv__holo top-mv__holo--base" viewBox="0 0 1000 800" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       <defs>
@@ -49,7 +49,7 @@ $mv_holo_verticals = [
       <div class="top-mv__center">
         <p class="top-mv__status">あそびゴコロ 実装中！</p>
         <div class="top-mv__title-wrapper">
-          <h1 class="top-mv__title js-world-title" id="hero-title" tabindex="-1"><span class="top-mv__title-line">ディエス<span class="top-mv__title-dot">・</span></span><span class="top-mv__title-line">クリエイト</span></h1>
+          <h1 class="top-mv__title" id="hero-title" tabindex="-1"><span class="top-mv__title-line">ディエス<span class="top-mv__title-dot">・</span></span><span class="top-mv__title-line">クリエイト</span></h1>
         </div>
         <div class="top-mv__message">
           <p class="top-mv__idea">そのアイデアに、<br>ちょっと心おどる仕掛けを</p>

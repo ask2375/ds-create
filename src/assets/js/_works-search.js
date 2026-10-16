@@ -18,7 +18,7 @@ const initWorksFilters = (root = document) => {
     const items = Array.from(filter.querySelectorAll(".js-works-filter-item"));
     if (!toggle || !list || !input || items.length === 0) return;
 
-    const current = toggle.querySelector(".works__search-filter-current");
+    const current = toggle.querySelector(".js-works-filter-current");
 
     const open = () => {
       closeAllFilters(filter);
@@ -112,6 +112,7 @@ const loadWorksResults = async (container, url, { focusForm = false } = {}) => {
     container.replaceWith(next);
     initWorksFilters(next);
     initModals(next);
+    document.dispatchEvent(new CustomEvent("works:replaced", { detail: { root: next } }));
     if (focusIndex >= 0) next.querySelectorAll(focusTargets)[focusIndex]?.focus({ preventScroll: true });
     history.replaceState(history.state, "", `${url.pathname}${url.search}${location.hash}`);
     if (focusForm) next.querySelector(".works__search")?.scrollIntoView({ block: "start" });

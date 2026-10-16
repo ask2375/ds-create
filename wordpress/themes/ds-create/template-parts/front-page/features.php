@@ -6,9 +6,9 @@ $features = [
   ["no" => "04", "icon" => "star", "label" => "management", "title" => "電気エンジニア9年で培った進行管理力", "text" => "段取り・関係者との連携・期日厳守。前職で身につけた仕事の進め方で、安心してお任せいただける進行をお約束します。"],
 ];
 ?>
-<section class="top-world__panel top-world__panel--features js-world-panel" id="features" aria-labelledby="features-title" data-col="1" data-row="3">
+<section class="top-world__panel top-world__panel--features js-world-panel" id="features" aria-labelledby="features-title">
   <div class="top-panel__inner top-features">
-    <h2 class="top-panel__title js-world-title" id="features-title" tabindex="-1">特徴・強み</h2>
+    <h2 class="top-panel__title" id="features-title" tabindex="-1">特徴・強み</h2>
     <p class="top-panel__lead">「動き」と「確かさ」を両立できる理由があります。</p>
     <ol class="top-features__items">
       <?php foreach ($features as $feature): ?>
