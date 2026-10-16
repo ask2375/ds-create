@@ -68,6 +68,10 @@
   -webkit-line-clamp: 3; /* 表示する行数 */
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  @include mq("md") {
+    font-size: maxrem(16);
+  }
 }
 
 .works-card__list-items {

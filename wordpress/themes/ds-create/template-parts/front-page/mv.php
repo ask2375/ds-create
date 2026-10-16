@@ -10,13 +10,6 @@ $mv_holo_verticals = [
   ["modifier" => "right", "x" => "948", "size" => 29, "text" => "ていねいな、あそびゴコロを。　 ", "speed" => "16", "phase" => ".15"],
   ["modifier" => "left", "x" => "53", "size" => 25, "text" => "想いをカタチに。　 くりえいてぃぶな　 ", "speed" => "-13", "phase" => ".6"],
 ];
-$mv_menu_items = [
-  ["id" => "features", "en" => "features", "label" => "特徴・強み", "icon" => "star", "theme" => "red"],
-  ["id" => "service", "en" => "service", "label" => "お役に立てること", "icon" => "code", "theme" => "orange"],
-  ["id" => "works", "en" => "works", "label" => "制作実績", "icon" => "grid", "theme" => "yellow"],
-  ["id" => "about", "en" => "about", "label" => "自己紹介", "icon" => "user", "theme" => "blue"],
-  ["id" => "contact", "en" => "contact", "label" => "お問い合わせ", "icon" => "mail", "theme" => "green"],
-];
 ?>
 <section class="top-world__panel top-world__panel--mv top-mv js-world-panel" id="mv" data-col="1" data-row="1" aria-labelledby="hero-title">
   <div class="top-mv__layout">
@@ -71,31 +64,5 @@ $mv_menu_items = [
       </div>
     </div>
 
-    <aside class="top-mv__sidebar js-mv-sidebar">
-      <div class="top-mv__notebook" aria-hidden="true">
-        <div class="top-mv__notebook-sheet top-mv__notebook-sheet--blue"></div>
-        <div class="top-mv__notebook-sheet top-mv__notebook-sheet--pink"></div>
-        <div class="top-mv__notebook-sheet top-mv__notebook-sheet--paper"></div>
-      </div>
-      <ul class="top-mv__ring-items" aria-hidden="true">
-        <?php for ($ring = 0; $ring < 13; $ring++): ?>
-          <li class="top-mv__ring-item"></li>
-        <?php endfor; ?>
-      </ul>
-      <nav class="top-mv__menu top-menu js-mv-menu" aria-label="メインメニュー">
-        <div class="top-menu__brand"><img class="top-menu__brand-img" src="<?php img_path("/common/logo.svg"); ?>" width="546" height="100" alt="ディエス・クリエイト" fetchpriority="high"></div>
-        <ul class="top-menu__items">
-          <?php foreach ($mv_menu_items as $menu_item): ?>
-            <li class="top-menu__item">
-              <button class="top-menu__btn js-world-link" type="button" data-go="<?php echo esc_attr($menu_item["id"]); ?>">
-                <span class="top-menu__icon top-menu__icon--<?php echo esc_attr($menu_item["theme"]); ?>" data-icon="<?php echo esc_attr($menu_item["icon"]); ?>" aria-hidden="true"></span>
-                <span class="top-menu__label"><span class="top-menu__label-en"><?php echo esc_html($menu_item["en"]); ?></span><span class="top-menu__label-ja"><?php echo esc_html($menu_item["label"]); ?></span></span>
-                <span class="top-menu__direction" aria-hidden="true"></span>
-              </button>
-            </li>
-          <?php endforeach; ?>
-        </ul>
-      </nav>
-    </aside>
   </div>
 </section>

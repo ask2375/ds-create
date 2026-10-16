@@ -150,27 +150,3 @@
     0 rem(4) 0 $pink_e4a9d1,
     0 rem(5) 0 1px $pink_b26699;
 }
-
-.top-panel__footer {
-  flex-shrink: 0;
-  padding-block: rem(16);
-  padding-inline: rem(24);
-  background-color: $white;
-  border-top: 1px solid $blue_bdcde7;
-
-  @include mq("md") {
-    padding-inline: rem(64);
-  }
-}
-
-.top-panel__copyright {
-  font-size: 11px;
-  font-family: $noto;
-  font-weight: $regular;
-  color: $blue_7187a8;
-  text-align: center;
-}
-
-.top-panel__copyright small {
-  font-size: inherit;
-}

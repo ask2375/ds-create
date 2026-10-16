@@ -1,0 +1,24 @@
+@use "../global" as *;
+
+.footer {
+  padding-block: rem(16);
+  padding-inline: rem(24);
+  background-color: $white;
+  border-top: 1px solid $blue_bdcde7;
+
+  @include mq("md") {
+    padding-inline: rem(64);
+  }
+}
+
+.footer__copyright {
+  text-align: center;
+}
+
+.footer__copyright-text {
+  display: block;
+  font-size: 11px;
+  font-family: $noto;
+  font-weight: $regular;
+  color: $blue_7187a8;
+}

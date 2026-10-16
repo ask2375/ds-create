@@ -1,0 +1,172 @@
+@use "../global" as *;
+
+.top-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sidebar-w);
+  min-width: 0;
+  height: 100svh;
+  min-height: 0;
+  z-index: 3;
+
+  @media screen and (max-width: 1024px) {
+    position: relative;
+    order: 1;
+    width: auto;
+    height: auto;
+    padding-block: rem(31) rem(26);
+    padding-inline: rem(39) rem(28);
+  }
+}
+
+.top-sidebar__notebook {
+  --cut: #{rem(30)};
+
+  position: absolute;
+  inset: -3% rem(26) -3% rem(-42);
+  transform: rotate(-2deg);
+  z-index: -1;
+
+  @media screen and (max-width: 1024px) {
+    inset: rem(-8) rem(16) rem(-45) rem(-28);
+  }
+}
+
+.top-sidebar__notebook-sheet {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(rem(4) 2px rem(7) rgba($gray_494b4f, 0.251));
+}
+
+.top-sidebar__notebook-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+}
+
+.top-sidebar__notebook-sheet--blue {
+  transform: translate(rem(29), rem(13)) rotate(0.7deg);
+
+  @media screen and (max-width: 1024px) {
+    transform: translate(rem(15), rem(7)) rotate(0.6deg);
+  }
+}
+
+.top-sidebar__notebook-sheet--blue::before {
+  background: linear-gradient(90deg, $skyblue_299ddb 82%, $skyblue_31a9e8 95%, $skyblue_238ec8);
+}
+
+.top-sidebar__notebook-sheet--pink {
+  transform: translate(rem(15), rem(6)) rotate(0.3deg);
+
+  @media screen and (max-width: 1024px) {
+    transform: translate(rem(8), rem(3)) rotate(0.3deg);
+  }
+}
+
+.top-sidebar__notebook-sheet--pink::before {
+  background: linear-gradient(90deg, $pink_f1a0c7 83%, $pink_e66ba5 96%, $pink_d85996);
+}
+
+.top-sidebar__notebook-sheet--paper {
+  filter: drop-shadow(rem(4) 1px rem(6) rgba($gray_494b4f, 0.239));
+}
+
+.top-sidebar__notebook-sheet--paper::before {
+  background-color: $gray_494b4f;
+}
+
+.top-sidebar__notebook-sheet--paper::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background-color: $white_fbfdff;
+  background-image: linear-gradient(rgba($skyblue_299ddb, 0.137) 1px, transparent 1px), linear-gradient(90deg, rgba($skyblue_299ddb, 0.137) 1px, transparent 1px);
+  background-size: rem(24) rem(24);
+  background-repeat: repeat;
+  clip-path: polygon(0 0, calc(100% - #{rem(28)}) 0, 100% rem(28), 100% calc(100% - #{rem(28)}), calc(100% - #{rem(28)}) 100%, 0 100%);
+}
+
+.top-sidebar__ring-items {
+  position: absolute;
+  inset: 2% auto 2% 0;
+  transform: rotate(-2deg);
+  display: grid;
+  grid-template-rows: repeat(13, 1fr);
+  width: rem(35);
+  z-index: 3;
+  pointer-events: none;
+
+  @media screen and (max-width: 1100px) {
+    width: rem(27);
+  }
+
+  @media screen and (max-width: 1024px) {
+    inset: rem(-3) auto rem(-22) 0;
+    grid-template-rows: repeat(7, 1fr);
+    width: rem(24);
+  }
+}
+
+.top-sidebar__ring-item {
+  position: relative;
+  align-self: center;
+  height: rem(22);
+
+  @media screen and (max-width: 1024px) {
+    height: rem(17);
+  }
+}
+
+.top-sidebar__ring-item:nth-child(n + 8) {
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.top-sidebar__ring-item::before {
+  content: "";
+  position: absolute;
+  inset: 1px rem(5) 1px rem(-8);
+  border: 3px solid $gray_494b4f;
+  border-radius: #{rem(16)} / #{rem(7)};
+  box-shadow:
+    inset 0 1px 0 $white_eaf9ff,
+    0 2px 2px rgba($gray_494b4f, 0.302);
+  z-index: 1;
+  border-right-color: transparent;
+
+  @media screen and (max-width: 1100px) {
+    border-radius: #{rem(12)} / #{rem(7)};
+  }
+
+  @media screen and (max-width: 1024px) {
+    border-width: 2px;
+    border-radius: #{rem(12)} / #{rem(6)};
+  }
+}
+
+.top-sidebar__ring-item::after {
+  content: "";
+  position: absolute;
+  top: rem(6);
+  right: 0;
+  width: rem(10);
+  height: rem(10);
+  background-color: $gray_494b4f;
+  border-radius: 100vmax;
+  box-shadow:
+    0 0 0 2px $skyblue_c7e4f2,
+    inset 1px 1px 2px $gray_292b2f;
+
+  @media screen and (max-width: 1024px) {
+    top: rem(5);
+    width: rem(7);
+    height: rem(7);
+  }
+}

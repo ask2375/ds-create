@@ -37,5 +37,4 @@ $profile_rows = [
       </div>
     </div>
   </div>
-  <?php get_template_part("template-parts/front-page/panel-footer"); ?>
 </section>

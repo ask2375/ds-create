@@ -1,11 +1,18 @@
 @use "../global" as *;
 
 .home {
+  --sidebar-w: 32vw;
+  --stage-w: calc(100vw - var(--sidebar-w));
+
   font-size: maxrem(16);
   font-family: $noto;
   color: $gray_333333;
   line-height: 1.8;
   overflow: hidden;
+
+  @media screen and (max-width: 1024px) {
+    overflow: visible;
+  }
 
   @include mq("md") {
     font-size: maxrem(15);
@@ -13,26 +20,45 @@
   }
 }
 
+.home .footer {
+  display: none;
+
+  @media screen and (max-width: 1024px) {
+    display: block;
+  }
+}
+
 .top-world {
   position: fixed;
   inset: 0;
   overflow: clip;
+
+  @media screen and (max-width: 1024px) {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
 }
 
 .top-world__inner {
   position: absolute;
   top: 0;
-  left: 0;
-  transform: translate(-100vw, -100svh);
+  left: var(--sidebar-w);
+  translate: calc(var(--col, 1) * -1 * var(--stage-w)) calc(var(--row, 1) * -100svh);
   display: grid;
-  grid-template-columns: repeat(3, 100vw);
+  grid-template-columns: repeat(3, var(--stage-w));
   grid-template-rows: repeat(4, 100svh);
-  width: 300vw;
+  width: calc(var(--stage-w) * 3);
   height: 400svh;
+
+  @media screen and (max-width: 1024px) {
+    display: contents;
+  }
 }
 
 .top-world__inner.is-ready {
-  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: translate 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
@@ -44,25 +70,37 @@
   display: flex;
   flex-direction: column;
   color: $blue_234781;
-  background-color: $blue_5194f1;
-  background-image: radial-gradient(ellipse at 54% 38%, $blue_77b5ff 0, $blue_65a7fa 42%, $blue_5194f1 100%);
   overflow-y: auto;
   overscroll-behavior: contain;
   isolation: isolate;
+
+  @media screen and (max-width: 1024px) {
+    order: 2;
+    overflow: visible;
+    overscroll-behavior: auto;
+  }
 }
 
-.top-world__panel::before {
-  @include perspective-grid;
+.top-world__panel[inert] {
+  visibility: hidden;
+  transition: visibility 0s linear 0.8s;
 
-  content: "";
-  position: sticky;
-  top: 0;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.top-world__panel--mv {
   display: block;
-  flex-shrink: 0;
-  height: 100svh;
-  margin-bottom: -100svh;
-  z-index: -1;
-  pointer-events: none;
+  grid-column: 2;
+  grid-row: 2;
+  color: inherit;
+  overflow: visible;
+
+  @media screen and (max-width: 1024px) {
+    order: 0;
+    overflow: hidden;
+  }
 }
 
 .top-world__panel--features {
@@ -80,23 +118,11 @@
   grid-row: 3;
 }
 
-.top-world__panel--contact {
-  --section-accent: #{$green_56b995};
+.top-world__panel--works {
+  --section-accent: #{$yellow_f2c65d};
 
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.top-world__panel--mv {
-  display: block;
   grid-column: 2;
-  grid-row: 2;
-  color: inherit;
-  overflow: hidden;
-
-  @include mq("md") {
-    overflow-y: auto;
-  }
+  grid-row: 1;
 }
 
 .top-world__panel--about {
@@ -106,11 +132,11 @@
   grid-row: 2;
 }
 
-.top-world__panel--works {
-  --section-accent: #{$yellow_f2c65d};
+.top-world__panel--contact {
+  --section-accent: #{$green_56b995};
 
-  grid-column: 2;
-  grid-row: 1;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .home [tabindex="-1"]:focus {

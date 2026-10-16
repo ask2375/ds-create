@@ -8,6 +8,5 @@
   </section>
 </main>
 
-<?php get_template_part("template-parts/front-page/panel-footer"); ?>
 
 <?php get_footer(); ?>

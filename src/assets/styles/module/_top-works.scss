@@ -25,3 +25,13 @@
   text-align: center;
   padding-block: rem(40);
 }
+
+.top-works .works__cards {
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mq("md") {
+    grid-template-columns: 1fr;
+  }
+}
