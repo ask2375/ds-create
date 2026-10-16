@@ -126,7 +126,7 @@ const buildSearchUrl = form => {
   url.search = "";
   url.hash = "";
   new FormData(form).forEach((value, key) => {
-    if (String(value).trim() !== "") url.searchParams.append(key, value);
+    if (String(value).trim() !== "") url.searchParams.set(key, value);
   });
   return url;
 };

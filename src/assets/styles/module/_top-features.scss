@@ -4,10 +4,16 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: rem(24);
+  margin-top: rem(36);
+
+  @media screen and (max-height: 800px) {
+    margin-top: rem(27);
+  }
 
   @include mq("md") {
     grid-template-columns: 1fr;
     gap: rem(20);
+    margin-top: rem(27);
   }
 }
 
@@ -17,14 +23,14 @@
   padding-inline: rem(106) rem(28);
   background-color: $white;
   border: 2px solid $blue_7e9dca;
-  border-radius: rem(12) rem(24) rem(12) rem(24);
+  border-radius: rem(12) rem(24);
   box-shadow: 0 rem(5) 0 $blue_ccdbed;
 
-  @media (width >= 769px) and (height <= 800px) {
+  @media screen and (max-height: 800px) {
     padding-block: rem(20);
   }
 
-  @media (width >= 769px) and (width <= 1000px) {
+  @media screen and (max-width: 1000px) {
     padding-inline: rem(82) rem(20);
   }
 
@@ -33,24 +39,9 @@
     padding-inline: rem(85) rem(21);
   }
 
-  @media (width <= 360px) {
+  @media screen and (max-width: 360px) {
     padding-inline: rem(75) rem(17);
   }
-}
-
-.top-features__item:nth-child(2) {
-  --section-accent: #{$blue_95bff2};
-  --section-tint: #{$blue_edf5ff};
-}
-
-.top-features__item:nth-child(3) {
-  --section-accent: #{$pink_f0a6d4};
-  --section-tint: #{$white_fff1f9};
-}
-
-.top-features__item:nth-child(4) {
-  --section-accent: #{$purple_b4a6e4};
-  --section-tint: #{$white_f5f0ff};
 }
 
 .top-features__emblem {
@@ -69,7 +60,7 @@
   border: 2px solid var(--section-accent);
   border-radius: rem(12);
 
-  @media (width >= 769px) and (width <= 1000px) {
+  @media screen and (max-width: 1000px) {
     left: rem(15);
     width: rem(51);
   }
@@ -81,7 +72,7 @@
     height: rem(65);
   }
 
-  @media (width <= 360px) {
+  @media screen and (max-width: 360px) {
     left: rem(13);
     width: rem(45);
   }
@@ -112,7 +103,10 @@
   line-height: normal;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: rem(8);
+}
+
+.top-features__body {
+  margin-top: rem(8);
 }
 
 .top-features__title {
@@ -121,9 +115,8 @@
   font-weight: $extrabold;
   color: $blue_234781;
   line-height: 1.7;
-  margin-bottom: rem(12);
 
-  @media (width >= 769px) and (height <= 800px) {
+  @media screen and (max-height: 800px) {
     font-size: maxrem(16);
   }
 
@@ -138,6 +131,7 @@
   font-weight: $regular;
   color: $blue_576b8a;
   line-height: 1.95;
+  margin-top: rem(12);
 
   @include mq("md") {
     font-size: maxrem(12);

@@ -8,7 +8,6 @@ $features = [
 ?>
 <section class="top-world__panel top-world__panel--features js-world-panel" id="features" aria-labelledby="features-title" data-col="1" data-row="3">
   <div class="top-panel__inner top-features">
-    <p class="top-panel__kicker"><span class="top-panel__kicker-label" data-icon="star">features</span><span class="top-panel__kicker-number">01</span></p>
     <h2 class="top-panel__title js-world-title" id="features-title" tabindex="-1">特徴・強み</h2>
     <p class="top-panel__lead">「動き」と「確かさ」を両立できる理由があります。</p>
     <ol class="top-features__items">

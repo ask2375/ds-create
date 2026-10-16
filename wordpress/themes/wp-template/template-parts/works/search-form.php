@@ -1,5 +1,6 @@
 <?php
-$search_args = works_search_args();
+$recommended_default = $args["recommended_default"] ?? false;
+$search_args = works_search_args($recommended_default);
 $filters = works_search_filters();
 $recommended = works_search_recommended();
 $search_url = $args["action"] ?? get_post_type_archive_link("works") . "#works-search";
@@ -47,6 +48,9 @@ $search_url = $args["action"] ?? get_post_type_archive_link("works") . "#works-s
         endforeach; ?>
 
         <label class="works__search-check">
+          <?php if ($recommended_default): ?>
+            <input type="hidden" name="<?php echo esc_attr($recommended["param"]); ?>" value="0" />
+          <?php endif; ?>
           <input type="checkbox" name="<?php echo esc_attr($recommended["param"]); ?>" value="1" class="works__search-check-input js-works-check" <?php checked($search_args[$recommended["param"]], "1"); ?> />
           <span class="works__search-check-text"><?php echo esc_html($recommended["label"]); ?></span>
         </label>
@@ -61,7 +65,7 @@ $search_url = $args["action"] ?? get_post_type_archive_link("works") . "#works-s
     </button>
   </div>
 
-  <?php if (works_search_active_args()): ?>
+  <?php if ($recommended_default ? works_search_active_args(true) !== [$recommended["param"] => "1"] : works_search_active_args()): ?>
     <div class="works__search-reset-wrapper">
       <a href="<?php echo esc_url($search_url); ?>" class="works__search-reset js-works-ajax-link">
         <span class="works__search-reset-icon" aria-hidden="true"></span>

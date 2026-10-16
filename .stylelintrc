@@ -22,6 +22,7 @@
     "no-duplicate-selectors": null,
     "no-descending-specificity": null,
     "color-hex-length": null,
+    "media-feature-range-notation": "prefix",
     "property-no-unknown": [
       true,
       {
@@ -321,5 +322,13 @@
         "unspecified": "ignore"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/assets/styles/base/_base.scss", "src/assets/styles/page/_utility.scss"],
+      "rules": {
+        "media-feature-range-notation": null
+      }
+    }
+  ]
 }

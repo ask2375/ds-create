@@ -31,31 +31,43 @@
 }
 
 .top-minimap__item--features {
+  --minimap-color: #{$red_e7656a};
+
   grid-column: 2;
   grid-row: 4;
 }
 
 .top-minimap__item--service {
+  --minimap-color: #{$orange_f2a064};
+
   grid-column: 2;
   grid-row: 3;
 }
 
 .top-minimap__item--contact {
+  --minimap-color: #{$green_56b995};
+
   grid-column: 1;
   grid-row: 2;
 }
 
 .top-minimap__item--mv {
+  --minimap-color: #{$white};
+
   grid-column: 2;
   grid-row: 2;
 }
 
 .top-minimap__item--about {
+  --minimap-color: #{$blue_167cb8};
+
   grid-column: 3;
   grid-row: 2;
 }
 
 .top-minimap__item--works {
+  --minimap-color: #{$yellow_f2c65d};
+
   grid-column: 2;
   grid-row: 1;
 }
@@ -65,8 +77,9 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: $blue_edf4ff;
-  border: 1px solid $blue_7999ce;
+  background-color: var(--minimap-color);
+  border: 1px solid rgba($white, 0.6);
+  transition: box-shadow 0.3s;
 }
 
 .top-minimap__link::after {
@@ -76,26 +89,6 @@
 }
 
 .top-minimap__link[aria-current="true"] {
-  background-color: $pink_ee8ac6;
-  border-color: $pink_ba5c9d;
-}
-
-[data-panel="mv"] .top-minimap__link {
-  background-color: $white_f6fbff;
-  border-color: $blue_7f9fc9;
-
-  @include mq("md") {
-    background-color: $white;
-    border-color: $blue_86a7de;
-  }
-}
-
-[data-panel="mv"] .top-minimap__link[aria-current="true"] {
-  background-color: $pink_ff9ace;
   border-color: $white;
-
-  @include mq("md") {
-    background-color: $pink_f48bc7;
-    border-color: $pink_ca68a9;
-  }
+  box-shadow: 0 0 0 2px $white;
 }

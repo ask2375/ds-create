@@ -1,0 +1,42 @@
+@use "sass:math";
+@use "setting" as *;
+
+@mixin perspective-grid($horizon: 7.5, $ray-step: 18, $ray-count: 20, $depth-step: 0.37) {
+  $depth: 100 - $horizon;
+  $core: rgba($white_e9faff, 0.9);
+  $halo: rgba($skyblue_b4efff, 0.5);
+  $last: math.floor(math.div(math.div($depth, 5) - 1, $depth-step));
+  $lines: ();
+  $rays: ();
+
+  @for $i from $last through 0 {
+    $z: 1 + $i * $depth-step;
+    $y: $horizon + math.div($depth, $z);
+    $y: math.div(math.round($y * 1000), 1000);
+    $s: math.div(1, $z);
+    $w1: math.div(math.round(7000 * $s), 1000);
+    $w2: math.div(math.round(2500 * $s), 1000);
+    $w3: math.div(math.round(750 * $s), 1000);
+    $lines: append($lines, transparent unquote("calc(#{$y}% - #{$w1}px)"), comma);
+    $lines: append($lines, $halo unquote("calc(#{$y}% - #{$w2}px)"), comma);
+    $lines: append($lines, $core unquote("calc(#{$y}% - #{$w3}px)"), comma);
+    $lines: append($lines, $core unquote("calc(#{$y}% + #{$w3}px)"), comma);
+    $lines: append($lines, $halo unquote("calc(#{$y}% + #{$w2}px)"), comma);
+    $lines: append($lines, transparent unquote("calc(#{$y}% + #{$w1}px)"), comma);
+  }
+
+  @for $k from $ray-count through (-1 * $ray-count) {
+    $dx: $k * $ray-step;
+    $angle: "180deg - atan2(#{$dx}vw, #{$depth}svh)";
+    $length: "hypot(#{$dx}vw, #{$depth}svh)";
+    $rays: append($rays, transparent unquote("calc(#{$angle} - atan2(7px, #{$length}))"), comma);
+    $rays: append($rays, $halo unquote("calc(#{$angle} - atan2(2.5px, #{$length}))"), comma);
+    $rays: append($rays, $core unquote("calc(#{$angle} - atan2(0.75px, #{$length}))"), comma);
+    $rays: append($rays, $core unquote("calc(#{$angle} + atan2(0.75px, #{$length}))"), comma);
+    $rays: append($rays, $halo unquote("calc(#{$angle} + atan2(2.5px, #{$length}))"), comma);
+    $rays: append($rays, transparent unquote("calc(#{$angle} + atan2(7px, #{$length}))"), comma);
+  }
+
+  background-image: linear-gradient(transparent 0, $lines), conic-gradient(from 0deg at 50% ($horizon * 1%), transparent 0deg, $rays, transparent 360deg);
+  mask-image: linear-gradient(transparent ($horizon * 1%), rgba($black_000000, 0.8) (($horizon + $depth * 0.55) * 1%), $black_000000);
+}
