@@ -10,6 +10,10 @@
     margin-top: rem(27);
   }
 
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   @media screen and (max-width: 1000px) {
     gap: rem(15);
   }
@@ -18,6 +22,18 @@
     grid-template-columns: 1fr;
     gap: rem(25);
     margin-top: rem(27);
+  }
+}
+
+.top-service__card:last-child:nth-child(odd) {
+  @media screen and (max-width: 1200px) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - #{rem(12)}); // (24 / 2)
+  }
+
+  @include mq("md") {
+    width: 100%;
   }
 }
 

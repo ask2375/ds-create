@@ -1,11 +1,11 @@
 //~~~ トップページ: MV（メニューの縮小・曲面パネル内のループ文字） ~~~
 
 //=== メニューをサイドバーの高さに収める ===
-const sidebar = document.querySelector(".js-mv-sidebar");
-const menu = document.querySelector(".js-mv-menu");
+const sidebar = document.querySelector(".js-top-sidebar");
+const menu = document.querySelector(".js-top-menu");
 
 if (sidebar && menu) {
-  const mobile = window.matchMedia("(max-width: 768px)");
+  const mobile = window.matchMedia("(max-width: 1024px)");
   let frame = 0;
 
   const fit = () => {

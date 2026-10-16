@@ -1,11 +1,12 @@
-//~~~ トップページ: パネル移動 ~~~
+//~~~ トップページ: パネル移動（1025px 以上）とセクションへのスクロール（1024px 以下） ~~~
 const world = document.querySelector(".js-world");
 
 if (world) {
   const panels = [...world.querySelectorAll(".js-world-panel")];
   const panelById = new Map(panels.map(panel => [panel.id, panel]));
-  const links = [...document.querySelectorAll(".js-top-header .js-world-link, .top-minimap .js-world-link")];
-  const header = document.querySelector(".js-top-header");
+  const links = [...document.querySelectorAll("[data-go]")];
+  const narrow = window.matchMedia("(max-width: 1024px)");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const neighbors = {
     mv: { ArrowUp: "works", ArrowDown: "service", ArrowLeft: "contact", ArrowRight: "about" },
     service: { ArrowUp: "mv", ArrowDown: "features" },
@@ -16,32 +17,74 @@ if (world) {
   };
   let current = "mv";
 
-  //=== パネル移動 ===
-  const go = (id, { updateHash = true, focus = true } = {}) => {
-    const target = panelById.get(id) || panelById.get("mv");
-    if (current !== target.id) target.scrollTop = 0;
-    current = target.id;
+  const resolve = id => panelById.get(id) || panelById.get("mv");
+
+  const mark = id => {
+    current = id;
     document.body.dataset.panel = current;
-    if (header) header.inert = current === "mv";
-    world.style.transform = `translate(${-Number(target.dataset.col) * 100}vw, ${-Number(target.dataset.row) * 100}svh)`;
+    links.forEach(link => link.setAttribute("aria-current", String(link.dataset.go === current)));
+  };
+
+  //=== パネル移動（1025px 以上） ===
+  const go = (id, { updateHash = true, focus = true } = {}) => {
+    const target = resolve(id);
+    if (current !== target.id) target.scrollTop = 0;
+    mark(target.id);
+    world.style.setProperty("--col", target.dataset.col);
+    world.style.setProperty("--row", target.dataset.row);
     panels.forEach(panel => {
       panel.inert = panel !== target;
     });
-    links.forEach(link => link.setAttribute("aria-current", String(link.dataset.go === current)));
     if (updateHash) history.pushState(null, "", `#${current}`);
     if (focus) target.querySelector("h1, h2")?.focus({ preventScroll: true });
   };
 
+  //=== セクションへスクロール（1024px 以下） ===
+  const scrollToPanel = (id, { updateHash = true, smooth = true } = {}) => {
+    const target = resolve(id);
+    target.scrollIntoView({ behavior: smooth && !reduced.matches ? "smooth" : "auto", block: "start" });
+    if (updateHash) history.pushState(null, "", `#${target.id}`);
+    target.querySelector("h1, h2")?.focus({ preventScroll: true });
+  };
+
+  const watcher = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) mark(entry.target.id);
+      });
+    },
+    { rootMargin: "-40% 0px -59% 0px" },
+  );
+
+  const enterNarrow = () => {
+    panels.forEach(panel => {
+      panel.inert = false;
+      watcher.observe(panel);
+    });
+    const id = location.hash.slice(1);
+    if (panelById.has(id)) scrollToPanel(id, { updateHash: false, smooth: false });
+  };
+
+  const enterWide = () => {
+    watcher.disconnect();
+    window.scrollTo(0, 0);
+    go(location.hash.slice(1), { updateHash: false, focus: false });
+  };
+
   //=== イベント ===
   document.addEventListener("click", event => {
-    const trigger = event.target.closest(".js-world-link");
+    const trigger = event.target.closest("[data-go]");
     if (!trigger || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
-    if (trigger.dataset.go !== current) go(trigger.dataset.go);
+    if (narrow.matches) {
+      scrollToPanel(trigger.dataset.go);
+    } else if (trigger.dataset.go !== current) {
+      go(trigger.dataset.go);
+    }
   });
 
   document.addEventListener("keydown", event => {
-    if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (narrow.matches || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const target = event.composedPath()[0];
     if (!(target instanceof HTMLElement) || target.matches("input, textarea, select, [contenteditable='true']")) return;
     const activePanel = panelById.get(current);
@@ -54,12 +97,32 @@ if (world) {
     go(next);
   });
 
-  window.addEventListener("popstate", () => go(location.hash.slice(1), { updateHash: false }));
+  window.addEventListener("popstate", () => {
+    const id = location.hash.slice(1);
+    if (narrow.matches) {
+      if (panelById.has(id)) scrollToPanel(id, { updateHash: false, smooth: false });
+    } else {
+      go(id, { updateHash: false });
+    }
+  });
+
   window.addEventListener("hashchange", () => {
-    if (location.hash.slice(1) !== current) go(location.hash.slice(1), { updateHash: false });
+    if (!narrow.matches && location.hash.slice(1) !== current) go(location.hash.slice(1), { updateHash: false });
+  });
+
+  narrow.addEventListener("change", event => {
+    if (event.matches) {
+      enterNarrow();
+    } else {
+      enterWide();
+    }
   });
 
   //=== 初期化 ===
-  go(location.hash.slice(1), { updateHash: false, focus: false });
+  if (narrow.matches) {
+    enterNarrow();
+  } else {
+    go(location.hash.slice(1), { updateHash: false, focus: false });
+  }
   requestAnimationFrame(() => requestAnimationFrame(() => world.classList.add("is-ready")));
 }

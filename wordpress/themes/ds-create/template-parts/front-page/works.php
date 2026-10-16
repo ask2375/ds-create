@@ -42,5 +42,4 @@ $works_list_url = $search_changed ? add_query_arg($search_active, get_post_type_
       </div>
     </div>
   </div>
-  <?php get_template_part("template-parts/front-page/panel-footer"); ?>
 </section>

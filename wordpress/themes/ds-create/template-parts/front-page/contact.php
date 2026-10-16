@@ -8,5 +8,4 @@
       <p class="top-contact__text">「こんな動きはできる？」といったご相談だけでも大歓迎です。</p>
     </div>
   </div>
-  <?php get_template_part("template-parts/front-page/panel-footer"); ?>
 </section>

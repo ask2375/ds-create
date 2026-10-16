@@ -30,5 +30,4 @@ $services = [
       <button type="button" class="top-panel__btn js-dialog-open" data-dialog="service-detail">詳しく見る</button>
     </div>
   </div>
-  <?php get_template_part("template-parts/front-page/panel-footer"); ?>
 </section>
