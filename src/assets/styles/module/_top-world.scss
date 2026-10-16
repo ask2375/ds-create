@@ -2,17 +2,11 @@
 
 .home {
   --sidebar-w: 32vw;
-  --stage-w: calc(100vw - var(--sidebar-w));
 
   font-size: maxrem(16);
   font-family: $noto;
   color: $gray_333333;
   line-height: 1.8;
-  overflow: hidden;
-
-  @media screen and (max-width: 1024px) {
-    overflow: visible;
-  }
 
   @include mq("md") {
     font-size: maxrem(15);
@@ -29,76 +23,34 @@
 }
 
 .top-world {
-  position: fixed;
-  inset: 0;
-  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  padding-inline-start: var(--sidebar-w);
 
   @media screen and (max-width: 1024px) {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
+    padding-inline-start: 0;
   }
 }
 
 .top-world__inner {
-  position: absolute;
-  top: 0;
-  left: var(--sidebar-w);
-  translate: calc(var(--col, 1) * -1 * var(--stage-w)) calc(var(--row, 1) * -100svh);
-  display: grid;
-  grid-template-columns: repeat(3, var(--stage-w));
-  grid-template-rows: repeat(4, 100svh);
-  width: calc(var(--stage-w) * 3);
-  height: 400svh;
-
-  @media screen and (max-width: 1024px) {
-    display: contents;
-  }
-}
-
-.top-world__inner.is-ready {
-  transition: translate 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
+  display: contents;
 }
 
 .top-world__panel {
   position: relative;
   display: flex;
   flex-direction: column;
+  order: 2;
   color: $blue_234781;
-  overflow-y: auto;
-  overscroll-behavior: contain;
   isolation: isolate;
-
-  @media screen and (max-width: 1024px) {
-    order: 2;
-    overflow: visible;
-    overscroll-behavior: auto;
-  }
-}
-
-.top-world__panel[inert] {
-  visibility: hidden;
-  transition: visibility 0s linear 0.8s;
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
 }
 
 .top-world__panel--mv {
   display: block;
-  grid-column: 2;
-  grid-row: 2;
+  order: 0;
   color: inherit;
-  overflow: visible;
 
   @media screen and (max-width: 1024px) {
-    order: 0;
     overflow: hidden;
   }
 }
@@ -106,37 +58,22 @@
 .top-world__panel--features {
   --section-accent: #{$red_e7656a};
   --section-tint: #{$white_fceced};
-
-  grid-column: 2;
-  grid-row: 4;
 }
 
 .top-world__panel--service {
   --section-accent: #{$orange_f2a064};
-
-  grid-column: 2;
-  grid-row: 3;
 }
 
 .top-world__panel--works {
   --section-accent: #{$yellow_f2c65d};
-
-  grid-column: 2;
-  grid-row: 1;
 }
 
 .top-world__panel--about {
   --section-accent: #{$blue_167cb8};
-
-  grid-column: 3;
-  grid-row: 2;
 }
 
 .top-world__panel--contact {
   --section-accent: #{$green_56b995};
-
-  grid-column: 1;
-  grid-row: 2;
 }
 
 .home [tabindex="-1"]:focus {

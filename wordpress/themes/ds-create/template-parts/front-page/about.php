@@ -6,9 +6,9 @@ $profile_rows = [
   ["term" => "趣味", "desc" => "釣り、ドライブ"],
 ];
 ?>
-<section class="top-world__panel top-world__panel--about js-world-panel" id="about" aria-labelledby="about-title" data-col="2" data-row="1">
+<section class="top-world__panel top-world__panel--about js-world-panel" id="about" aria-labelledby="about-title">
   <div class="top-panel__inner top-about">
-    <h2 class="top-panel__title js-world-title" id="about-title" tabindex="-1">自己紹介</h2>
+    <h2 class="top-panel__title" id="about-title" tabindex="-1">自己紹介</h2>
     <div class="top-about__split">
       <div class="top-about__img-wrapper">
         <div class="top-about__img">

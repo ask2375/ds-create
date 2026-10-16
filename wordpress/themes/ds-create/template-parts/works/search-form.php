@@ -30,7 +30,7 @@ $search_url = $args["action"] ?? get_post_type_archive_link("works") . "#works-s
           ?>
           <div class="works__search-filter js-works-filter">
             <button type="button" class="works__search-filter-toggle js-works-filter-toggle" aria-expanded="false" aria-controls="<?php echo esc_attr($list_id); ?>">
-              <span class="works__search-filter-current"><?php echo esc_html($current_label); ?></span>
+              <span class="works__search-filter-current js-works-filter-current"><?php echo esc_html($current_label); ?></span>
             </button>
 
             <ul class="works__search-filter-list js-works-filter-list" id="<?php echo esc_attr($list_id); ?>" role="listbox" aria-label="<?php echo esc_attr($conf["label"]); ?>">

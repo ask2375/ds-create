@@ -5,9 +5,9 @@ $services = [
   ["no" => "03", "eyebrow" => "coding", "title" => "コーディング", "text" => "複雑なデザインの構築から、魅せるアニメーションの実装まで。AIを取り入れ、スピードと品質を両立します。", "tags" => ["アニメーション", "実装・検証"]],
 ];
 ?>
-<section class="top-world__panel top-world__panel--service js-world-panel" id="service" aria-labelledby="service-title" data-col="1" data-row="2">
+<section class="top-world__panel top-world__panel--service js-world-panel" id="service" aria-labelledby="service-title">
   <div class="top-panel__inner top-service">
-    <h2 class="top-panel__title js-world-title" id="service-title" tabindex="-1">お役に立てること</h2>
+    <h2 class="top-panel__title" id="service-title" tabindex="-1">お役に立てること</h2>
     <p class="top-panel__lead">企画からリリースまで、Webサイト制作に必要な3つの領域をカバーします。</p>
     <ul class="top-service__cards">
       <?php foreach ($services as $index => $service): ?>
