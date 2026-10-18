@@ -1,60 +1,53 @@
 <?php
-$filters = works_search_filters();
-$site_terms = works_search_filter_terms($filters["site"]["taxonomy"], $filters["site"]["group"]);
-$top_works = new WP_Query([
+$pickup_args = [
   "post_type" => "works",
   "post_status" => "publish",
-  "posts_per_page" => -1,
-  "orderby" => ["date" => "DESC", "ID" => "DESC"],
+  "posts_per_page" => 3,
   "no_found_rows" => true,
-]);
+  "tax_query" => [
+    [
+      "taxonomy" => "works_category",
+      "field" => "slug",
+      "terms" => works_search_recommended()["slug"],
+    ],
+  ],
+  "meta_query" => [
+    "relation" => "OR",
+    "works_date_clause" => ["key" => "works_date", "compare" => "EXISTS"],
+    ["key" => "works_date", "compare" => "NOT EXISTS"],
+  ],
+  "orderby" => ["works_date_clause" => "DESC", "date" => "DESC", "ID" => "DESC"],
+];
+$pickup_works = new WP_Query($pickup_args);
+$pickup_posts = $pickup_works->posts;
+if (count($pickup_posts) < 3) {
+  $fill_args = $pickup_args;
+  unset($fill_args["tax_query"]);
+  $fill_args["posts_per_page"] = 3 - count($pickup_posts);
+  $fill_args["post__not_in"] = wp_list_pluck($pickup_posts, "ID");
+  $pickup_posts = array_merge($pickup_posts, (new WP_Query($fill_args))->posts);
+}
 ?>
-<section class="top-world__panel top-world__panel--works js-world-panel" id="works" aria-labelledby="works-title">
-  <div class="top-panel__inner top-works" data-top-works>
-    <h2 class="top-panel__title" id="works-title" tabindex="-1">制作実績</h2>
-    <p class="top-panel__lead">「動き」で魅せるサイトから、「カチッ」とした企業サイトまで。</p>
-    <?php if ($top_works->have_posts()): ?>
-      <div class="top-works__party">
-        <?php if ($site_terms): ?>
-          <ul class="top-works__filter-items" aria-label="<?php echo esc_attr($filters["site"]["label"]); ?>">
-            <li class="top-works__filter-item">
-              <button class="top-works__filter-btn" type="button" data-top-works-filter="" aria-pressed="true" aria-controls="top-works-cards">
-                <span class="top-works__filter-num">01 / all</span>
-                <span class="top-works__filter-label">すべて</span>
-              </button>
-            </li>
-            <?php foreach ($site_terms as $term_index => $term): ?>
-              <li class="top-works__filter-item">
-                <button class="top-works__filter-btn" type="button" data-top-works-filter="<?php echo esc_attr($term->slug); ?>" aria-pressed="false" aria-controls="top-works-cards">
-                  <span class="top-works__filter-num"><?php echo esc_html(sprintf("%02d / %s", $term_index + 2, str_replace("-", " ", $term->slug))); ?></span>
-                  <span class="top-works__filter-label"><?php echo esc_html($term->name); ?></span>
-                </button>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-        <?php endif; ?>
-        <div class="top-works__deck">
-          <ul class="top-works__cards" id="top-works-cards" data-top-works-cards>
-            <?php
-            while ($top_works->have_posts()):
-              $top_works->the_post(); ?>
-              <?php get_template_part("template-parts/front-page/works-card"); ?>
-            <?php
-            endwhile;
-            wp_reset_postdata();
-            ?>
-          </ul>
-          <nav class="top-works__pagination" aria-label="制作実績のページ切替">
-            <ul class="top-works__page-items" data-top-works-pages></ul>
-          </nav>
-          <p class="sr-only" aria-live="polite" data-top-works-status></p>
-        </div>
-      </div>
+<section class="top-depth__chapter top-works js-depth-chapter" id="works" aria-labelledby="works-title">
+  <div class="top-chapter">
+    <?php get_template_part("template-parts/front-page/chapter-heading", null, ["id" => "works", "label" => "works", "title" => "制作実績", "lead" => "動きで魅せるサイトから企業サイトまで。制作の一部をご紹介します。"]); ?>
+    <?php if ($pickup_posts): ?>
+      <ul class="top-works__cards">
+        <?php
+        global $post;
+        foreach ($pickup_posts as $post):
+          setup_postdata($post); ?>
+          <?php get_template_part("template-parts/front-page/works-card"); ?>
+        <?php
+        endforeach;
+        wp_reset_postdata();
+        ?>
+      </ul>
     <?php else: ?>
       <p class="top-works__empty">制作実績は準備中です。</p>
     <?php endif; ?>
-    <div class="top-panel__btn-wrapper">
-      <a class="top-panel__btn" href="<?php echo esc_url(get_post_type_archive_link("works")); ?>">実績一覧を見る</a>
+    <div class="top-chapter__btn-wrapper top-works__btn-wrapper">
+      <a class="btn-chamfer" href="<?php echo esc_url(get_post_type_archive_link("works")); ?>"><span class="btn-chamfer__text">実績一覧を見る</span></a>
     </div>
   </div>
 </section>

@@ -41,10 +41,11 @@ if (holo) {
     cancelAnimationFrame(frame);
     frame = 0;
     previous = 0;
-    if (!reduced.matches && !document.hidden && (document.body.dataset.panel || "mv") === "mv") frame = requestAnimationFrame(tick);
+    if (!reduced.matches && !document.hidden && (document.body.dataset.panel || "mv") === "mv" && !("mvCracked" in document.body.dataset)) frame = requestAnimationFrame(tick);
   };
 
   const measure = () => {
+    if (!holo.getBoundingClientRect().width) return;
     tracks.forEach(track => {
       track.text.textContent = track.unit;
       track.period = Math.max(1, track.text.getSubStringLength(0, track.unit.length));
@@ -58,7 +59,7 @@ if (holo) {
 
   document.fonts.ready.then(measure);
   new ResizeObserver(measure).observe(holo);
-  new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ["data-panel"] });
+  new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ["data-panel", "data-mv-cracked"] });
   document.addEventListener("visibilitychange", sync);
   reduced.addEventListener("change", sync);
 }

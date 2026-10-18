@@ -14,7 +14,8 @@
     "@wordpress/env": "^11.5.0",
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.13",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "three": "^0.185.1"
   },
   "resolutions": {
     "picomatch@npm:^4.0.3": "4.0.4",
