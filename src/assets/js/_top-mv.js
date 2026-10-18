@@ -1,38 +1,4 @@
-//~~~ トップページ: MV（メニューの縮小・曲面パネル内のループ文字） ~~~
-
-//=== メニューをサイドバーの高さに収める ===
-const sidebar = document.querySelector(".js-top-sidebar");
-const menu = document.querySelector(".js-top-menu");
-
-if (sidebar && menu) {
-  const mobile = window.matchMedia("(max-width: 1024px)");
-  let frame = 0;
-
-  const fit = () => {
-    frame = 0;
-    if (mobile.matches) {
-      menu.style.removeProperty("--menu-scale");
-      return;
-    }
-    const angle = (2 * Math.PI) / 180;
-    const width = menu.offsetWidth * Math.cos(angle) + menu.offsetHeight * Math.sin(angle);
-    const height = menu.offsetHeight * Math.cos(angle) + menu.offsetWidth * Math.sin(angle);
-    const scale = Math.min(1, Math.max(1, sidebar.clientWidth - 66) / width, Math.max(1, sidebar.clientHeight - 72) / height);
-    const previous = Number(menu.style.getPropertyValue("--menu-scale") || 1);
-    if (Math.abs(previous - scale) > 0.001) menu.style.setProperty("--menu-scale", scale.toFixed(4));
-  };
-
-  const schedule = () => {
-    if (!frame) frame = requestAnimationFrame(fit);
-  };
-
-  const observer = new ResizeObserver(schedule);
-  observer.observe(sidebar);
-  observer.observe(menu);
-  mobile.addEventListener("change", schedule);
-  document.fonts.ready.then(schedule);
-  schedule();
-}
+//~~~ トップページ: MV（曲面パネル内のループ文字） ~~~
 
 //=== 曲面パネル内のループ文字 ===
 const holo = document.querySelector(".js-mv-holo");

@@ -1,14 +1,18 @@
 @use "../global" as *;
 
 .top-mv__layout {
+  --mv-h: calc(100svh - var(--header-h));
+
   position: relative;
   display: grid;
   grid-template: "hero" minmax(0, 1fr) / minmax(0, 1fr);
   color: $gray_494b4f;
-  min-height: 100svh;
+  height: var(--mv-h);
   isolation: isolate;
 
   @media screen and (max-width: 1024px) {
+    height: auto;
+    min-height: var(--mv-h);
     overflow: hidden;
   }
 
@@ -19,17 +23,18 @@
 
 .top-mv__holo {
   position: absolute;
-  inset: 0 0 0 calc(var(--sidebar-w) * -1);
-  width: calc(100% + var(--sidebar-w));
-  height: 100%;
+  inset: 0;
+  width: 90%;
+  height: 90%;
+  margin: auto;
   z-index: 0;
   overflow: visible;
   pointer-events: none;
   user-select: none;
 
   @media screen and (max-width: 1024px) {
-    inset: 0;
     width: 100%;
+    height: 100%;
   }
 }
 
@@ -111,14 +116,19 @@
 .top-mv__hero {
   position: relative;
   display: grid;
+  grid-template-rows: minmax(0, 1fr);
   grid-template-columns: 54% 46%;
   grid-area: hero;
   align-items: center;
   min-width: 0;
-  padding-block: 8% 3%;
+  padding-block: 8% calc(var(--mv-h) * 0.08);
   padding-inline: 3% 1%;
   z-index: 1;
   overflow: hidden;
+
+  @media screen and (max-width: 1024px) {
+    padding-block-end: 3%;
+  }
 
   @media screen and (max-height: 650px) {
     padding-block-start: 4%;
@@ -384,12 +394,16 @@
   position: relative;
   align-self: end;
   width: 113%;
-  height: min(89svh, #{rem(1180)}); // 801 / 900
+  height: min(calc(var(--mv-h) * 0.84), #{rem(1180)});
   max-width: none;
   margin-left: -8%;
   z-index: 2;
   container-type: size;
   pointer-events: none;
+
+  @media screen and (max-width: 1024px) {
+    height: min(calc(89svh - var(--header-h)), #{rem(1180)}); // 801 / 900
+  }
 
   @include mq("md") {
     width: 125%;

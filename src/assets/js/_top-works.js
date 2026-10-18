@@ -1,92 +1,75 @@
-//~~~ トップページ 制作実績: ゲーム風 UI のスライダー・ジャンルタブ ~~~
-import Swiper from "swiper/bundle";
+//~~~ トップページ 制作実績: ジャンルの絞り込みとページ切替 ~~~
+const topWorks = document.querySelector("[data-top-works]");
+const topWorksList = topWorks?.querySelector("[data-top-works-cards]");
 
-//=== スライダー ===
-let currentSlider = null;
+if (topWorksList) {
+  const cards = [...topWorksList.querySelectorAll("[data-top-works-card]")];
+  const filters = [...topWorks.querySelectorAll("[data-top-works-filter]")];
+  const pages = topWorks.querySelector("[data-top-works-pages]");
+  const status = topWorks.querySelector("[data-top-works-status]");
+  let genre = "";
+  let page = 0;
+  let perPage = 0;
 
-const getCurrentSPV = () => {
-  const w = window.innerWidth;
-  if (w >= 1700) return 5;
-  if (w >= 1025) return 4;
-  if (w >= 900) return 5;
-  if (w >= 768) return 4;
-  if (w >= 600) return 2.5;
-  return 1.5;
-};
+  const readPerPage = () => Number(getComputedStyle(topWorksList).getPropertyValue("--per-page")) || 6;
 
-const initTopWorksSlider = (root = document) => {
-  const sliderEl = root.querySelector(".js-swiper");
-  if (!sliderEl) return;
+  const matched = () => cards.filter(card => !genre || card.dataset.genres.split(" ").includes(genre));
 
-  if (currentSlider) {
-    window.removeEventListener("resize", currentSlider.onResize);
-    currentSlider.swiper.destroy(true, true);
-    currentSlider = null;
-  }
+  //=== 表示の更新 ===
+  const render = () => {
+    const items = matched();
+    const total = Math.max(1, Math.ceil(items.length / perPage));
+    page = Math.min(page, total - 1);
+    const start = page * perPage;
+    const shown = items.slice(start, start + perPage);
 
-  const sliderWrapper = sliderEl.closest(".top-works__slider-wrapper") || root;
-  const slideCount = sliderEl.querySelectorAll(".swiper-slide").length;
-  const paginationEl = sliderWrapper.querySelector(".js-swiper-pagination");
+    cards.forEach(card => {
+      card.hidden = !shown.includes(card);
+    });
 
-  const isOverflowing = () => slideCount > getCurrentSPV();
+    pages.replaceChildren(
+      ...(total > 1
+        ? Array.from({ length: total }, (_, index) => {
+            const item = document.createElement("li");
+            const button = document.createElement("button");
+            item.className = "top-works__page-item";
+            button.className = "top-works__page-btn";
+            button.type = "button";
+            button.dataset.topWorksPage = String(index);
+            button.setAttribute("aria-label", `${index + 1}ページ目`);
+            button.setAttribute("aria-current", String(index === page));
+            item.append(button);
+            return item;
+          })
+        : []),
+    );
 
-  const swiper = new Swiper(sliderEl, {
-    slidesPerView: 1.5,
-    spaceBetween: "2%",
-    loop: false,
-    navigation: {
-      nextEl: sliderWrapper.querySelector(".swiper-button-next"),
-      prevEl: sliderWrapper.querySelector(".swiper-button-prev"),
-    },
-    pagination: {
-      el: paginationEl,
-      clickable: true,
-    },
-    breakpoints: {
-      600: { slidesPerView: 2.5 },
-      768: { slidesPerView: 4 },
-      900: { slidesPerView: 5 },
-      1025: { slidesPerView: 4 },
-      1700: { slidesPerView: 5 },
-    },
-  });
+    status.textContent = items.length ? `${items.length}件中 ${start + 1}〜${start + shown.length}件目を表示` : "該当する制作実績はありません";
+  };
 
-  sliderWrapper.querySelectorAll(".swiper-button-prev, .swiper-button-next").forEach(btn => {
-    btn.addEventListener("click", () => btn.blur());
-  });
-
-  const updateSwiperState = () => {
-    if (isOverflowing()) {
-      sliderEl.classList.remove("is-swiper-static");
-      if (paginationEl) paginationEl.style.display = "";
-      swiper.enable();
-      swiper.update();
-    } else {
-      swiper.slideTo(0, 0, false);
-      swiper.disable();
-      sliderEl.classList.add("is-swiper-static");
-      if (paginationEl) paginationEl.style.display = "none";
+  //=== イベント ===
+  topWorks.addEventListener("click", event => {
+    const filter = event.target.closest("[data-top-works-filter]");
+    if (filter) {
+      genre = filter.dataset.topWorksFilter;
+      page = 0;
+      filters.forEach(button => button.setAttribute("aria-pressed", String(button === filter)));
+      render();
+      return;
     }
-  };
+    const pageButton = event.target.closest("[data-top-works-page]");
+    if (pageButton) {
+      page = Number(pageButton.dataset.topWorksPage);
+      render();
+      pages.querySelector('[data-top-works-page="' + page + '"]')?.focus();
+    }
+  });
 
-  updateSwiperState();
-
-  let resizeTimer;
-  const onResize = () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(updateSwiperState, 150);
-  };
-  window.addEventListener("resize", onResize);
-
-  currentSlider = { swiper, onResize };
-};
-
-//=== ジャンルタブ（選択した時点で絞り込みを送信） ===
-document.addEventListener("change", event => {
-  const tab = event.target.closest(".js-top-works-tab");
-  if (tab?.form) tab.form.requestSubmit();
-});
-
-//=== 初期化 ===
-initTopWorksSlider();
-document.addEventListener("works:replaced", event => initTopWorksSlider(event.detail.root));
+  new ResizeObserver(() => {
+    const next = readPerPage();
+    if (next === perPage) return;
+    page = Math.floor((page * perPage) / next);
+    perPage = next;
+    render();
+  }).observe(topWorksList);
+}
