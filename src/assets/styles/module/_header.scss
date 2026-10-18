@@ -1,9 +1,22 @@
 @use "../global" as *;
 
+:root {
+  --header-h: #{rem(76)};
+
+  @media screen and (max-width: 1100px) {
+    --header-h: #{rem(66)};
+  }
+
+  @include mq("md") {
+    --header-h: #{rem(67)};
+  }
+}
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--header-h);
   padding-block: rem(16);
   padding-inline: rem(24);
   background-color: $white;

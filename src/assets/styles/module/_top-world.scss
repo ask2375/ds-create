@@ -1,8 +1,6 @@
 @use "../global" as *;
 
 .home {
-  --sidebar-w: 32vw;
-
   font-size: maxrem(16);
   font-family: $noto;
   color: $gray_333333;
@@ -14,40 +12,16 @@
   }
 }
 
-.home .footer {
-  display: none;
-
-  @media screen and (max-width: 1024px) {
-    display: block;
-  }
-}
-
-.top-world {
-  display: flex;
-  flex-direction: column;
-  padding-inline-start: var(--sidebar-w);
-
-  @media screen and (max-width: 1024px) {
-    padding-inline-start: 0;
-  }
-}
-
-.top-world__inner {
-  display: contents;
-}
-
 .top-world__panel {
   position: relative;
   display: flex;
   flex-direction: column;
-  order: 2;
   color: $blue_234781;
   isolation: isolate;
 }
 
 .top-world__panel--mv {
   display: block;
-  order: 0;
   color: inherit;
 
   @media screen and (max-width: 1024px) {
