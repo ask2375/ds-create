@@ -1,0 +1,114 @@
+@use "../global" as *;
+
+.btn-chamfer {
+  --chamfer: #{rem(20)};
+  --chamfer-start: #{rem(8)};
+  --btn-icon: #{rem(22)};
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: maxrem(14);
+  font-family: $noto;
+  font-weight: $extrabold;
+  color: $white;
+  line-height: 1.6;
+  text-align: left;
+  min-height: rem(56);
+  max-width: 100%;
+  padding-block: rem(13);
+  padding-inline: rem(26);
+  filter: drop-shadow(0 rem(5) rem(9) rgba($pink_92385f, 0.125));
+  transition: translate 0.18s ease;
+  isolation: isolate;
+
+  @include mq("md") {
+    --btn-icon: #{rem(20)};
+
+    font-size: maxrem(13);
+    min-height: rem(50);
+    padding-block: rem(12);
+    padding-inline: rem(19);
+  }
+
+  @media screen and (max-width: 360px) {
+    padding-inline: rem(16);
+  }
+}
+
+.btn-chamfer::before,
+.btn-chamfer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: rgba($white, 0.941);
+  border-radius: rem(12);
+  clip-path: polygon(var(--chamfer-start) 0, calc(100% - var(--chamfer)) 0, 100% var(--chamfer), 100% 100%, 0 100%, 0 var(--chamfer-start));
+  z-index: -2;
+}
+
+.btn-chamfer::after {
+  inset: 1px;
+  background-color: transparent;
+  background-image: linear-gradient(120deg, $pink_c54283 0%, $pink_c13a7b 58%, $pink_bd3978 100%);
+  border-radius: rem(11);
+  z-index: -1;
+}
+
+.btn-chamfer__text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(28);
+  overflow-wrap: anywhere;
+  width: 100%;
+  min-width: 0;
+
+  @include mq("md") {
+    gap: rem(17);
+  }
+
+  @media screen and (max-width: 360px) {
+    gap: rem(13);
+  }
+}
+
+.btn-chamfer__text::after {
+  content: "";
+  flex-shrink: 0;
+  width: var(--btn-icon);
+  aspect-ratio: 1;
+  background-color: currentcolor;
+  mask: url("../../images/common/icon-arrow.svg") center / contain no-repeat;
+  transition: translate 0.18s ease;
+}
+
+.btn-chamfer--header {
+  --chamfer: #{rem(13)};
+  --chamfer-start: #{rem(6)};
+  --btn-icon: #{rem(19)};
+
+  font-size: maxrem(12);
+  line-height: 1.5;
+  min-height: rem(44);
+  padding-block: rem(10);
+  padding-inline: rem(17);
+
+  @include mq("md") {
+    justify-content: center;
+    font-size: maxrem(13);
+  }
+}
+
+.btn-chamfer--header .btn-chamfer__text {
+  gap: rem(15);
+  width: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-chamfer,
+  .btn-chamfer__text::after {
+    transition: none;
+  }
+}

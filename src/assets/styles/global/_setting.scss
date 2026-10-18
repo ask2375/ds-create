@@ -210,6 +210,46 @@ $orange_f2a064: #f2a064;
 $blue_167cb8: #167cb8;
 $white_fceced: #fceced;
 
+$navy_173354: #173354;
+$navy_183b69: #183b69;
+$navy_294b75: #294b75;
+$gray_34465f: #34465f;
+$blue_175f96: #175f96;
+$blue_2369a1: #2369a1;
+$blue_235e8a: #235e8a;
+$blue_315f94: #315f94;
+$blue_3863a7: #3863a7;
+$blue_477bb1: #477bb1;
+$blue_65adfa: #65adfa;
+$blue_68aaf5: #68aaf5;
+$blue_73b5fa: #73b5fa;
+$blue_74b6f9: #74b6f9;
+$skyblue_36b7e3: #36b7e3;
+$skyblue_76c9ef: #76c9ef;
+$skyblue_b7eaff: #b7eaff;
+$skyblue_bce8f5: #bce8f5;
+$skyblue_c4eaff: #c4eaff;
+$skyblue_d1eeff: #d1eeff;
+$skyblue_d8f3ff: #d8f3ff;
+$skyblue_d8f6ff: #d8f6ff;
+$skyblue_ddfaff: #ddfaff;
+$white_eafaff: #eafaff;
+$white_eaffff: #eaffff;
+$white_f7ffff: #f7ffff;
+$white_f8fbff: #f8fbff;
+$white_f8fdff: #f8fdff;
+$white_fff5fb: #fff5fb;
+$pink_92385f: #92385f;
+$pink_bd3978: #bd3978;
+$pink_c13a7b: #c13a7b;
+$pink_c54283: #c54283;
+$pink_c94d88: #c94d88;
+$pink_df679e: #df679e;
+$pink_eaa4d4: #eaa4d4;
+$pink_f2cbe5: #f2cbe5;
+$pink_f5a4d0: #f5a4d0;
+$pink_fcebf5: #fcebf5;
+
 // px → remへと変換し、最小値12pxを設ける
 @function maxrem($pixels) {
   @return max(math.div($pixels, 16) * 1rem, 12px);

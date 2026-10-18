@@ -1,26 +1,25 @@
 <?php
 $features = [
-  ["no" => "01", "icon" => "play", "label" => "motion", "title" => "デザインの魅力を引き出すアニメーション", "text" => "テレビアニメ・ゲーム・VTuberなどの公式サイトで培った演出力で、デザインの魅力を120%まで引き出します。"],
-  ["no" => "02", "icon" => "bolt", "label" => "quality", "title" => "AI活用で、納品スピードと品質を両立", "text" => "コーディングにAIを導入し、定型作業を効率化。空いた時間を検証と調整に注ぎ、短納期でも品質を落としません。"],
-  ["no" => "03", "icon" => "grid", "label" => "teamwork", "title" => "チーム体制でワンストップ対応", "text" => "デザイナーの制作パートナー様と組み、ディレクション・デザイン・コーディングまでまとめてお任せいただけます。"],
-  ["no" => "04", "icon" => "star", "label" => "management", "title" => "電気エンジニア9年で培った進行管理力", "text" => "段取り・関係者との連携・期日厳守。前職で身につけた仕事の進め方で、安心してお任せいただける進行をお約束します。"],
-];
-?>
-<section class="top-world__panel top-world__panel--features js-world-panel" id="features" aria-labelledby="features-title">
-  <div class="top-panel__inner top-features">
-    <h2 class="top-panel__title" id="features-title" tabindex="-1">特徴・強み</h2>
-    <p class="top-panel__lead">「動き」と「確かさ」を両立できる理由があります。</p>
-    <ol class="top-features__items">
+  ["icon" => "motion", "title" => "世界観に合うアニメーション", "text" => "デザインの意図や空気感を汲み取り、印象に残る演出へ。"],
+  ["icon" => "cursor", "title" => "使いやすさを支える動き", "text" => "視線の流れや操作の心地よさまで考えて設計します。"],
+  ["icon" => "team", "title" => "柔軟な制作体制", "text" => "短納期や複数案件も、チームと連携して対応します。"],
+]; ?>
+<section class="top-depth__chapter top-features js-depth-chapter" id="features" aria-labelledby="features-title">
+  <div class="top-chapter">
+    <?php get_template_part("template-parts/front-page/chapter-heading", null, ["id" => "features", "label" => "features", "title" => "特徴・強み", "lead" => "デザインの世界観を大切に、そのサイトらしい「動き」をご提案・実装します。"]); ?>
+    <ul class="top-features__items">
       <?php foreach ($features as $feature): ?>
-        <li class="top-features__item">
-          <div class="top-features__emblem" data-icon="<?php echo esc_attr($feature["icon"]); ?>"><span class="top-features__emblem-number"><?php echo esc_html($feature["no"]); ?></span></div>
-          <p class="top-features__label"><?php echo esc_html($feature["label"]); ?></p>
-          <div class="top-features__body">
-            <h3 class="top-features__title"><?php echo esc_html($feature["title"]); ?></h3>
-            <p class="top-features__text"><?php echo esc_html($feature["text"]); ?></p>
+        <li class="top-features__item glass-card">
+          <div class="glass-card__icon" data-icon="<?php echo esc_attr($feature["icon"]); ?>" aria-hidden="true"></div>
+          <div class="glass-card__body">
+            <h3 class="glass-card__title"><?php echo esc_html($feature["title"]); ?></h3>
+            <p class="glass-card__text"><?php echo esc_html($feature["text"]); ?></p>
           </div>
         </li>
       <?php endforeach; ?>
-    </ol>
+    </ul>
+    <div class="top-chapter__btn-wrapper top-features__btn-wrapper">
+      <button type="button" class="btn-chamfer js-dialog-open" data-dialog="features-detail"><span class="btn-chamfer__text">強み・制作方針を見る</span></button>
+    </div>
   </div>
 </section>
