@@ -28,7 +28,7 @@
   content: "";
   width: rem(56);
   height: rem(4);
-  background-color: $yellow_f2c65d;
+  background-color: #f2c65d;
   border-radius: rem(2);
 }
 
@@ -36,14 +36,14 @@
   font-size: maxrem(13);
   font-family: $zen;
   font-weight: $bold;
-  color: $navy_3a4a68;
+  color: #3a4a68;
   line-height: 1.8;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 .works__label::first-letter {
-  color: $yellow_f2c65d;
+  color: #f2c65d;
 }
 
 .works__title {
@@ -59,7 +59,7 @@
 }
 
 .works__title::first-letter {
-  color: $yellow_f2c65d;
+  color: #f2c65d;
 }
 
 .works__cards {
@@ -107,7 +107,7 @@
   font-size: maxrem(14);
   font-family: $zen;
   font-weight: $regular;
-  color: $gray_5b6b86;
+  color: #5b6b86;
   line-height: 1.8;
   text-align: center;
   // wbrタグ指定のため

@@ -12,11 +12,11 @@
   margin: auto;
   padding: 0;
   background-color: $white;
-  border: 2px solid $blue_5077ce;
+  border: 2px solid #5077ce;
   border-radius: rem(24);
   box-shadow:
-    rem(7) rem(9) 0 rgba($blue_89ade7, 0.361),
-    0 rem(24) rem(70) rgba($blue_153e79, 0.22);
+    rem(7) rem(9) 0 rgba(#89ade7, 0.361),
+    0 rem(24) rem(70) rgba(#153e79, 0.22);
   overflow: hidden;
 
   @media screen and (max-width: 600px) {
@@ -24,8 +24,8 @@
     max-height: 90svh;
     border-radius: rem(17);
     box-shadow:
-      rem(4) rem(6) 0 rgba($blue_89ade7, 0.361),
-      0 rem(24) rem(70) rgba($blue_153e79, 0.22);
+      rem(4) rem(6) 0 rgba(#89ade7, 0.361),
+      0 rem(24) rem(70) rgba(#153e79, 0.22);
   }
 }
 
@@ -35,7 +35,7 @@
 }
 
 .top-dialog::backdrop {
-  background-color: rgba($blue_183c73, 0.459);
+  background-color: rgba(#183c73, 0.459);
 }
 
 .top-dialog__header {
@@ -46,8 +46,8 @@
   gap: rem(20);
   padding-block: rem(23) rem(20);
   padding-inline: rem(28);
-  background-color: $white_f6faff;
-  border-bottom: 1px solid $blue_d5e1f6;
+  background-color: #f6faff;
+  border-bottom: 1px solid #d5e1f6;
 
   @media screen and (max-width: 600px) {
     gap: rem(12);
@@ -61,7 +61,7 @@
   font-family: $arial;
   font-weight: $black;
   font-style: italic;
-  color: $blue_6484c0;
+  color: #6484c0;
   line-height: 1.5;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -95,7 +95,7 @@
   height: rem(40);
   padding: 0;
   background-color: $white;
-  border: 1px solid $blue_9eb6e3;
+  border: 1px solid #9eb6e3;
   border-radius: 100vmax;
   transition: opacity 0.3s;
 
@@ -147,7 +147,7 @@
   font-size: inherit;
   font-family: $noto;
   font-weight: $medium;
-  color: $blue_4b648d;
+  color: #4b648d;
 }
 
 .top-dialog__footer {
@@ -155,8 +155,8 @@
   text-align: center;
   padding-block: rem(15) rem(19);
   padding-inline: rem(28);
-  background-color: $white_f9fbff;
-  border-top: 1px solid $blue_d5e1f6;
+  background-color: #f9fbff;
+  border-top: 1px solid #d5e1f6;
 
   @media screen and (max-width: 600px) {
     padding-block: rem(13) rem(16);
@@ -177,17 +177,17 @@
   min-height: rem(46);
   padding-block: rem(11);
   padding-inline: rem(25);
-  background-color: $blue_426bc2;
-  border: 2px solid $blue_426bc2;
+  background-color: #426bc2;
+  border: 2px solid #426bc2;
   border-radius: rem(9);
-  box-shadow: 0 rem(3) 0 $blue_b4c9ee;
+  box-shadow: 0 rem(3) 0 #b4c9ee;
   transition: opacity 0.3s;
 }
 
 .top-dialog__btn--light {
   color: $blue_234781;
   background-color: $white;
-  border-color: $blue_a9bde2;
+  border-color: #a9bde2;
 }
 
 @media (any-hover: hover) {
@@ -210,8 +210,8 @@
   gap: rem(18);
   padding-block: rem(23);
   padding-inline: rem(23);
-  background-color: $white_fbfdff;
-  border: 1px solid $blue_cbdcf3;
+  background-color: #fbfdff;
+  border: 1px solid #cbdcf3;
   border-radius: rem(16);
 
   @media screen and (max-width: 600px) {
@@ -228,14 +228,14 @@
   font-size: maxrem(20);
   font-family: $arial;
   font-weight: $black;
-  color: $blue_355f9d;
+  color: #355f9d;
   line-height: 1;
   width: rem(50);
   height: rem(50);
-  background-color: $blue_b6d7fb;
+  background-color: #b6d7fb;
   border: 2px solid $white;
   border-radius: rem(13);
-  box-shadow: 0 2px 0 $blue_bdd4ee;
+  box-shadow: 0 2px 0 #bdd4ee;
 
   @media screen and (max-width: 600px) {
     font-size: maxrem(15);
@@ -246,13 +246,13 @@
 }
 
 .top-dialog__card:nth-child(2) .top-dialog__service-number {
-  color: $pink_b0538e;
-  background-color: $pink_f7c8e6;
+  color: #b0538e;
+  background-color: #f7c8e6;
 }
 
 .top-dialog__card:nth-child(3) .top-dialog__service-number {
-  color: $mint_3b817e;
-  background-color: $mint_bce8e1;
+  color: #3b817e;
+  background-color: #bce8e1;
 }
 
 .top-dialog__service-title {
@@ -288,7 +288,7 @@
 .top-dialog__profile {
   display: grid;
   margin-top: rem(24);
-  border-top: 1px solid $blue_dbe5f5;
+  border-top: 1px solid #dbe5f5;
 }
 
 .top-dialog__profile-row {
@@ -297,7 +297,7 @@
   gap: rem(18);
   padding-block: rem(13);
   padding-inline: rem(4);
-  border-bottom: 1px solid $blue_dbe5f5;
+  border-bottom: 1px solid #dbe5f5;
 
   @media screen and (max-width: 600px) {
     grid-template-columns: rem(74) minmax(0, 1fr);
@@ -309,7 +309,7 @@
   font-size: maxrem(12);
   font-family: $noto;
   font-weight: $medium;
-  color: $blue_6a80a4;
+  color: #6a80a4;
 
   @media screen and (max-width: 600px) {
     font-size: 11px;
@@ -324,7 +324,7 @@
   font-size: 11px;
   font-family: $noto;
   font-weight: $medium;
-  color: $blue_6a80a4;
+  color: #6a80a4;
 }
 
 .top-dialog__subheading {
@@ -350,7 +350,7 @@
   position: relative;
   padding-block-end: rem(23);
   padding-inline-start: rem(25);
-  border-left: 2px solid $blue_c7d8f4;
+  border-left: 2px solid #c7d8f4;
 
   @media screen and (max-width: 600px) {
     padding-inline-start: rem(18);
@@ -368,17 +368,17 @@
   left: rem(-8);
   width: rem(14);
   height: rem(14);
-  background-color: $pink_eb8fc8;
+  background-color: #eb8fc8;
   border: 3px solid $white;
   border-radius: 100vmax;
-  box-shadow: 0 0 0 1px $pink_cf9abd;
+  box-shadow: 0 0 0 1px #cf9abd;
 }
 
 .top-dialog__history-date {
   font-size: 11px;
   font-family: $arial;
   font-weight: $extrabold;
-  color: $blue_6b89bd;
+  color: #6b89bd;
   line-height: 1.8;
   letter-spacing: 0.06em;
 }
@@ -396,7 +396,7 @@
   font-size: maxrem(13);
   font-family: $noto;
   font-weight: $medium;
-  color: $blue_566f96;
+  color: #566f96;
   margin-top: rem(5);
 }
 
@@ -404,12 +404,12 @@
   font-size: maxrem(12);
   font-family: $noto;
   font-weight: $medium;
-  color: $blue_566f96;
+  color: #566f96;
   margin-top: rem(24);
   padding-block: rem(14);
   padding-inline: rem(17);
-  background-color: $white_f6f9ff;
-  border: 1px solid $blue_d9e3f3;
-  border-left: 4px solid $pink_ef9dce;
+  background-color: #f6f9ff;
+  border: 1px solid #d9e3f3;
+  border-left: 4px solid #ef9dce;
   border-radius: rem(9);
 }

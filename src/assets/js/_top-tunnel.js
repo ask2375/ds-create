@@ -7,8 +7,6 @@ import {
   Float32BufferAttribute,
   Fog,
   Group,
-  LineBasicMaterial,
-  LineSegments,
   Mesh,
   MeshBasicMaterial,
   NormalBlending,
@@ -18,20 +16,26 @@ import {
   UniformsUtils,
   Vector3,
 } from "three";
+import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
+import { LineSegments2 } from "three/examples/jsm/lines/LineSegments2.js";
+import { LineSegmentsGeometry } from "three/examples/jsm/lines/LineSegmentsGeometry.js";
 
 const TUNNEL = {
   radius: 120,
   curveEnd: 1240,
-  extent: 2550,
+  extent: 2900,
   cell: 18,
   sides: 42,
   period: 10,
   streams: 8,
   beamLength: 145,
   wallLookAhead: 210,
-  stations: [310, 650, 990, 1330, 1670],
+  stations: [310, 650, 990, 1330, 1670, 2010],
   readingOffset: 105,
-  fog: [245, 750],
+  fog: [190, 680],
+  gridWidth: 2,
+  glow: [0.3, 0.1],
+  pulse: { period: 8, fade: 2, wall: 0.5, background: 0.12 },
 };
 
 const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
@@ -153,10 +157,11 @@ export function createTunnel(scene) {
   };
 
   //=== 壁の色 ===
-  const pink = new Color("#eaa4d4");
-  const blue = new Color("#73b5fa");
+  const pink = new Color("#f266c6");
+  const blue = new Color("#3d95ff");
+  const sky = new Color("#5cc2fa");
   const readingDistances = [0, ...TUNNEL.stations.map(station => station - TUNNEL.readingOffset)];
-  const gradientStops = readingDistances.map((distance, i) => ({ distance: distance + TUNNEL.wallLookAhead, color: i % 2 === 0 ? blue : pink }));
+  const gradientStops = readingDistances.map((distance, i) => ({ distance: distance + TUNNEL.wallLookAhead, color: i === TUNNEL.stations.length ? sky : i % 2 === 0 ? blue : pink }));
 
   const colorAtDistance = (distance, target) => {
     if (distance <= gradientStops[0].distance) return target.copy(blue);
@@ -168,7 +173,7 @@ export function createTunnel(scene) {
         return target.copy(start.color).lerp(end.color, t * t * (3 - 2 * t));
       }
     }
-    return target.copy(pink);
+    return target.copy(gradientStops[gradientStops.length - 1].color);
   };
 
   //=== 壁と方眼 ===
@@ -207,11 +212,12 @@ export function createTunnel(scene) {
   group.add(new Mesh(wallGeometry, wallMaterial));
   disposables.push(wallGeometry, wallMaterial);
 
+  const gridMaterials = [];
   const addGrid = (positions, opacity) => {
-    const geometry = new BufferGeometry();
-    geometry.setAttribute("position", new Float32BufferAttribute(positions, 3));
-    const material = new LineBasicMaterial({ color: "#efffff", transparent: true, opacity, depthWrite: false, fog: true });
-    group.add(new LineSegments(geometry, material));
+    const geometry = new LineSegmentsGeometry().setPositions(positions);
+    const material = new LineMaterial({ color: "#efffff", linewidth: TUNNEL.gridWidth, transparent: true, opacity, depthWrite: false, fog: true });
+    group.add(new LineSegments2(geometry, material));
+    gridMaterials.push(material);
     disposables.push(geometry, material);
   };
   addGrid(minor, 0.24);
@@ -338,8 +344,19 @@ export function createTunnel(scene) {
   });
 
   //=== 背景と霧 ===
-  scene.background = blue.clone();
-  scene.fog = new Fog(blue.clone(), TUNNEL.fog[0], TUNNEL.fog[1]);
+  const glowColor = (distance, target) => colorAtDistance(distance, target).offsetHSL(0, TUNNEL.glow[0], TUNNEL.glow[1]);
+  scene.background = glowColor(0, new Color());
+  scene.fog = new Fog(scene.background.clone(), TUNNEL.fog[0], TUNNEL.fog[1]);
+
+  //=== 明るさの脈動 ===
+  const pulseAt = time => {
+    const { period, fade } = TUNNEL.pulse;
+    const t = time % period;
+    const rise = clamp(t / fade);
+    const fall = clamp((t - fade) / fade);
+    const value = t < fade ? rise : 1 - fall;
+    return value * value * (3 - 2 * value);
+  };
 
   let clock = 0;
   let lastTime = null;
@@ -350,8 +367,14 @@ export function createTunnel(scene) {
     beamMaterials.forEach(material => {
       material.uniforms.uTime.value = clock;
     });
-    colorAtDistance(distance + TUNNEL.wallLookAhead, scene.background);
+    const brightness = motion ? pulseAt(clock) : 0;
+    wallMaterial.color.setScalar(1 + TUNNEL.pulse.wall * brightness);
+    glowColor(distance + TUNNEL.wallLookAhead, scene.background).offsetHSL(0, 0, TUNNEL.pulse.background * brightness);
     scene.fog.color.copy(scene.background);
+  };
+
+  const setResolution = (width, height) => {
+    gridMaterials.forEach(material => material.resolution.set(width, height));
   };
 
   const dispose = () => {
@@ -359,5 +382,5 @@ export function createTunnel(scene) {
     scene.remove(group);
   };
 
-  return { totalLength, stations: TUNNEL.stations, at, tangentAt, upAt, update, dispose };
+  return { totalLength, stations: TUNNEL.stations, at, tangentAt, upAt, update, setResolution, dispose };
 }

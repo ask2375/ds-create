@@ -27,7 +27,7 @@
   min-height: rem(60);
   padding-inline: rem(10);
   background-color: $white;
-  border: 1px solid $skyblue_9dd9f7;
+  border: 1px solid #9dd9f7;
   border-radius: rem(4);
 
   @include mq("md") {
@@ -70,7 +70,7 @@
   height: rem(40);
   padding-inline: rem(16) rem(36);
   background-color: $white;
-  border: 1px solid $skyblue_9dd9f7;
+  border: 1px solid #9dd9f7;
   border-radius: rem(4);
   transition: border-color 0.3s;
   cursor: pointer;
@@ -116,7 +116,7 @@
   max-height: rem(240);
   padding-block: rem(4);
   background-color: $white;
-  border: 1px solid $skyblue_9dd9f7;
+  border: 1px solid #9dd9f7;
   border-radius: rem(4);
   z-index: 2;
   transition:
@@ -147,7 +147,7 @@
 }
 
 .works__search-filter-item[aria-selected="true"] {
-  background-color: $skyblue_eaf6fd;
+  background-color: #eaf6fd;
 }
 
 .works__search-check {
@@ -177,7 +177,7 @@
   width: 100%;
   padding-inline: rem(16);
   background-color: $white;
-  border: 1px solid $skyblue_9dd9f7;
+  border: 1px solid #9dd9f7;
   border-radius: rem(4);
   transition:
     color 0.3s,
@@ -284,7 +284,7 @@
   height: rem(60);
   max-width: rem(500);
   background-color: $white;
-  border: 1px solid $skyblue_9dd9f7;
+  border: 1px solid #9dd9f7;
   border-radius: 100vmax;
   transition: background-color 0.3s;
 
@@ -352,7 +352,7 @@
   }
 
   .works__search-filter-item:hover {
-    background-color: $skyblue_eaf6fd;
+    background-color: #eaf6fd;
   }
 
   .works__search-check:hover .works__search-check-text {
