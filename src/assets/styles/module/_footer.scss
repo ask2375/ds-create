@@ -4,7 +4,7 @@
   padding-block: rem(16);
   padding-inline: rem(24);
   background-color: $white;
-  border-top: 1px solid $blue_bdcde7;
+  border-top: 1px solid #bdcde7;
 
   @include mq("md") {
     padding-inline: rem(64);
@@ -20,5 +20,5 @@
   font-size: 11px;
   font-family: $noto;
   font-weight: $regular;
-  color: $blue_7187a8;
+  color: #7187a8;
 }

@@ -9,6 +9,7 @@
     <?php get_template_part("template-parts/front-page/works"); ?>
     <?php get_template_part("template-parts/front-page/about"); ?>
     <?php get_template_part("template-parts/front-page/contact"); ?>
+    <?php get_template_part("template-parts/front-page/warp-gate"); ?>
   </div>
   <div class="top-depth__track js-depth-track" aria-hidden="true"></div>
 </main>
@@ -18,8 +19,11 @@
     <span class="sr-only">スクロール演出の位置</span>
     <input class="top-depth__range js-depth-range" type="range" min="0" max="1000" step="1" value="0" />
   </label>
-  <button class="top-depth__play js-depth-play" type="button" aria-label="演出を自動再生"><span class="top-depth__play-label js-depth-play-label">演出を見る</span></button>
-  <button class="top-depth__motion js-depth-motion" type="button" aria-pressed="false">動きを抑える</button>
+  <button class="top-depth__motion js-depth-motion" type="button" aria-pressed="false">通常モード</button>
+</div>
+
+<div class="top-warp js-warp" aria-hidden="true">
+  <canvas class="top-warp__canvas js-warp-canvas"></canvas>
 </div>
 
 <?php get_template_part("template-parts/front-page/dialog-features"); ?>

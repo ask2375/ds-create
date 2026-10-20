@@ -3,7 +3,7 @@
 
 @mixin perspective-grid($horizon: 7.5, $ray-step: 18, $ray-count: 20, $depth-step: 0.37) {
   $depth: 100 - $horizon;
-  $core: rgba($white_e9faff, 0.9);
+  $core: rgba(#e9faff, 0.9);
   $halo: rgba($skyblue_b4efff, 0.5);
   $last: math.floor(math.div(math.div($depth, 5) - 1, $depth-step));
   $lines: ();
@@ -38,5 +38,5 @@
   }
 
   background-image: linear-gradient(transparent 0, $lines), conic-gradient(from 0deg at 50% ($horizon * 1%), transparent 0deg, $rays, transparent 360deg);
-  mask-image: linear-gradient(transparent ($horizon * 1%), rgba($black_000000, 0.8) (($horizon + $depth * 0.55) * 1%), $black_000000);
+  mask-image: linear-gradient(transparent ($horizon * 1%), rgba(#000000, 0.8) (($horizon + $depth * 0.55) * 1%), #000000);
 }

@@ -13,7 +13,7 @@
   height: var(--header-h);
   padding-inline: rem(24);
   background-color: $white;
-  border-bottom: 1px solid $blue_b9cdec;
+  border-bottom: 1px solid #b9cdec;
   z-index: 100;
 
   @include mq("md") {
@@ -26,14 +26,14 @@
   top: rem(10);
   right: rem(24);
   left: rem(24);
-  color: $navy_173354;
+  color: #173354;
   height: calc(var(--header-h) - #{rem(12)});
-  background-color: $white_f8fbff;
-  border: 1px solid $skyblue_d8f6ff;
-  border-bottom-color: $pink_f2cbe5;
+  background-color: #f8fbff;
+  border: 1px solid #d8f6ff;
+  border-bottom-color: #f2cbe5;
   border-radius: rem(16);
   box-shadow:
-    0 rem(4) rem(18) rgba($blue_315f94, 0.125),
+    0 rem(4) rem(18) rgba(#315f94, 0.125),
     inset 0 rem(-6) rem(12) rem(-11) $pink_eaa4d4;
   isolation: isolate;
 
@@ -62,7 +62,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(180deg, rgba($white, 0.922) 0%, rgba($white_f8fbff, 0.922) 85%, rgba($white_fff5fb, 0.929) 100%);
+    background-image: linear-gradient(180deg, rgba($white, 0.922) 0%, rgba(#f8fbff, 0.922) 85%, rgba(#fff5fb, 0.929) 100%);
     border-radius: inherit;
     backdrop-filter: blur(rem(16));
     z-index: -1;
@@ -177,7 +177,7 @@
   font-size: maxrem(13);
   font-family: $noto;
   font-weight: $bold;
-  color: $navy_173354;
+  color: #173354;
   line-height: 1.5;
   white-space: nowrap;
   min-height: rem(44);
@@ -197,7 +197,7 @@
   left: 2px;
   scale: 0 1;
   height: 3px;
-  background-color: $skyblue_36b7e3;
+  background-color: #36b7e3;
   border-radius: 2px;
   transition: scale 0.18s ease;
 }
@@ -226,11 +226,11 @@
     overflow-y: auto;
     padding-block: rem(16);
     padding-inline: rem(16);
-    background-color: rgba($white_f8fbff, 0.98);
-    border: 1px solid $skyblue_d8f6ff;
-    border-bottom-color: $pink_f2cbe5;
+    background-color: rgba(#f8fbff, 0.98);
+    border: 1px solid #d8f6ff;
+    border-bottom-color: #f2cbe5;
     border-radius: rem(16);
-    box-shadow: 0 rem(12) rem(28) rgba($blue_315f94, 0.149);
+    box-shadow: 0 rem(12) rem(28) rgba(#315f94, 0.149);
     z-index: 11;
   }
 
@@ -274,7 +274,7 @@
     font-size: maxrem(14);
     font-family: $noto;
     font-weight: $bold;
-    color: $navy_173354;
+    color: #173354;
     line-height: 1.5;
     min-height: rem(44);
     padding-inline: rem(12);
@@ -301,7 +301,7 @@
     width: rem(44);
     height: rem(44);
     background-color: rgba($white, 0.702);
-    border: 1px solid $skyblue_bce8f5;
+    border: 1px solid #bce8f5;
     border-radius: rem(12);
     cursor: pointer;
     z-index: 12;
@@ -318,7 +318,7 @@
     transform: translate(-50%, -50%);
     width: rem(22);
     height: 2px;
-    background-color: $navy_173354;
+    background-color: #173354;
     border-radius: 100vmax;
     transition:
       top 0.3s,
@@ -354,7 +354,7 @@
 
 .hamburger.is-active {
   @media screen and (max-width: 960px) {
-    background-color: $pink_fcebf5;
+    background-color: #fcebf5;
   }
 }
 

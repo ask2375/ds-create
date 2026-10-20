@@ -26,12 +26,11 @@ async function initDepth(root) {
   const shapePath = mv.querySelector("#top-mv-holo-surface");
   const mvParts = [mvCenter, mvCharacter, holoBase, holoLettering, holoRim].filter(Boolean);
   const range = $(".js-depth-range");
-  const playButton = $(".js-depth-play");
-  const playLabel = $(".js-depth-play-label");
   const motionButton = $(".js-depth-motion");
   const links = [...document.querySelectorAll("[data-go]")];
   const ids = chapters.map(chapter => chapter.id);
-  const stops = [0.238, 0.408, 0.578, 0.748, 0.945];
+  const span = 1.17;
+  const stops = [0.238, 0.408, 0.578, 0.748, 0.918, 1.115].map(u => u / span);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const mobileQuery = window.matchMedia("(max-width: 767px)");
   const query = new URLSearchParams(location.search);
@@ -40,9 +39,6 @@ async function initDepth(root) {
   let target = 0;
   let progress = 0;
   let previousTime = 0;
-  let playing = false;
-  let playStart = 0;
-  let playFrom = 0;
   let stageWidth = 0;
   let stageHeight = 0;
   let needsRender = true;
@@ -85,6 +81,18 @@ async function initDepth(root) {
     readable = true;
   }
 
+  //=== ワープ ===
+  let warp = null;
+  const warpOverlay = document.querySelector(".js-warp");
+  if (renderer && warpOverlay) {
+    try {
+      const { createWarp } = await import("./_top-warp.js");
+      warp = createWarp(warpOverlay);
+    } catch (error) {
+      warp = null;
+    }
+  }
+
   const stations = tunnel ? tunnel.stations : [];
   const stationVectors = tunnel ? stations.map(distance => tunnel.at(distance)) : [];
   const camSpace = three ? new three.Vector3() : null;
@@ -105,6 +113,7 @@ async function initDepth(root) {
       camera.updateProjectionMatrix();
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.5));
       renderer.setSize(width, height, false);
+      tunnel.setResolution(renderer.domElement.width, renderer.domElement.height);
     }
     sizes.length = 0;
     chapters.forEach(chapter => sizes.push(chapter.offsetHeight));
@@ -118,12 +127,12 @@ async function initDepth(root) {
   //=== スクロール位置 → カメラの道のり ===
   const flightDistance = p => {
     if (p < 0.15) return mix(0, 42, smooth(0.095, 0.15, p));
-    const a = clamp((p - 0.15) / 0.17, 0, 4.9999);
-    const i = Math.min(4, Math.floor(a));
+    const a = clamp((p - 0.15) / 0.17, 0, 5.9999);
+    const i = Math.min(5, Math.floor(a));
     const t = a - i;
     const station = stations[i];
     const start = i === 0 ? 42 : stations[i - 1] + 30;
-    if (i === 4) {
+    if (i === 5) {
       if (t < 0.3) return mix(start, station - 110, smooth(0, 0.3, t));
       return mix(station - 110, station - 103, smooth(0.3, 0.9, t));
     }
@@ -194,7 +203,8 @@ async function initDepth(root) {
 
   //=== 空間の更新 ===
   const updateWorld = p => {
-    const distance = flightDistance(p);
+    const u = p * span;
+    const distance = flightDistance(u);
     cameraDistance = distance;
     const position = tunnel.at(distance);
     const direction = tunnel.tangentAt(distance);
@@ -208,7 +218,7 @@ async function initDepth(root) {
     camera.updateMatrixWorld();
     if (readable) return;
 
-    renderMv(p);
+    renderMv(u);
     let visible = -1;
     const availableHeight = stageHeight - (mobileQuery.matches ? 22 : 48);
     chapters.forEach((chapter, i) => {
@@ -225,7 +235,7 @@ async function initDepth(root) {
       const exitSide = i % 2 === 0 ? -1 : 1;
       const settledX = x * (1 - readWeight * 0.92) + exitSide * exiting * stageWidth * 0.3;
       const settledY = y * (1 - readWeight * 0.92);
-      const shown = opacity > 0.005 && delta >= 25 && p >= 0.135;
+      const shown = opacity > 0.005 && delta >= 25 && u >= 0.135;
       chapter.style.transform = `translate(-50%, -50%) translate3d(${settledX}px, ${settledY}px, 0) scale(${perspectiveScale * fit}) rotate(${bank * -18 * (1 - readWeight)}deg)`;
       chapter.style.opacity = String(shown ? opacity : 0);
       chapter.style.visibility = shown ? "visible" : "hidden";
@@ -238,8 +248,8 @@ async function initDepth(root) {
     markCurrent(visible);
     range.value = String(Math.round(p * 1000));
     range.style.setProperty("--progress", `${p * 100}%`);
-    range.setAttribute("aria-valuetext", `${Math.round(p * 100)}%${visible >= 0 ? `・${chapters[visible].querySelector("h2").textContent}` : ""}`);
-    document.body.dataset.panel = visible >= 0 ? ids[visible] : p < 0.15 ? "mv" : "flight";
+    range.setAttribute("aria-valuetext", `${Math.round(p * 100)}%${visible >= 0 ? `・${chapters[visible].querySelector("h2")?.textContent ?? chapters[visible].getAttribute("aria-label")}` : ""}`);
+    document.body.dataset.panel = visible >= 0 ? ids[visible] : u < 0.15 ? "mv" : "flight";
   };
 
   //=== スクロール操作 ===
@@ -254,19 +264,7 @@ async function initDepth(root) {
     window.scrollTo({ top: target * scrollMax(), behavior: "instant" });
   };
 
-  const setPlayState = state => {
-    playing = state;
-    playButton.classList.toggle("is-playing", state);
-    playButton.setAttribute("aria-label", state ? "自動再生を停止" : "演出を自動再生");
-    playLabel.textContent = state ? "停止する" : "演出を見る";
-  };
-
-  const stopPlaying = () => {
-    if (playing) setPlayState(false);
-  };
-
   const goTo = id => {
-    stopPlaying();
     const section = document.getElementById(id);
     if (!section) return;
     const heading = section.querySelector("h1, h2");
@@ -280,13 +278,35 @@ async function initDepth(root) {
     pendingFocus = heading;
   };
 
-  //=== 動きを抑える表示 ===
+  //=== ワープで戻る ===
+  let warpHold = false;
+  const warpTo = id => {
+    const section = document.getElementById(id);
+    if (!section || warp.active) return;
+    const index = ids.indexOf(id);
+    warp
+      .play({
+        onCovered: () => {
+          scrollToProgress(index >= 0 ? stops[index] : 0, true);
+          pendingFocus = section.querySelector("h1, h2");
+          warpHold = "pending";
+        },
+        onReveal: () => {
+          warpHold = false;
+          needsRender = true;
+        },
+      })
+      .then(() => {
+        warpHold = false;
+      });
+  };
+
+  //=== 通常モード / 3D モード ===
   function setReadable(value) {
-    stopPlaying();
     readable = value || !renderer;
     document.body.classList.toggle("is-readable", readable);
     motionButton.setAttribute("aria-pressed", String(readable));
-    motionButton.textContent = readable ? "空間演出に戻す" : "動きを抑える";
+    motionButton.textContent = readable ? "3Dモード" : "通常モード";
     [mv, ...chapters].forEach(element => {
       element.inert = false;
       element.style.removeProperty("opacity");
@@ -310,15 +330,11 @@ async function initDepth(root) {
     const rawDt = (time - (previousTime || time)) / 1000;
     const dt = Math.min(rawDt, 0.06);
     previousTime = time;
-    if (document.hidden || readable || !renderer) {
+    if (document.hidden || readable || !renderer || warpHold === true) {
       requestAnimationFrame(animate);
       return;
     }
     fxTime += dt;
-    if (playing) {
-      scrollToProgress(Math.min(1, playFrom + (time - playStart) / 95000));
-      if (target >= 1) stopPlaying();
-    }
     const before = progress;
     progress = rawDt > 0.25 ? target : mix(progress, target, 1 - Math.exp(-dt * 7));
     if (Math.abs(progress - target) < 0.000015) progress = target;
@@ -331,6 +347,7 @@ async function initDepth(root) {
     if (mvFx.active) glass.renderScene(scene, camera, mvFx);
     else renderer.render(scene, camera);
     needsRender = false;
+    if (warpHold === "pending") warpHold = true;
     requestAnimationFrame(animate);
   };
 
@@ -342,29 +359,12 @@ async function initDepth(root) {
     },
     { passive: true },
   );
-  window.addEventListener("wheel", stopPlaying, { passive: true });
-  window.addEventListener("touchstart", stopPlaying, { passive: true });
-  window.addEventListener("keydown", event => {
-    if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) stopPlaying();
-  });
   window.addEventListener("resize", resize);
   new ResizeObserver(resize).observe(stage);
   if (holoBase) new ResizeObserver(resize).observe(holoBase);
 
   range.addEventListener("input", () => {
-    stopPlaying();
     scrollToProgress(Number(range.value) / 1000, true);
-  });
-
-  playButton.addEventListener("click", () => {
-    if (playing) {
-      stopPlaying();
-      return;
-    }
-    if (progress > 0.98) scrollToProgress(0, true);
-    playFrom = progress;
-    playStart = performance.now();
-    setPlayState(true);
   });
 
   motionButton.addEventListener("click", () => setReadable(!readable));
@@ -372,13 +372,11 @@ async function initDepth(root) {
 
   document.addEventListener("click", event => {
     if (!(event.target instanceof Element)) return;
-    if (event.target.closest(".js-dialog-open, [data-modal-open]")) stopPlaying();
     const jump = event.target.closest(".js-depth-jump");
     if (jump) {
-      stopPlaying();
-      if (readable) goTo(ids[0]);
+        if (readable) goTo(ids[0]);
       else {
-        scrollToProgress(Number(jump.dataset.jump));
+        scrollToProgress(Number(jump.dataset.jump) / span);
         pendingFocus = chapters[0].querySelector("h2");
       }
       return;
@@ -387,6 +385,10 @@ async function initDepth(root) {
     if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     history.pushState(null, "", `#${link.dataset.go}`);
+    if (warp && !readable && link.classList.contains("js-depth-warp")) {
+      warpTo(link.dataset.go);
+      return;
+    }
     goTo(link.dataset.go);
   });
 
@@ -396,7 +398,6 @@ async function initDepth(root) {
   });
 
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stopPlaying();
     previousTime = 0;
   });
 
