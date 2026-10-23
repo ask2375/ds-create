@@ -43,6 +43,23 @@
   z-index: 2;
 }
 
+.is-depth-restoring {
+  overflow-y: scroll;
+}
+
+.is-depth-restoring .top-depth__stage {
+  visibility: hidden;
+}
+
+.is-depth-restoring:not(.is-readable) .body-container::before {
+  background-image: none;
+  background-color: #73b5fa;
+}
+
+.is-depth-restoring:not(.is-readable) .body-container::after {
+  visibility: hidden;
+}
+
 .top-depth__mv {
   position: absolute;
   inset: 0;

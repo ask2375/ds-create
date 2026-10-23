@@ -172,6 +172,28 @@ function enqueue_production_assets_fallback()
 
 add_action("wp_enqueue_scripts", "add_vite_scripts", 10);
 
+function add_top_depth_restore_script()
+{
+  if (!is_front_page()) {
+    return;
+  }
+  ?>
+  <script>
+    try {
+      const root = document.documentElement;
+      if (sessionStorage.getItem("top-depth-mode") === "read" || new URLSearchParams(location.search).get("mode") === "read") {
+        root.classList.add("is-readable");
+      }
+      if (["reload", "back_forward"].includes(performance.getEntriesByType("navigation")[0]?.type) && sessionStorage.getItem("top-depth-scroll")) {
+        root.classList.add("is-depth-restoring");
+        setTimeout(() => root.classList.remove("is-depth-restoring"), 3000);
+      }
+    } catch {}
+  </script>
+  <?php
+}
+add_action("wp_head", "add_top_depth_restore_script", 1);
+
 /**
  * global-styles-inline-cssを無効化
  */
