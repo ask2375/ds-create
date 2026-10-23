@@ -1,30 +1,30 @@
 <?php
+$pickup_date_query = [
+  "relation" => "OR",
+  "works_date_clause" => ["key" => "works_date", "compare" => "EXISTS"],
+  ["key" => "works_date", "compare" => "NOT EXISTS"],
+];
 $pickup_args = [
   "post_type" => "works",
   "post_status" => "publish",
-  "posts_per_page" => 3,
   "no_found_rows" => true,
-  "tax_query" => [
-    [
-      "taxonomy" => "works_category",
-      "field" => "slug",
-      "terms" => works_search_recommended()["slug"],
-    ],
-  ],
-  "meta_query" => [
-    "relation" => "OR",
-    "works_date_clause" => ["key" => "works_date", "compare" => "EXISTS"],
-    ["key" => "works_date", "compare" => "NOT EXISTS"],
-  ],
+  "meta_query" => $pickup_date_query,
   "orderby" => ["works_date_clause" => "DESC", "date" => "DESC", "ID" => "DESC"],
 ];
-$pickup_works = new WP_Query($pickup_args);
-$pickup_posts = $pickup_works->posts;
-if (count($pickup_posts) < 3) {
-  $fill_args = $pickup_args;
-  unset($fill_args["tax_query"]);
-  $fill_args["posts_per_page"] = 3 - count($pickup_posts);
-  $fill_args["post__not_in"] = wp_list_pluck($pickup_posts, "ID");
+$pickup_conditions = [
+  ["meta_query" => ["relation" => "AND", ["key" => "_is_works_top_pickup", "value" => "1"], $pickup_date_query]],
+  ["tax_query" => [["taxonomy" => "works_category", "field" => "slug", "terms" => works_search_recommended()["slug"]]]],
+  [],
+];
+$pickup_posts = [];
+foreach ($pickup_conditions as $condition) {
+  if (count($pickup_posts) >= WORKS_TOP_PICKUP_MAX) {
+    break;
+  }
+  $fill_args = array_merge($pickup_args, $condition, [
+    "posts_per_page" => WORKS_TOP_PICKUP_MAX - count($pickup_posts),
+    "post__not_in" => wp_list_pluck($pickup_posts, "ID"),
+  ]);
   $pickup_posts = array_merge($pickup_posts, (new WP_Query($fill_args))->posts);
 }
 ?>

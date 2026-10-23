@@ -34,8 +34,18 @@ async function initDepth(root) {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const mobileQuery = window.matchMedia("(max-width: 767px)");
   const query = new URLSearchParams(location.search);
+  const restoreKey = "top-depth-scroll";
+  const modeKey = "top-depth-mode";
+  history.scrollRestoration = "manual";
+  const savedMode = (() => {
+    try {
+      return sessionStorage.getItem(modeKey);
+    } catch {
+      return null;
+    }
+  })();
 
-  let readable = reducedMotion.matches || query.get("mode") === "read";
+  let readable = reducedMotion.matches || query.get("mode") === "read" || savedMode === "read";
   let target = 0;
   let progress = 0;
   let previousTime = 0;
@@ -302,8 +312,22 @@ async function initDepth(root) {
   };
 
   //=== 通常モード / 3D モード ===
+  const currentChapter = () => {
+    if (document.body.classList.contains("is-readable")) {
+      let index = -1;
+      chapters.forEach((chapter, i) => {
+        if (chapter.getBoundingClientRect().top <= window.innerHeight / 2) index = i;
+      });
+      return index;
+    }
+    if (target < stops[0] / 2) return -1;
+    return stops.reduce((nearest, stop, i) => (Math.abs(stop - target) < Math.abs(stops[nearest] - target) ? i : nearest), 0);
+  };
+
   function setReadable(value) {
+    const current = currentChapter();
     readable = value || !renderer;
+    document.documentElement.classList.remove("is-readable");
     document.body.classList.toggle("is-readable", readable);
     motionButton.setAttribute("aria-pressed", String(readable));
     motionButton.textContent = readable ? "3Dモード" : "通常モード";
@@ -321,8 +345,10 @@ async function initDepth(root) {
     document.body.dataset.panel = "mv";
     markCurrent(-1);
     resize();
-    if (readable) window.scrollTo({ top: 0, behavior: "instant" });
-    else scrollToProgress(0, true);
+    if (readable) {
+      if (current >= 0) chapters[current].scrollIntoView({ behavior: "instant", block: "start" });
+      else window.scrollTo({ top: 0, behavior: "instant" });
+    } else scrollToProgress(current >= 0 ? stops[current] : 0, true);
   }
 
   //=== 描画ループ ===
@@ -367,7 +393,12 @@ async function initDepth(root) {
     scrollToProgress(Number(range.value) / 1000, true);
   });
 
-  motionButton.addEventListener("click", () => setReadable(!readable));
+  motionButton.addEventListener("click", () => {
+    setReadable(!readable);
+    try {
+      sessionStorage.setItem(modeKey, readable ? "read" : "3d");
+    } catch {}
+  });
   reducedMotion.addEventListener("change", event => setReadable(event.matches));
 
   document.addEventListener("click", event => {
@@ -401,11 +432,32 @@ async function initDepth(root) {
     previousTime = 0;
   });
 
+  window.addEventListener("pagehide", () => {
+    try {
+      sessionStorage.setItem(restoreKey, JSON.stringify({ readable, ratio: clamp(window.scrollY / scrollMax()) }));
+    } catch {}
+  });
+
+  const readRestore = () => {
+    const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+    if (navigationType !== "reload" && navigationType !== "back_forward") return null;
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(restoreKey));
+      return saved && saved.readable === readable && Number.isFinite(saved.ratio) ? saved.ratio : null;
+    } catch {
+      return null;
+    }
+  };
+
   //=== 開始 ===
   await document.fonts.ready;
   setReadable(readable);
   const hash = location.hash.slice(1);
-  if (ids.includes(hash)) {
+  const restoreRatio = readRestore();
+  if (restoreRatio !== null) {
+    if (readable) window.scrollTo({ top: restoreRatio * scrollMax(), behavior: "instant" });
+    else scrollToProgress(restoreRatio, true);
+  } else if (ids.includes(hash)) {
     if (readable) goTo(hash);
     else scrollToProgress(stops[ids.indexOf(hash)], true);
   }
@@ -417,5 +469,6 @@ async function initDepth(root) {
     renderer.render(scene, camera);
   }
   document.body.classList.add("is-depth-ready");
+  document.documentElement.classList.remove("is-depth-restoring");
   requestAnimationFrame(animate);
 }

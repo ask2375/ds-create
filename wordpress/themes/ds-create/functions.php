@@ -41,6 +41,7 @@ get_template_part("functions-lib/func-add-posttype-post");
 
 // 制作実績（works）の投稿タイプ・絞り込み検索
 get_template_part("functions-lib/func-add-posttype-works");
+get_template_part("functions-lib/func-works-top-pickup");
 
 // 構造化データの設定（汎用化済み）
 get_template_part("functions-lib/func-structured-data");
